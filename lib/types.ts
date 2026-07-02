@@ -1,0 +1,54 @@
+export type Viscosity = "0W20" | "0W30" | "5W30" | "5W40" | "10W40" | "10W60" | "15W40";
+
+export type OilCategory = "fullSynthetic" | "syntheticBlend" | "mineral" | "racing";
+
+export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  viscosity: Viscosity;
+  category: OilCategory;
+  /** Marketing tagline key -> resolved per language via description map on product */
+  tagline: string;
+  specs: string[]; // e.g. ["ACEA C3", "API SN", "VW 504.00/507.00"]
+  sizesLiter: number[]; // available bottle sizes
+  price: number; // price for the default (first) size in EUR
+  compareAtPrice?: number;
+  rating: number;
+  reviews: number;
+  bestFor: string[]; // fuel/usage tags e.g. ["petrol","diesel","modern"]
+  accent: string; // hex accent for the bottle visual
+  badge?: "bestseller" | "new" | "sale" | "pro";
+  stock: number;
+}
+
+export interface CartLine {
+  productId: string;
+  slug: string;
+  name: string;
+  viscosity: Viscosity;
+  sizeLiter: number;
+  price: number;
+  qty: number;
+  accent: string;
+}
+
+export interface RdwVehicle {
+  plate: string;
+  found: boolean;
+  make?: string;
+  model?: string;
+  year?: number;
+  fuel?: string;
+  cylinders?: number;
+  bodyType?: string;
+  color?: string;
+}
+
+export interface OilRecommendation {
+  vehicle: RdwVehicle;
+  viscosity: Viscosity | null;
+  reasonKey: string; // i18n key explaining why
+  productSlug: string | null;
+  isElectric: boolean;
+}

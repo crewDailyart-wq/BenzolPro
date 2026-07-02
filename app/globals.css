@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0b;
+  color: #f4f4f5;
+  font-feature-settings: "ss01", "cv01";
+  overflow-x: hidden;
+}
+
+/* Thin neon scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0b;
+}
+::-webkit-scrollbar-thumb {
+  background: #26262b;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d7ff00;
+}
+
+::selection {
+  background: #d7ff00;
+  color: #0a0a0b;
+}
+
+/* RTL adjustments for Arabic */
+[dir="rtl"] {
+  text-align: right;
+}
+
+@layer components {
+  .btn-neon {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-neon px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink transition-all duration-200 hover:shadow-neon-lg hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-line px-6 py-3 text-sm font-semibold text-zinc-100 transition-all duration-200 hover:border-neon hover:text-neon active:scale-95;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink-line bg-ink-card px-3 py-1 text-xs font-medium text-zinc-300;
+  }
+  .card-surface {
+    @apply rounded-2xl border border-ink-line bg-ink-card;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-ink-line bg-ink-soft px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:border-neon focus:ring-2 focus:ring-neon/30;
+  }
+  .section-pad {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Dutch-style license plate */
+.plate {
+  background: linear-gradient(180deg, #ffdd00 0%, #ffcf00 100%);
+  color: #0a0a0b;
+  border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  border: 2px solid #0a0a0b;
+  box-shadow: 0 4px 20px -6px rgba(255, 207, 0, 0.5);
+}
+
+.text-glow {
+  text-shadow: 0 0 24px rgba(215, 255, 0, 0.45);
+}
+
+.animate-delay-1 { animation-delay: 0.08s; }
+.animate-delay-2 { animation-delay: 0.16s; }
+.animate-delay-3 { animation-delay: 0.24s; }
+.animate-delay-4 { animation-delay: 0.32s; }

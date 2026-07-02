@@ -35,7 +35,7 @@ export default function BundleDeals() {
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">{t("bundle.title")}</h2>
           <p className="mt-2 max-w-xl text-zinc-400">{t("bundle.subtitle")}</p>
         </div>
-        <div className="flex items-center gap-2 rounded-full border border-neon/40 bg-neon/10 px-4 py-2 text-sm font-semibold text-neon">
+        <div className="blue-sheen flex items-center gap-2 rounded-full border border-azure/40 bg-azure/10 px-4 py-2 text-sm font-semibold text-azure shadow-azure">
           <TruckIcon width={18} height={18} /> {t("bundle.alwaysFree")}
         </div>
       </div>

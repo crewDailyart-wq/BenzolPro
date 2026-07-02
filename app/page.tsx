@@ -1,3 +1,4 @@
+import ParallaxBackground from "@/components/ParallaxBackground";
 import Hero from "@/components/Hero";
 import UspSection from "@/components/UspSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
@@ -12,9 +13,10 @@ export default function HomePage() {
 
   return (
     <>
+      <ParallaxBackground />
       <Hero />
-      <FeaturedProducts products={list} />
       <BundleDeals />
+      <FeaturedProducts products={list} />
       <UspSection />
       <TrustedGarages />
       <FaqSection />

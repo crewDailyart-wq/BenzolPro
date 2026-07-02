@@ -29,6 +29,12 @@ const config: Config = {
           dim: "#b78a2b",
           deep: "#8a6518",
         },
+        // subtle blue accent that complements the gold
+        azure: {
+          DEFAULT: "#4da6ff",
+          soft: "#8fc7ff",
+          dim: "#2f7fd0",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
@@ -37,6 +43,7 @@ const config: Config = {
       boxShadow: {
         neon: "0 0 0 1px rgba(231,181,60,0.4), 0 0 24px -4px rgba(231,181,60,0.45)",
         "neon-lg": "0 0 40px -6px rgba(231,181,60,0.55)",
+        azure: "0 0 0 1px rgba(77,166,255,0.35), 0 0 28px -6px rgba(77,166,255,0.5)",
         card: "0 20px 60px -30px rgba(0,0,0,0.9)",
       },
       backgroundImage: {
@@ -44,6 +51,8 @@ const config: Config = {
           "linear-gradient(to right, rgba(231,181,60,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(231,181,60,0.06) 1px, transparent 1px)",
         "radial-neon":
           "radial-gradient(circle at 50% 0%, rgba(231,181,60,0.18), transparent 60%)",
+        "radial-azure":
+          "radial-gradient(circle at 50% 50%, rgba(77,166,255,0.16), transparent 62%)",
         "gold-metal":
           "linear-gradient(135deg, #8a6518 0%, #e7b53c 30%, #f6d989 50%, #e7b53c 70%, #8a6518 100%)",
       },
@@ -82,6 +91,14 @@ const config: Config = {
           "0%": { backgroundPosition: "0% 50%" },
           "100%": { backgroundPosition: "200% 50%" },
         },
+        twinkle: {
+          "0%, 100%": { opacity: "0.15", transform: "scale(0.7)" },
+          "50%": { opacity: "0.9", transform: "scale(1.15)" },
+        },
+        "blue-sheen": {
+          "0%": { transform: "translateX(-120%)" },
+          "60%, 100%": { transform: "translateX(220%)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s cubic-bezier(0.16,1,0.3,1) both",
@@ -92,6 +109,8 @@ const config: Config = {
         wheel: "wheel 0.6s linear infinite",
         marquee: "marquee 32s linear infinite",
         "gold-pan": "gold-pan 5s linear infinite",
+        twinkle: "twinkle 4s ease-in-out infinite",
+        "blue-sheen": "blue-sheen 4.5s ease-in-out infinite",
       },
     },
   },

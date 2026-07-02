@@ -14,7 +14,7 @@ import { ArrowRight, CarIcon, CheckIcon, BoltIcon } from "./icons";
 
 type Status = "idle" | "loading" | "done" | "error" | "invalid" | "notfound";
 
-export default function PlateLookup() {
+export default function PlateLookup({ className = "" }: { className?: string }) {
   const { t } = useI18n();
   const { add } = useCart();
   const { price } = useAudience();
@@ -52,9 +52,10 @@ export default function PlateLookup() {
   const product = result?.productSlug ? getProductBySlug(result.productSlug) : undefined;
 
   return (
-    <div id="plate" className="scroll-mt-24">
-      <div className="card-surface relative overflow-hidden p-6 shadow-card sm:p-8">
+    <div id="plate" className={`scroll-mt-24 ${className}`}>
+      <div className="blue-sheen card-surface relative flex h-full flex-col overflow-hidden p-6 shadow-card sm:p-8">
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-radial-neon opacity-60" />
+        <div className="pointer-events-none absolute -bottom-20 -left-16 h-52 w-52 rounded-full bg-radial-azure opacity-70" />
 
         <div className="relative">
           <span className="chip"><CarIcon width={14} height={14} /> RDW</span>

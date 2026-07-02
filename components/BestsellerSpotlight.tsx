@@ -11,7 +11,15 @@ import OilBottle from "./OilBottle";
 import PriceTag from "./PriceTag";
 import { StarIcon, BoltIcon, CheckIcon, ArrowRight } from "./icons";
 
-export default function BestsellerSpotlight({ product }: { product: Product }) {
+export default function BestsellerSpotlight({
+  product,
+  large = false,
+  className = "",
+}: {
+  product: Product;
+  large?: boolean;
+  className?: string;
+}) {
   const { t, locale } = useI18n();
   const { add } = useCart();
   const { price } = useAudience();
@@ -26,7 +34,7 @@ export default function BestsellerSpotlight({ product }: { product: Product }) {
   }
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       {/* floating badge */}
       <div className="absolute -top-3 left-1/2 z-20 -translate-x-1/2">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-neon px-4 py-1.5 text-xs font-extrabold uppercase tracking-wide text-ink shadow-neon">
@@ -34,20 +42,27 @@ export default function BestsellerSpotlight({ product }: { product: Product }) {
         </span>
       </div>
 
-      <div className="card-surface relative overflow-hidden p-6 shadow-card sm:p-8">
-        {/* animated aura */}
-        <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-radial-neon opacity-70" />
-        <div className="pointer-events-none absolute inset-0 bg-grid-neon [background-size:26px_26px] opacity-30" />
+      <div
+        className={`blue-sheen card-surface relative flex h-full flex-col justify-center overflow-hidden shadow-card ${
+          large ? "p-6 sm:p-10" : "p-6 sm:p-8"
+        }`}
+      >
+        {/* gold + azure aura */}
+        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-radial-neon opacity-70" />
+        <div className="pointer-events-none absolute -bottom-24 -left-20 h-64 w-64 rounded-full bg-radial-azure opacity-70" />
+        <div className="pointer-events-none absolute inset-0 bg-grid-neon [background-size:26px_26px] opacity-25" />
 
-        <div className="relative grid grid-cols-1 items-center gap-4 sm:grid-cols-2">
+        <div className="relative grid grid-cols-1 items-center gap-4 sm:grid-cols-2 sm:gap-6">
           {/* floating bottle */}
-          <div className="relative mx-auto h-56 w-full max-w-[220px]">
+          <div className={`relative mx-auto w-full ${large ? "h-64 max-w-[260px] sm:h-80" : "h-56 max-w-[220px]"}`}>
             <div className="absolute inset-x-6 bottom-3 h-6 rounded-[50%] bg-black/60 blur-md" />
-            <div className="animate-float h-full w-full">
+            {/* soft blue ring behind bottle */}
+            <div className="absolute inset-8 rounded-full bg-radial-azure opacity-80" />
+            <div className="animate-float relative h-full w-full">
               <OilBottle
                 accent={product.accent}
                 viscosity={product.viscosity}
-                className="h-full w-full drop-shadow-[0_18px_40px_rgba(0,0,0,0.7)]"
+                className="h-full w-full drop-shadow-[0_18px_44px_rgba(0,0,0,0.75)]"
               />
             </div>
           </div>
@@ -59,7 +74,7 @@ export default function BestsellerSpotlight({ product }: { product: Product }) {
               <span className="font-semibold text-zinc-100">{product.rating.toFixed(1)}</span>
               <span>({product.reviews})</span>
             </div>
-            <h3 className="mt-1 text-2xl font-extrabold">{product.name}</h3>
+            <h3 className={`mt-1 font-extrabold ${large ? "text-3xl" : "text-2xl"}`}>{product.name}</h3>
             {tagline && <p className="text-sm text-zinc-400">{tagline}</p>}
 
             <div className="mt-3 flex flex-wrap justify-center gap-1 sm:justify-start">
@@ -71,7 +86,7 @@ export default function BestsellerSpotlight({ product }: { product: Product }) {
             </div>
 
             <div className="mt-4 flex justify-center sm:justify-start">
-              <PriceTag base={product.price} compareAt={product.compareAtPrice} size="md" />
+              <PriceTag base={product.price} compareAt={product.compareAtPrice} size={large ? "lg" : "md"} />
             </div>
 
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
@@ -91,15 +106,20 @@ export default function BestsellerSpotlight({ product }: { product: Product }) {
               </Link>
             </div>
 
-            <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-zinc-500 sm:justify-start">
-              <CheckIcon width={13} height={13} className="text-neon" /> {t("hero.trust2")}
-            </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 sm:justify-start">
+              <span className="flex items-center gap-1.5">
+                <CheckIcon width={13} height={13} className="text-neon" /> {t("hero.trust2")}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckIcon width={13} height={13} className="text-azure" /> {t("hero.trust3")}
+              </span>
+            </div>
           </div>
         </div>
 
         <Link
           href="/products?sort=popular"
-          className="relative mt-4 inline-flex items-center gap-1 text-sm font-medium text-neon hover:underline"
+          className="relative mt-5 inline-flex items-center gap-1 text-sm font-medium text-neon hover:underline"
         >
           {t("spotlight.seeAll")} <ArrowRight width={16} height={16} />
         </Link>

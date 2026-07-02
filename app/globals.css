@@ -105,6 +105,33 @@ body {
   transform: none;
 }
 
+/* subtle blue glow + sweeping sheen (used on select elements) */
+.text-blue-glow {
+  text-shadow: 0 0 20px rgba(77, 166, 255, 0.5);
+}
+.blue-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.blue-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(143, 199, 255, 0.14), transparent);
+  transform: translateX(-120%);
+  animation: blue-sheen 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* parallax layers move via a --p variable set from scroll position */
+.parallax-layer {
+  will-change: transform;
+  transform: translate3d(0, calc(var(--p, 0) * 1px), 0);
+}
+
 /* marquee track */
 .marquee-mask {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
@@ -120,7 +147,13 @@ body {
   .animate-drive,
   .animate-float,
   .animate-marquee,
+  .animate-twinkle,
+  .animate-blue-sheen,
+  .blue-sheen::after,
   .text-gold-metal {
     animation: none !important;
+  }
+  .parallax-layer {
+    transform: none !important;
   }
 }

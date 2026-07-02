@@ -133,3 +133,35 @@ export const MinusIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M5 12h14" />
   </svg>
 );
+
+export const UserIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="8" r="4" />
+    <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+  </svg>
+);
+
+export const WrenchIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M14.5 5.5a4 4 0 0 0-5.3 4.9L4 15.6 6.4 18l5.2-5.2a4 4 0 0 0 4.9-5.3l-2.3 2.3-2-2z" />
+  </svg>
+);
+
+export const PackageIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 3 4 7v10l8 4 8-4V7z" />
+    <path d="M4 7l8 4 8-4M12 11v10" />
+  </svg>
+);
+
+export const SparkIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" />
+  </svg>
+);
+
+export const PlusMinIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+);

@@ -5,19 +5,23 @@ import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
+import { useAudience } from "@/lib/audience";
 import { euro, priceForSize } from "@/lib/format";
 import { TAGLINES } from "@/lib/products";
 import OilBottle from "./OilBottle";
 import ProductCard from "./ProductCard";
+import PriceTag from "./PriceTag";
 import { StarIcon, CheckIcon, TruckIcon, ShieldIcon, ArrowRight, BoltIcon, CartIcon } from "./icons";
 
 export default function ProductDetail({ product, related }: { product: Product; related: Product[] }) {
   const { t, locale } = useI18n();
   const { add, setOpen } = useCart();
+  const { price: audiencePrice, isGarage } = useAudience();
   const [size, setSize] = useState(product.sizesLiter[0]);
   const [qty, setQty] = useState(1);
 
-  const price = priceForSize(product.price, product.sizesLiter[0], size);
+  const basePrice = priceForSize(product.price, product.sizesLiter[0], size);
+  const price = audiencePrice(basePrice, qty);
   const tagline = TAGLINES[product.tagline]?.[locale] ?? "";
 
   const stockLabel =
@@ -62,10 +66,14 @@ export default function ProductDetail({ product, related }: { product: Product; 
           </div>
 
           {/* price */}
-          <div className="mt-6 flex items-baseline gap-3">
-            <span className="text-3xl font-extrabold text-neon">{euro(price)}</span>
-            {product.compareAtPrice && size === product.sizesLiter[0] && (
-              <span className="text-lg text-zinc-600 line-through">{euro(product.compareAtPrice)}</span>
+          <div className="mt-6">
+            <PriceTag
+              base={basePrice}
+              compareAt={size === product.sizesLiter[0] ? product.compareAtPrice : undefined}
+              size="lg"
+            />
+            {isGarage && (
+              <p className="mt-1 text-xs text-zinc-500">{t("audience.bulkHint")}</p>
             )}
           </div>
 
@@ -99,7 +107,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
             </div>
             <button
               type="button"
-              onClick={() => add(product, size, qty)}
+              onClick={() => add(product, size, qty, price)}
               disabled={product.stock === 0}
               className="btn-neon flex-1"
             >
@@ -110,7 +118,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
           <button
             type="button"
             onClick={() => {
-              add(product, size, qty);
+              add(product, size, qty, price);
               setOpen(true);
             }}
             disabled={product.stock === 0}

@@ -5,9 +5,10 @@ import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
-import { euro } from "@/lib/format";
+import { useAudience } from "@/lib/audience";
 import { TAGLINES } from "@/lib/products";
 import OilBottle from "./OilBottle";
+import PriceTag from "./PriceTag";
 import { StarIcon, BoltIcon, CheckIcon } from "./icons";
 
 const BADGE_STYLE: Record<string, string> = {
@@ -20,6 +21,7 @@ const BADGE_STYLE: Record<string, string> = {
 export default function ProductCard({ product }: { product: Product }) {
   const { t, locale } = useI18n();
   const { add } = useCart();
+  const { price } = useAudience();
   const [justAdded, setJustAdded] = useState(false);
 
   const badgeLabel: Record<string, string> = {
@@ -30,7 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   function quickAdd() {
-    add(product, product.sizesLiter[0], 1);
+    add(product, product.sizesLiter[0], 1, price(product.price));
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1400);
   }
@@ -85,12 +87,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="mt-auto flex items-end justify-between pt-4">
           <div>
             <p className="text-[11px] text-zinc-500">{t("product.from")}</p>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-lg font-extrabold text-neon">{euro(product.price)}</span>
-              {product.compareAtPrice && (
-                <span className="text-xs text-zinc-600 line-through">{euro(product.compareAtPrice)}</span>
-              )}
-            </div>
+            <PriceTag base={product.price} compareAt={product.compareAtPrice} size="sm" />
           </div>
           <button
             type="button"

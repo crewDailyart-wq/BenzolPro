@@ -230,7 +230,9 @@ export default function Checkout() {
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold leading-tight">{line.name}</p>
-                    <p className="text-xs text-zinc-500">{line.sizeLiter} {t("product.liter")}</p>
+                    <p className="text-xs text-zinc-500">
+                      {line.isBundle ? t("bundle.badge") : `${line.sizeLiter} ${t("product.liter")}`}
+                    </p>
                   </div>
                   <span className="text-sm font-bold">{euro(line.price * line.qty)}</span>
                 </div>

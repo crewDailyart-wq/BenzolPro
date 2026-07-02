@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
+import { useAudience } from "@/lib/audience";
 import { getProductBySlug } from "@/lib/products";
 import { formatPlate, isPlausiblePlate, normalizePlate } from "@/lib/rdw";
 import type { OilRecommendation } from "@/lib/types";
@@ -16,6 +17,7 @@ type Status = "idle" | "loading" | "done" | "error" | "invalid" | "notfound";
 export default function PlateLookup() {
   const { t } = useI18n();
   const { add } = useCart();
+  const { price } = useAudience();
   const [plate, setPlate] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<OilRecommendation | null>(null);
@@ -125,12 +127,12 @@ export default function PlateLookup() {
                         <p className="text-xs uppercase tracking-wide text-neon">{t("plate.recommendedOil")}</p>
                         <p className="text-lg font-bold">{product.name}</p>
                         <p className="text-sm text-zinc-400">{product.specs.slice(0, 3).join(" · ")}</p>
-                        <p className="mt-1 text-lg font-bold text-neon">{euro(product.price)}</p>
+                        <p className="mt-1 text-lg font-bold text-neon">{euro(price(product.price))}</p>
                       </div>
                       <div className="flex w-full flex-col gap-2 sm:w-auto">
                         <button
                           type="button"
-                          onClick={() => add(product, product.sizesLiter[0], 1)}
+                          onClick={() => add(product, product.sizesLiter[0], 1, price(product.price))}
                           className="btn-neon"
                         >
                           {t("product.quickBuy")}

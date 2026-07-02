@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/provider";
+import { AudienceProvider } from "@/lib/audience";
 import { CartProvider } from "@/lib/cart";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -37,12 +38,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen antialiased">
         <I18nProvider>
-          <CartProvider>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <CartDrawer />
-          </CartProvider>
+          <AudienceProvider>
+            <CartProvider>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+              <CartDrawer />
+            </CartProvider>
+          </AudienceProvider>
         </I18nProvider>
       </body>
     </html>

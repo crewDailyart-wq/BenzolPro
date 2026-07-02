@@ -19,7 +19,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviews: 214,
     bestFor: ["petrol", "modern", "winter"],
-    accent: "#d7ff00",
+    accent: "#f6d989",
     badge: "new",
     stock: 42,
   },
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviews: 168,
     bestFor: ["petrol", "diesel", "modern", "winter"],
-    accent: "#7bffb0",
+    accent: "#e8d9a0",
     stock: 30,
   },
   {
@@ -53,7 +53,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviews: 512,
     bestFor: ["petrol", "diesel", "modern"],
-    accent: "#d7ff00",
+    accent: "#e7b53c",
     badge: "bestseller",
     stock: 120,
   },
@@ -70,7 +70,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.8,
     reviews: 289,
     bestFor: ["diesel", "modern"],
-    accent: "#5ad1ff",
+    accent: "#5aa9d1",
     badge: "pro",
     stock: 64,
   },
@@ -88,7 +88,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     reviews: 638,
     bestFor: ["petrol", "diesel", "lpg", "performance"],
-    accent: "#d7ff00",
+    accent: "#e7b53c",
     badge: "bestseller",
     stock: 156,
   },
@@ -105,7 +105,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.7,
     reviews: 174,
     bestFor: ["petrol", "performance", "lpg"],
-    accent: "#ff8a3d",
+    accent: "#e08a3d",
     stock: 48,
   },
   {
@@ -122,7 +122,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.7,
     reviews: 421,
     bestFor: ["petrol", "diesel", "highMileage"],
-    accent: "#c9a227",
+    accent: "#b8873f",
     badge: "sale",
     stock: 200,
   },
@@ -139,7 +139,7 @@ export const PRODUCTS: Product[] = [
     rating: 4.6,
     reviews: 133,
     bestFor: ["petrol", "diesel", "highMileage", "lpg"],
-    accent: "#b06bff",
+    accent: "#a678e0",
     stock: 88,
   },
   {
@@ -155,7 +155,7 @@ export const PRODUCTS: Product[] = [
     rating: 5.0,
     reviews: 97,
     bestFor: ["petrol", "performance"],
-    accent: "#ff3d5a",
+    accent: "#e0455e",
     badge: "pro",
     stock: 26,
   },
@@ -193,6 +193,10 @@ export const TAGLINES: Record<string, Record<string, string>> = {
 
 export function getProductBySlug(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug);
+}
+
+export function getProductById(id: string): Product | undefined {
+  return PRODUCTS.find((p) => p.id === id);
 }
 
 export function getProductsByViscosity(v: Viscosity): Product[] {

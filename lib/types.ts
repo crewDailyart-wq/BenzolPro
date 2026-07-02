@@ -26,11 +26,15 @@ export interface CartLine {
   productId: string;
   slug: string;
   name: string;
-  viscosity: Viscosity;
+  viscosity: Viscosity | string;
   sizeLiter: number;
   price: number;
   qty: number;
   accent: string;
+  /** true for bundle lines which always ship free */
+  alwaysFreeShip?: boolean;
+  /** true when this line represents a bundle rather than a single product */
+  isBundle?: boolean;
 }
 
 export interface RdwVehicle {

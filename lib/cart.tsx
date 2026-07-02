@@ -15,7 +15,8 @@ interface CartContextValue {
   total: number;
   isOpen: boolean;
   setOpen: (open: boolean) => void;
-  add: (product: Product, sizeLiter: number, qty?: number) => void;
+  add: (product: Product, sizeLiter: number, qty?: number, unitPrice?: number) => void;
+  addLine: (line: CartLine) => void;
   remove: (productId: string, sizeLiter: number) => void;
   setQty: (productId: string, sizeLiter: number, qty: number) => void;
   clear: () => void;
@@ -53,13 +54,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [lines, hydrated]);
 
-  const add = useCallback((product: Product, sizeLiter: number, qty = 1) => {
+  const add = useCallback((product: Product, sizeLiter: number, qty = 1, unitPrice?: number) => {
     setLines((prev) => {
       const key = lineKey(product.id, sizeLiter);
       const existing = prev.find((l) => lineKey(l.productId, l.sizeLiter) === key);
+      const price = unitPrice ?? priceForSize(product.price, product.sizesLiter[0], sizeLiter);
       if (existing) {
         return prev.map((l) =>
-          lineKey(l.productId, l.sizeLiter) === key ? { ...l, qty: l.qty + qty } : l,
+          lineKey(l.productId, l.sizeLiter) === key ? { ...l, qty: l.qty + qty, price } : l,
         );
       }
       const line: CartLine = {
@@ -68,10 +70,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         name: product.name,
         viscosity: product.viscosity,
         sizeLiter,
-        price: priceForSize(product.price, product.sizesLiter[0], sizeLiter),
+        price,
         qty,
         accent: product.accent,
       };
+      return [...prev, line];
+    });
+    setOpen(true);
+  }, []);
+
+  const addLine = useCallback((line: CartLine) => {
+    setLines((prev) => {
+      const key = lineKey(line.productId, line.sizeLiter);
+      const existing = prev.find((l) => lineKey(l.productId, l.sizeLiter) === key);
+      if (existing) {
+        return prev.map((l) =>
+          lineKey(l.productId, l.sizeLiter) === key ? { ...l, qty: l.qty + line.qty } : l,
+        );
+      }
       return [...prev, line];
     });
     setOpen(true);
@@ -95,12 +111,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const subtotal = useMemo(() => lines.reduce((s, l) => s + l.price * l.qty, 0), [lines]);
   const count = useMemo(() => lines.reduce((s, l) => s + l.qty, 0), [lines]);
-  const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_COST;
+  const hasFreeShipLine = useMemo(() => lines.some((l) => l.alwaysFreeShip), [lines]);
+  const shipping =
+    subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD || hasFreeShipLine ? 0 : SHIPPING_COST;
   const total = subtotal + shipping;
 
   const value = useMemo<CartContextValue>(
-    () => ({ lines, count, subtotal, shipping, total, isOpen, setOpen, add, remove, setQty, clear }),
-    [lines, count, subtotal, shipping, total, isOpen, add, remove, setQty, clear],
+    () => ({ lines, count, subtotal, shipping, total, isOpen, setOpen, add, addLine, remove, setQty, clear }),
+    [lines, count, subtotal, shipping, total, isOpen, add, addLine, remove, setQty, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

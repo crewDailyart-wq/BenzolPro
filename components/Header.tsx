@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Logo from "./Logo";
 import LanguageSwitcher from "./LanguageSwitcher";
+import AudienceToggle from "./AudienceToggle";
 import { CartIcon, MenuIcon, CloseIcon, CarIcon } from "./icons";
 import { useCart } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
@@ -15,8 +16,9 @@ export default function Header() {
 
   const nav = [
     { href: "/products", label: t("nav.products") },
-    { href: "/#plate", label: t("nav.findOil") },
-    { href: "/#why", label: t("nav.how") },
+    { href: "/#bundels", label: t("bundle.nav") },
+    { href: "/#garages", label: t("garages.nav") },
+    { href: "/#faq", label: t("faq.nav") },
   ];
 
   return (
@@ -38,6 +40,9 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
+          <div className="hidden lg:block">
+            <AudienceToggle />
+          </div>
           <div className="hidden sm:block">
             <LanguageSwitcher compact />
           </div>
@@ -89,6 +94,9 @@ export default function Header() {
               <CarIcon width={18} height={18} />
               {t("nav.findOil")}
             </Link>
+            <div className="mt-3">
+              <AudienceToggle className="w-full" />
+            </div>
             <div className="mt-3">
               <LanguageSwitcher />
             </div>

@@ -78,7 +78,13 @@ export default function CartDrawer() {
                       <div>
                         <p className="text-sm font-semibold leading-tight">{line.name}</p>
                         <p className="text-xs text-zinc-500">
-                          {line.sizeLiter} {t("product.liter")}
+                          {line.isBundle ? (
+                            <span className="text-neon">{t("bundle.badge")} · {t("cart.free")} ✈</span>
+                          ) : (
+                            <>
+                              {line.sizeLiter} {t("product.liter")}
+                            </>
+                          )}
                         </p>
                       </div>
                       <button

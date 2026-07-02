@@ -21,7 +21,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Thin neon scrollbar */
+/* Thin gold scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -30,15 +30,15 @@ body {
   background: #0a0a0b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #26262b;
+  background: #2c2a22;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d7ff00;
+  background: #e7b53c;
 }
 
 ::selection {
-  background: #d7ff00;
+  background: #e7b53c;
   color: #0a0a0b;
 }
 
@@ -68,7 +68,7 @@ body {
   }
 }
 
-/* Dutch-style license plate */
+/* Dutch-style license plate (kept authentic yellow) */
 .plate {
   background: linear-gradient(180deg, #ffdd00 0%, #ffcf00 100%);
   color: #0a0a0b;
@@ -80,10 +80,47 @@ body {
 }
 
 .text-glow {
-  text-shadow: 0 0 24px rgba(215, 255, 0, 0.45);
+  text-shadow: 0 0 24px rgba(231, 181, 60, 0.45);
+}
+
+/* Metallic gold text (animated sheen) */
+.text-gold-metal {
+  background: linear-gradient(100deg, #b78a2b 0%, #f6d989 25%, #fffdf5 50%, #f6d989 75%, #b78a2b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-pan 5s linear infinite;
+}
+
+/* fade-in on scroll reveal (used with IntersectionObserver .is-visible) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* marquee track */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 
 .animate-delay-1 { animation-delay: 0.08s; }
 .animate-delay-2 { animation-delay: 0.16s; }
 .animate-delay-3 { animation-delay: 0.24s; }
 .animate-delay-4 { animation-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drive,
+  .animate-float,
+  .animate-marquee,
+  .text-gold-metal {
+    animation: none !important;
+  }
+}

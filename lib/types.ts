@@ -20,6 +20,9 @@ export interface Product {
   accent: string; // hex accent for the bottle visual
   badge?: "bestseller" | "new" | "sale" | "pro";
   stock: number;
+  /** Optional real product photo path (e.g. "/products/benzol-prime-5w30.jpg").
+   *  When absent, the generated SVG bottle visual is used instead. */
+  image?: string;
 }
 
 export interface CartLine {

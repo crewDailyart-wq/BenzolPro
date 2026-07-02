@@ -6,11 +6,18 @@ export function euro(amount: number): string {
   }).format(amount);
 }
 
-/** Derive a bottle-size price from the base (1L) price with a bulk discount for 5L. */
+/**
+ * Derive a bottle/drum-size price from the base (smallest) size price, with
+ * steeper per-litre discounts the larger the container — mirroring how
+ * garages buy in bulk (a 208L drum is far cheaper per litre than a 1L can).
+ */
 export function priceForSize(basePrice: number, baseSize: number, size: number): number {
   if (size === baseSize) return basePrice;
   const perLitre = basePrice / baseSize;
-  // 5L (and larger) gets ~12% bulk discount
-  const bulkFactor = size >= 5 ? 0.88 : 1;
+  let bulkFactor = 1;
+  if (size >= 208) bulkFactor = 0.62;
+  else if (size >= 60) bulkFactor = 0.72;
+  else if (size >= 20) bulkFactor = 0.8;
+  else if (size >= 5) bulkFactor = 0.88;
   return Math.round(perLitre * size * bulkFactor * 100) / 100;
 }

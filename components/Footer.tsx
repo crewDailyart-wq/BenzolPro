@@ -14,22 +14,23 @@ export default function Footer() {
       links: [
         { label: t("footer.allProducts"), href: "/products" },
         { label: t("footer.bestsellers"), href: "/products?sort=popular" },
+        { label: t("bundle.nav"), href: "/bundels" },
         { label: t("footer.findOil"), href: "/#plate" },
       ],
     },
     {
-      title: t("footer.company"),
+      title: t("garages.nav"),
       links: [
-        { label: t("footer.about"), href: "/#why" },
-        { label: t("footer.sustainability"), href: "/#why" },
-        { label: t("footer.contact"), href: "/#plate" },
+        { label: t("quote.title"), href: "/offerte" },
+        { label: t("audience.garage"), href: "/#garages" },
+        { label: t("nav.certificates"), href: "/certificaten" },
       ],
     },
     {
       title: t("footer.support"),
       links: [
         { label: t("footer.shipping"), href: "/#why" },
-        { label: t("footer.faq"), href: "/#why" },
+        { label: t("faq.nav"), href: "/#faq" },
         { label: t("footer.terms"), href: "/#why" },
       ],
     },

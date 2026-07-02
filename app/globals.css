@@ -68,17 +68,6 @@ body {
   }
 }
 
-/* Dutch-style license plate (kept authentic yellow) */
-.plate {
-  background: linear-gradient(180deg, #ffdd00 0%, #ffcf00 100%);
-  color: #0a0a0b;
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  border: 2px solid #0a0a0b;
-  box-shadow: 0 4px 20px -6px rgba(255, 207, 0, 0.5);
-}
-
 .text-glow {
   text-shadow: 0 0 24px rgba(231, 181, 60, 0.45);
 }

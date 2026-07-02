@@ -6,6 +6,7 @@ import { CartProvider } from "@/lib/cart";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import ChatWidget from "@/components/ChatWidget";
 
 export const metadata: Metadata = {
   title: "BenzolPro — Premium motorolie, direct de juiste keuze",
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <main>{children}</main>
               <Footer />
               <CartDrawer />
+              <ChatWidget />
             </CartProvider>
           </AudienceProvider>
         </I18nProvider>

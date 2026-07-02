@@ -7,9 +7,9 @@ import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
 import { TAGLINES } from "@/lib/products";
-import OilBottle from "./OilBottle";
+import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
-import { StarIcon, BoltIcon, CheckIcon } from "./icons";
+import { StarIcon, BoltIcon, CheckIcon, TruckIcon, PackageIcon } from "./icons";
 
 const BADGE_STYLE: Record<string, string> = {
   bestseller: "bg-neon text-ink",
@@ -58,7 +58,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-ink-soft to-ink">
           <div className="absolute inset-0 bg-grid-neon [background-size:22px_22px] opacity-40" />
           <div className="relative h-full w-full p-6 transition duration-500 group-hover:scale-105">
-            <OilBottle accent={product.accent} viscosity={product.viscosity} className="h-full w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]" />
+            <ProductVisual product={product} className="h-full w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]" />
           </div>
         </div>
       </Link>
@@ -84,7 +84,11 @@ export default function ProductCard({ product }: { product: Product }) {
           ))}
         </div>
 
-        <div className="mt-auto flex items-end justify-between pt-4">
+        <p className="mt-2 flex items-center gap-1 text-[11px] font-medium text-emerald-400">
+          <TruckIcon width={13} height={13} /> {t("product.freeShipBadge")}
+        </p>
+
+        <div className="mt-auto flex items-end justify-between pt-3">
           <div>
             <p className="text-[11px] text-zinc-500">{t("product.from")}</p>
             <PriceTag base={product.price} compareAt={product.compareAtPrice} size="sm" />
@@ -100,6 +104,13 @@ export default function ProductCard({ product }: { product: Product }) {
             {justAdded ? <CheckIcon width={20} height={20} /> : <BoltIcon width={20} height={20} />}
           </button>
         </div>
+
+        <Link
+          href="/bundels"
+          className="mt-2 flex items-center justify-center gap-1.5 rounded-full border border-azure/40 bg-azure/5 py-2 text-xs font-semibold text-azure transition hover:bg-azure/15"
+        >
+          <PackageIcon width={14} height={14} /> {t("product.bundleCta")}
+        </Link>
       </div>
     </div>
   );

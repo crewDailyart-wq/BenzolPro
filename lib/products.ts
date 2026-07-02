@@ -2,7 +2,14 @@ import type { Product, Viscosity } from "./types";
 
 /**
  * Sample Benzol catalog. Prices are for the first (default) size in `sizesLiter`;
- * other sizes are derived with a simple per-litre scaling in the UI.
+ * other sizes (including bulk drums for garages: 20L / 60L / 208L) are derived
+ * with tiered per-litre discounts — see `priceForSize` in lib/format.ts.
+ *
+ * Eigen productfoto's toevoegen: zet een afbeelding (bijv. .jpg of .png) in
+ * de map `public/products/`, en voeg op het product hieronder een regel toe:
+ *   image: "/products/<bestandsnaam>.jpg"
+ * Zonder dit veld wordt automatisch de gegenereerde flesillustratie getoond.
+ * Zie ook README.md → "Eigen productfoto's toevoegen".
  */
 export const PRODUCTS: Product[] = [
   {
@@ -13,7 +20,7 @@ export const PRODUCTS: Product[] = [
     category: "fullSynthetic",
     tagline: "hybridReady",
     specs: ["ACEA C5", "API SP", "Honda / Toyota HV"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 16.95,
     compareAtPrice: 19.95,
     rating: 4.9,
@@ -31,7 +38,7 @@ export const PRODUCTS: Product[] = [
     category: "fullSynthetic",
     tagline: "maxEfficiency",
     specs: ["ACEA C2", "API SN", "PSA B71 2312"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 17.5,
     rating: 4.8,
     reviews: 168,
@@ -47,7 +54,7 @@ export const PRODUCTS: Product[] = [
     category: "fullSynthetic",
     tagline: "everydayHero",
     specs: ["ACEA C3", "API SN", "VW 504.00/507.00", "MB 229.51"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 14.95,
     compareAtPrice: 17.95,
     rating: 4.9,
@@ -65,7 +72,7 @@ export const PRODUCTS: Product[] = [
     category: "fullSynthetic",
     tagline: "dpfSafe",
     specs: ["ACEA C3", "API CF", "BMW LL-04", "dexos2"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 15.5,
     rating: 4.8,
     reviews: 289,
@@ -82,7 +89,7 @@ export const PRODUCTS: Product[] = [
     category: "fullSynthetic",
     tagline: "allRound",
     specs: ["ACEA A3/B4", "API SN/CF", "VW 502.00/505.00", "MB 229.5"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 13.95,
     compareAtPrice: 16.5,
     rating: 4.9,
@@ -100,7 +107,7 @@ export const PRODUCTS: Product[] = [
     category: "fullSynthetic",
     tagline: "turboProtect",
     specs: ["ACEA A3/B4", "API SP", "Porsche A40", "RN0710"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 15.95,
     rating: 4.7,
     reviews: 174,
@@ -116,7 +123,7 @@ export const PRODUCTS: Product[] = [
     category: "syntheticBlend",
     tagline: "highMileage",
     specs: ["ACEA A3/B4", "API SL/CF", "MB 229.1"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 9.95,
     compareAtPrice: 12.95,
     rating: 4.7,
@@ -134,7 +141,7 @@ export const PRODUCTS: Product[] = [
     category: "syntheticBlend",
     tagline: "sealCare",
     specs: ["ACEA A3/B3", "API SL", "High-mileage additive"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 10.5,
     rating: 4.6,
     reviews: 133,
@@ -150,7 +157,7 @@ export const PRODUCTS: Product[] = [
     category: "racing",
     tagline: "trackReady",
     specs: ["ACEA A3/B4", "API SN", "BMW M-Power", "Ester tech"],
-    sizesLiter: [1, 5],
+    sizesLiter: [1, 5, 20, 60, 208],
     price: 22.95,
     rating: 5.0,
     reviews: 97,
@@ -176,6 +183,10 @@ export const PRODUCTS: Product[] = [
     stock: 34,
   },
 ];
+
+// Work oil is already primarily sold in bulk — extend it with drum sizes too.
+const work = PRODUCTS.find((p) => p.id === "p-work-15w40");
+if (work) work.sizesLiter = [5, 20, 60, 208];
 
 /** Product taglines (short marketing lines). Kept here so they can be localized later. */
 export const TAGLINES: Record<string, Record<string, string>> = {

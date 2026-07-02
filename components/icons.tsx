@@ -165,3 +165,68 @@ export const PlusMinIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M12 5v14M5 12h14" />
   </svg>
 );
+
+export const ChatIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M4 5h16v11H9l-4 4V5z" />
+    <path d="M8 9h8M8 12.5h5" />
+  </svg>
+);
+
+export const CertificateIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="9" r="6" />
+    <path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7" />
+    <path d="m9.5 9 1.7 1.7L14.7 7" />
+  </svg>
+);
+
+export const ClipboardIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="6" y="4" width="12" height="17" rx="2" />
+    <rect x="9" y="2.5" width="6" height="3" rx="1" />
+    <path d="M9 11h6M9 14.5h6M9 18h3.5" />
+  </svg>
+);
+
+export const DropIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 3c3.5 4.2 6 7.6 6 10.5a6 6 0 1 1-12 0C6 10.6 8.5 7.2 12 3z" />
+  </svg>
+);
+
+export const UploadIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M12 15V4M8 8l4-4 4 4" />
+    <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+  </svg>
+);
+
+export const FileIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
+    <path d="M14 3v4h4" />
+  </svg>
+);
+
+export const SendIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <path d="M4 12 20 4l-6 16-3-7-7-1z" />
+  </svg>
+);
+
+export const ImageIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <circle cx="8.5" cy="9.5" r="1.7" />
+    <path d="m4 17 5-5 4 4 3-3 4 4" />
+  </svg>
+);
+
+export const BuildingIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}>
+    <rect x="5" y="3" width="9" height="18" rx="1" />
+    <rect x="15" y="9" width="5" height="12" rx="1" />
+    <path d="M8 7h1M11 7h1M8 11h1M11 11h1M8 15h1M11 15h1" />
+  </svg>
+);

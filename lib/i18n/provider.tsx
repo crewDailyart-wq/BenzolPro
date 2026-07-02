@@ -1,19 +1,16 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { DEFAULT_LOCALE, isLocale, LOCALE_META, type Locale } from "./config";
+import React, { createContext, useCallback, useContext, useMemo } from "react";
+import { DEFAULT_LOCALE, type Locale } from "./config";
 import { DICTIONARIES } from "./dictionaries";
 
 interface I18nContextValue {
   locale: Locale;
   dir: "ltr" | "rtl";
-  setLocale: (l: Locale) => void;
   t: (key: string, vars?: Record<string, string | number>) => string;
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null);
-
-const STORAGE_KEY = "benzolpro.locale";
 
 function resolve(dict: unknown, key: string): string {
   const parts = key.split(".");
@@ -28,40 +25,18 @@ function resolve(dict: unknown, key: string): string {
   return typeof current === "string" ? current : key;
 }
 
+/**
+ * The shop is Dutch-only by product decision (no visible language switcher).
+ * The dictionary/translation architecture is kept intact under the hood so a
+ * language switcher can be reintroduced later without a rewrite.
+ */
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
-
-  // Hydrate from storage / browser preference on mount
-  useEffect(() => {
-    const stored = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
-    if (stored && isLocale(stored)) {
-      setLocaleState(stored);
-      return;
-    }
-    const nav = typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "";
-    if (isLocale(nav)) setLocaleState(nav);
-  }, []);
-
-  // Keep <html lang/dir> in sync
-  useEffect(() => {
-    const meta = LOCALE_META[locale];
-    document.documentElement.lang = locale;
-    document.documentElement.dir = meta.dir;
-  }, [locale]);
-
-  const setLocale = useCallback((l: Locale) => {
-    setLocaleState(l);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, l);
-    } catch {
-      /* ignore */
-    }
-  }, []);
+  const locale = DEFAULT_LOCALE;
 
   const t = useCallback(
     (key: string, vars?: Record<string, string | number>) => {
       let str = resolve(DICTIONARIES[locale], key);
-      if (str === key) str = resolve(DICTIONARIES[DEFAULT_LOCALE], key); // graceful fallback to Dutch
+      if (str === key) str = resolve(DICTIONARIES[DEFAULT_LOCALE], key);
       if (vars) {
         for (const [k, v] of Object.entries(vars)) {
           str = str.replace(new RegExp(`\\{${k}\\}`, "g"), String(v));
@@ -72,10 +47,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     [locale],
   );
 
-  const value = useMemo<I18nContextValue>(
-    () => ({ locale, dir: LOCALE_META[locale].dir, setLocale, t }),
-    [locale, setLocale, t],
-  );
+  const value = useMemo<I18nContextValue>(() => ({ locale, dir: "ltr", t }), [locale, t]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }

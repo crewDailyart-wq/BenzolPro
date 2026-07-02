@@ -1,0 +1,27 @@
+Achtergrondafbeelding toevoegen aan de homepage (parallax)
+=============================================================
+
+De homepage heeft een parallax-scroll-achtergrond (zie
+components/ParallaxBackground.tsx). Je kunt daar je eigen afbeelding aan
+toevoegen:
+
+1. Zet een brede afbeelding (bijv. 1920x1080px of groter, JPG of PNG) in
+   deze map (public/) met de bestandsnaam:
+
+     hero-bg.jpg
+
+2. Klaar — de achtergrond gebruikt dit bestand automatisch zodra het
+   aanwezig is, met een donkere overlay (zodat tekst leesbaar blijft) en een
+   zacht parallax-effect terwijl je scrollt.
+
+3. Geen zin in een eigen afbeelding? Laat het bestand gewoon weg — dan blijft
+   de huidige animatie met goud/blauwe gloed en sterretjes gewoon zichtbaar
+   (er verschijnt geen kapot-plaatje-icoontje als hero-bg.jpg ontbreekt).
+
+Tip: gebruik een donkere of niet te drukke foto (bijv. een garage, motor,
+of asfalt bij nacht) zodat de gouden/blauwe teksten en knoppen goed
+leesbaar blijven.
+
+Productfoto's toevoegen
+=========================
+Zie public/products/LEES-MIJ.txt voor het toevoegen van foto's per product.

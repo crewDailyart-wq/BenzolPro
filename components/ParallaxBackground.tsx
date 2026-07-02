@@ -62,6 +62,15 @@ export default function ParallaxBackground() {
       {/* base tint */}
       <div className="absolute inset-0 bg-ink" />
 
+      {/* optional user background photo — drop public/hero-bg.jpg to enable it.
+          Safe if absent: a CSS background-image never shows a "broken image" icon. */}
+      <div
+        data-speed="0.08"
+        className="parallax-layer absolute inset-x-0 -top-24 h-[160%] bg-cover bg-center opacity-25"
+        style={{ backgroundImage: "url(/hero-bg.jpg)" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/75 to-ink" />
+
       {/* slow gold glow, top */}
       <div
         data-speed="0.12"

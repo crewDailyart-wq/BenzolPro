@@ -9,7 +9,8 @@ import { getProductBySlug } from "@/lib/products";
 import { formatPlate, isPlausiblePlate, normalizePlate } from "@/lib/rdw";
 import type { OilRecommendation } from "@/lib/types";
 import { euro } from "@/lib/format";
-import OilBottle from "./OilBottle";
+import ProductVisual from "./ProductVisual";
+import LicensePlate from "./LicensePlate";
 import { ArrowRight, CarIcon, CheckIcon, BoltIcon } from "./icons";
 
 type Status = "idle" | "loading" | "done" | "error" | "invalid" | "notfound";
@@ -57,14 +58,13 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-radial-neon opacity-60" />
         <div className="pointer-events-none absolute -bottom-20 -left-16 h-52 w-52 rounded-full bg-radial-azure opacity-70" />
 
-        <div className="relative">
-          <span className="chip"><CarIcon width={14} height={14} /> RDW</span>
+        <div className="relative flex h-full flex-col">
+          <span className="chip w-fit"><CarIcon width={14} height={14} /> RDW</span>
           <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{t("plate.title")}</h2>
           <p className="mt-1 text-sm text-zinc-400">{t("plate.subtitle")}</p>
 
           <form onSubmit={lookup} className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <div className="plate flex items-center gap-2 px-4 py-2 sm:min-w-[240px]">
-              <span className="hidden text-xs font-bold text-ink/70 sm:block">NL</span>
+            <LicensePlate size="lg" className="sm:min-w-[250px]">
               <input
                 value={plate}
                 onChange={(e) => {
@@ -74,9 +74,10 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
                 placeholder={t("plate.placeholder")}
                 aria-label="Kenteken"
                 maxLength={8}
-                className="w-full bg-transparent text-center text-xl font-extrabold uppercase tracking-widest text-ink placeholder:text-ink/40 outline-none"
+                className="w-full bg-transparent text-center text-2xl font-extrabold uppercase tracking-[0.12em] text-black placeholder:text-black/40 outline-none"
+                style={{ fontFamily: "var(--font-sans)" }}
               />
-            </div>
+            </LicensePlate>
             <button type="submit" className="btn-neon flex-1 sm:flex-none" disabled={status === "loading"}>
               {status === "loading" ? t("plate.loading") : t("plate.button")}
               {status !== "loading" && <ArrowRight width={18} height={18} />}
@@ -99,7 +100,11 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
           {status === "done" && result && (
             <div className="mt-6 animate-fade-up rounded-2xl border border-ink-line bg-ink-soft p-5">
               <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-300">
-                <span className="plate px-2 py-0.5 text-xs">{formatPlate(result.vehicle.plate)}</span>
+                <LicensePlate size="sm">
+                  <span className="text-[11px] font-extrabold tracking-widest text-black">
+                    {formatPlate(result.vehicle.plate)}
+                  </span>
+                </LicensePlate>
                 <span className="font-semibold text-zinc-100">
                   {result.vehicle.make} {result.vehicle.model}
                 </span>
@@ -122,7 +127,7 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
                   {product && (
                     <div className="mt-4 flex flex-col items-center gap-4 rounded-xl border border-ink-line bg-ink p-4 sm:flex-row">
                       <div className="h-24 w-24 shrink-0">
-                        <OilBottle accent={product.accent} viscosity={product.viscosity} className="h-full w-full" />
+                        <ProductVisual product={product} className="h-full w-full" />
                       </div>
                       <div className="flex-1 text-center sm:text-start">
                         <p className="text-xs uppercase tracking-wide text-neon">{t("plate.recommendedOil")}</p>
@@ -156,7 +161,7 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
             </div>
           )}
 
-          <p className="mt-4 text-xs text-zinc-600">
+          <p className="mt-auto pt-4 text-xs text-zinc-600">
             {t("footer.disclaimer")}
           </p>
         </div>

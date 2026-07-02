@@ -9,11 +9,12 @@ interface PriceTagProps {
   base: number;
   /** optional consumer "was" price */
   compareAt?: number;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   className?: string;
 }
 
 const SIZE: Record<string, string> = {
+  xs: "text-sm",
   sm: "text-lg",
   md: "text-xl",
   lg: "text-3xl",

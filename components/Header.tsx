@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import Logo from "./Logo";
-import LanguageSwitcher from "./LanguageSwitcher";
 import AudienceToggle from "./AudienceToggle";
 import { CartIcon, MenuIcon, CloseIcon, CarIcon } from "./icons";
 import { useCart } from "@/lib/cart";
@@ -16,8 +15,9 @@ export default function Header() {
 
   const nav = [
     { href: "/products", label: t("nav.products") },
-    { href: "/#bundels", label: t("bundle.nav") },
+    { href: "/bundels", label: t("bundle.nav") },
     { href: "/#garages", label: t("garages.nav") },
+    { href: "/certificaten", label: t("nav.certificates") },
     { href: "/#faq", label: t("faq.nav") },
   ];
 
@@ -26,7 +26,7 @@ export default function Header() {
       <div className="section-pad flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-8">
           <Logo />
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {nav.map((item) => (
               <Link
                 key={item.href}
@@ -42,9 +42,6 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <div className="hidden lg:block">
             <AudienceToggle />
-          </div>
-          <div className="hidden sm:block">
-            <LanguageSwitcher compact />
           </div>
 
           <button
@@ -64,7 +61,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setMobileOpen((o) => !o)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-ink-line text-zinc-200 md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-ink-line text-zinc-200 lg:hidden"
             aria-label={t("common.menu")}
             aria-expanded={mobileOpen}
           >
@@ -74,7 +71,7 @@ export default function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-ink-line bg-ink md:hidden">
+        <div className="border-t border-ink-line bg-ink lg:hidden">
           <nav className="section-pad flex flex-col gap-1 py-4">
             {nav.map((item) => (
               <Link
@@ -96,9 +93,6 @@ export default function Header() {
             </Link>
             <div className="mt-3">
               <AudienceToggle className="w-full" />
-            </div>
-            <div className="mt-3">
-              <LanguageSwitcher />
             </div>
           </nav>
         </div>

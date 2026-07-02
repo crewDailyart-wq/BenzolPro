@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useI18n } from "@/lib/i18n/provider";
 import { useAudience } from "@/lib/audience";
-import { WrenchIcon, StarIcon, ShieldIcon, TruckIcon, ArrowRight } from "./icons";
+import { WrenchIcon, StarIcon, ShieldIcon, TruckIcon, ArrowRight, ClipboardIcon } from "./icons";
 
 const GARAGES = [
   "AutoService Jansen",
@@ -77,15 +78,20 @@ export default function TrustedGarages() {
               <h3 className="text-xl font-bold sm:text-2xl">{t("garages.ctaTitle")}</h3>
               <p className="mt-1 max-w-lg text-sm text-zinc-400">{t("garages.ctaBody")}</p>
             </div>
-            <button
-              type="button"
-              onClick={() => setAudience("garage")}
-              className="btn-neon shrink-0"
-              disabled={isGarage}
-            >
-              {isGarage ? t("garages.ctaActive") : t("garages.ctaButton")}
-              {!isGarage && <ArrowRight width={18} height={18} />}
-            </button>
+            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => setAudience("garage")}
+                className="btn-neon"
+                disabled={isGarage}
+              >
+                {isGarage ? t("garages.ctaActive") : t("garages.ctaButton")}
+                {!isGarage && <ArrowRight width={18} height={18} />}
+              </button>
+              <Link href="/offerte" className="btn-ghost border-azure/40 text-azure hover:border-azure hover:text-azure">
+                <ClipboardIcon width={18} height={18} /> {t("nav.quote")}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

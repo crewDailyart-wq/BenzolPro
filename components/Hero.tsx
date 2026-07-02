@@ -20,9 +20,9 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* driving car across the top */}
+      {/* driving car, continuously cruising across the top */}
       <div className="relative h-0">
-        <DrivingCar className="top-3 hidden sm:block" />
+        <DrivingCar className="top-1 sm:top-3" />
       </div>
 
       <div className="section-pad relative pt-12 pb-14 lg:pt-16 lg:pb-20">

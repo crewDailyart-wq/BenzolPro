@@ -1,0 +1,27 @@
+Eigen productfoto's toevoegen
+==============================
+
+1. Zet je foto (JPG of PNG, bij voorkeur vierkant, min. 800x800px) in deze map.
+   Bijvoorbeeld: benzol-prime-5w30.jpg
+
+2. Open lib/products.ts en zoek het product op (bijv. "Benzol Prime 5W30").
+   Voeg een regel `image` toe met het pad naar je bestand:
+
+     {
+       id: "p-prime-5w30",
+       slug: "benzol-prime-5w30",
+       name: "Benzol Prime 5W30",
+       ...
+       image: "/products/benzol-prime-5w30.jpg",   <-- deze regel toevoegen
+     },
+
+3. Sla op en herstart (of herlaad) de website. De foto verschijnt automatisch
+   op de productkaart, de productpagina, de bestseller-uitlichting en in
+   bundeldeals. Zonder dit veld wordt automatisch de gegenereerde
+   flesillustratie getoond — er gaat dus nooit iets kapot als je geen foto
+   toevoegt of het pad een keer fout typt.
+
+Achtergrondafbeelding op de homepage (parallax-effect)
+========================================================
+Zie de map hierboven (public/) voor hero-bg.jpg — lees de instructies in
+public/LEES-MIJ.txt voor de achtergrondafbeelding van de homepage.

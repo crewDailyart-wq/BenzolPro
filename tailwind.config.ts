@@ -74,10 +74,10 @@ const config: Config = {
           "50%": { transform: "translateY(-14px) rotate(2deg)" },
         },
         drive: {
-          "0%": { transform: "translateX(-30vw)", opacity: "0" },
-          "8%": { opacity: "1" },
-          "92%": { opacity: "1" },
-          "100%": { transform: "translateX(130vw)", opacity: "0" },
+          "0%": { transform: "translateX(-32vw)", opacity: "0" },
+          "4%": { opacity: "1" },
+          "96%": { opacity: "1" },
+          "100%": { transform: "translateX(132vw)", opacity: "0" },
         },
         wheel: {
           "0%": { transform: "rotate(0deg)" },
@@ -105,7 +105,7 @@ const config: Config = {
         shimmer: "shimmer 2.5s linear infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         float: "float 6s ease-in-out infinite",
-        drive: "drive 5s cubic-bezier(0.4,0,0.5,1) 0.3s both",
+        drive: "drive 8s linear infinite",
         wheel: "wheel 0.6s linear infinite",
         marquee: "marquee 32s linear infinite",
         "gold-pan": "gold-pan 5s linear infinite",

@@ -68,7 +68,7 @@ export default function OfferteClient() {
     <div className="section-pad py-10">
       <div className="mx-auto max-w-2xl">
         <span className="chip"><BuildingIcon width={14} height={14} className="text-azure" /> {t("garages.badge")}</span>
-        <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{t("quote.title")}</h1>
+        <h1 className="text-azure-metal mt-3 text-3xl font-bold sm:text-4xl">{t("quote.title")}</h1>
         <p className="mt-2 text-zinc-400">{t("quote.subtitle")}</p>
 
         <form onSubmit={submit} className="card-surface mt-8 space-y-4 p-6 sm:p-8">

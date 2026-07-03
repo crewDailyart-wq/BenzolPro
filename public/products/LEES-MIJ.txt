@@ -11,7 +11,7 @@ Zet je foto (vierkant, min. 800x800px werkt het mooist) neer als:
   ---------------------------------------------------------------
   Benzol Ultra 0W20        -> benzol-ultra-0w20.jpg
   Benzol Eco 0W30          -> benzol-eco-0w30.jpg
-  Benzol Prime 5W30        -> benzol-prime-5w30.webp
+  Benzol Prime 5W30        -> benzol-prime-5w30.jpg
   Benzol DPF 5W30          -> benzol-dpf-5w30.jpg
   Benzol Synth 5W40        -> benzol-synth-5w40.jpg
   Benzol Turbo 5W40        -> benzol-turbo-5w40.jpg
@@ -20,12 +20,13 @@ Zet je foto (vierkant, min. 800x800px werkt het mooist) neer als:
   Benzol Race 10W60        -> benzol-race-10w60.jpg
   Benzol Work 15W40        -> benzol-work-15w40.jpg
 
-Let op: "Benzol Prime 5W30" verwacht een .webp bestand, alle andere
-verwachten .jpg. Let op: de extensie in de bestandsnaam moet ECHT bij het
-opgeslagen bestandstype horen (een PNG die je hernoemt naar .jpg werkt niet
-betrouwbaar). Wil je een ander formaat gebruiken? Pas dan in lib/products.ts
-de extensie in de regel `images: ["/products/<naam>.<extensie>"]` van dat
-product aan, zodat hij overeenkomt met je eigen bestand.
+Let op: de extensie in de bestandsnaam moet ECHT bij het opgeslagen
+bestandstype horen (een PNG die je hernoemt naar .jpg werkt niet
+betrouwbaar). Wil je een ander formaat gebruiken (.png, .webp, ...)? Pas dan
+in lib/products.ts de extensie in de regel
+`images: ["/products/<naam>.<extensie>"]` van dat product aan, zodat hij
+overeenkomt met je eigen bestand. Zowel .jpg, .jpeg, .png als .webp werken
+prima.
 
 Meerdere hoeken laten zien (foto-galerij met pijlknoppen)
 =============================================================

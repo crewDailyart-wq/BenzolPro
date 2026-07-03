@@ -79,7 +79,7 @@ export default function CertificatesClient() {
   return (
     <div className="section-pad py-10">
       <span className="chip"><CertificateIcon width={14} height={14} className="text-neon" /> {t("nav.certificates")}</span>
-      <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{t("certificates.title")}</h1>
+      <h1 className="text-azure-metal mt-3 text-3xl font-bold sm:text-4xl">{t("certificates.title")}</h1>
       <p className="mt-2 max-w-xl text-zinc-400">{t("certificates.subtitle")}</p>
 
       {/* official certificates */}

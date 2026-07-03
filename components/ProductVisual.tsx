@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Product } from "@/lib/types";
+import { resolveImages } from "@/lib/media";
 import OilBottle from "./OilBottle";
 
 /**
@@ -13,12 +14,22 @@ import OilBottle from "./OilBottle";
  */
 export default function ProductVisual({ product, className = "" }: { product: Product; className?: string }) {
   const [failed, setFailed] = useState(false);
-  const image = product.images?.[0];
+  const image = resolveImages(product)[0];
+
+  // Server-rendered <img> tags start loading as soon as the browser parses
+  // the HTML, before React hydrates and attaches onError — if the load
+  // already failed by then, that native error event is missed. This ref
+  // catches that case right on mount.
+  function checkAlreadyFailed(el: HTMLImageElement | null) {
+    if (el && el.complete && el.naturalWidth === 0) setFailed(true);
+  }
 
   if (image && !failed) {
     // eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos, no next/image domain config needed
     return (
       <img
+        key={image}
+        ref={checkAlreadyFailed}
         src={image}
         alt={product.name}
         className={`object-contain ${className}`}

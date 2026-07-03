@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BUNDLES, bundleOriginalPrice, type Bundle } from "@/lib/bundles";
+import { BUNDLES, bundleOriginalPrice, BADGE_LABEL, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { getProductById } from "@/lib/products";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
@@ -9,20 +9,6 @@ import { euro } from "@/lib/format";
 import type { CartLine } from "@/lib/types";
 import ProductVisual from "./ProductVisual";
 import { TruckIcon, CheckIcon, BoltIcon, SparkIcon } from "./icons";
-
-const BADGE_LABEL: Record<string, Record<string, string>> = {
-  popular: { nl: "Populair", en: "Popular", pl: "Popularne", ar: "شائع", tr: "Popüler" },
-  value: { nl: "Voordeel", en: "Best value", pl: "Najlepsza cena", ar: "أفضل قيمة", tr: "En avantajlı" },
-  garage: { nl: "Voor garages", en: "For garages", pl: "Dla warsztatów", ar: "للورش", tr: "Servisler için" },
-  performance: { nl: "Performance", en: "Performance", pl: "Performance", ar: "أداء", tr: "Performans" },
-};
-
-const GIFT_LABEL: Record<string, Record<string, string>> = {
-  funnel: { nl: "Gratis trechter", en: "Free funnel", pl: "Lejek gratis", ar: "قمع مجاني", tr: "Ücretsiz huni" },
-  gloves: { nl: "Gratis handschoenen", en: "Free gloves", pl: "Rękawice gratis", ar: "قفازات مجانية", tr: "Ücretsiz eldiven" },
-  drainpan: { nl: "Gratis opvangbak", en: "Free drain pan", pl: "Miska gratis", ar: "حوض تصريف مجاني", tr: "Ücretsiz tava" },
-  cap: { nl: "Gratis Benzol-cap", en: "Free Benzol cap", pl: "Czapka gratis", ar: "قبعة مجانية", tr: "Ücretsiz şapka" },
-};
 
 /** The reusable grid of bundle cards — used on the homepage section and the standalone /bundels page. */
 export default function BundleGrid({ productId }: { productId?: string }) {

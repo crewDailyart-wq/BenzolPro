@@ -1,27 +1,44 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import type { Product } from "@/lib/types";
+import { useEffect, useMemo, useRef, useState } from "react";
 import OilBottle from "./OilBottle";
 import { ArrowRight } from "./icons";
 
 /**
- * Product-detail image gallery: large photo with very visible prev/next
- * arrows, a clickable thumbnail strip below it, keyboard (←/→) and
- * touch-swipe support. Falls back to the generated SVG bottle if a product
- * has no photos, and silently skips any individual photo that fails to load.
+ * Image gallery: large photo with very visible prev/next arrows, a
+ * clickable thumbnail strip below it, keyboard (←/→) and touch-swipe
+ * support. Falls back to the generated SVG bottle if there are no photos,
+ * and silently skips any individual photo that fails to load.
+ *
+ * Generic over `images` (not tied to the Product type) so it can render
+ * either a product's photos or — in bundle-preview mode — a bundle's photos.
  */
 export default function ProductGallery({
-  product,
+  images: sourceImages,
+  name,
+  accent,
+  viscosity,
   imageClassName = "",
 }: {
-  product: Product;
+  images: string[];
+  name: string;
+  accent: string;
+  viscosity: string;
   imageClassName?: string;
 }) {
-  const allImages = useMemo(() => product.images ?? [], [product.images]);
+  // keyed by content, not array reference — callers like resolveImages()
+  // return a fresh array every render, which would otherwise reset state below on every parent re-render
+  const imagesKey = sourceImages.join("|");
+  const allImages = useMemo(() => sourceImages, [imagesKey]); // eslint-disable-line react-hooks/exhaustive-deps
   const [failed, setFailed] = useState<Set<number>>(new Set());
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
+
+  // reset to the first photo whenever the source list actually changes (e.g. switching into bundle preview)
+  useEffect(() => {
+    setIndex(0);
+    setFailed(new Set());
+  }, [imagesKey]);
 
   const images = allImages.filter((_, i) => !failed.has(i));
   const total = images.length;
@@ -39,7 +56,19 @@ export default function ProductGallery({
   }
   function markFailed(originalIndex: number) {
     if (originalIndex < 0) return;
-    setFailed((prev) => new Set(prev).add(originalIndex));
+    setFailed((prev) => (prev.has(originalIndex) ? prev : new Set(prev).add(originalIndex)));
+  }
+
+  /**
+   * Server-rendered <img> tags start loading as soon as the browser parses
+   * the HTML — before React hydrates and attaches the onError listener. If
+   * the load already failed by the time hydration commits, that native
+   * error event is missed. This ref catches that case on mount.
+   */
+  function checkAlreadyFailed(el: HTMLImageElement | null, src: string) {
+    if (el && el.complete && el.naturalWidth === 0) {
+      markFailed(allImages.indexOf(src));
+    }
   }
 
   function onKeyDown(e: React.KeyboardEvent) {
@@ -59,7 +88,7 @@ export default function ProductGallery({
   if (total === 0 || !current) {
     return (
       <div className="mx-auto aspect-square max-w-md">
-        <OilBottle accent={product.accent} viscosity={product.viscosity} className={`h-full w-full ${imageClassName}`} />
+        <OilBottle accent={accent} viscosity={viscosity} className={`h-full w-full ${imageClassName}`} />
       </div>
     );
   }
@@ -72,7 +101,7 @@ export default function ProductGallery({
         tabIndex={0}
         role="group"
         aria-roledescription="carousel"
-        aria-label={product.name}
+        aria-label={name}
         onKeyDown={onKeyDown}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
@@ -80,8 +109,9 @@ export default function ProductGallery({
         {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos */}
         <img
           key={current}
+          ref={(el) => checkAlreadyFailed(el, current)}
           src={current}
-          alt={`${product.name} — foto ${safeIndex + 1} van ${total}`}
+          alt={`${name} — foto ${safeIndex + 1} van ${total}`}
           className={`h-full w-full object-contain ${imageClassName}`}
           onError={() => markFailed(allImages.indexOf(current))}
         />
@@ -127,6 +157,7 @@ export default function ProductGallery({
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos */}
               <img
+                ref={(el) => checkAlreadyFailed(el, img)}
                 src={img}
                 alt=""
                 className="h-full w-full object-cover"

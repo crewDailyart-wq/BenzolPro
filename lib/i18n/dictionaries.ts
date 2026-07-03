@@ -110,6 +110,7 @@ const nl = {
     bundleCta: "Bekijk bundeldeals",
     freeShipBadge: "Gratis verzending vanaf €50",
     bulkTitle: "Ook beschikbaar in groothandelmaten",
+    backToProduct: "Terug naar los product",
   },
   bestFor: {
     petrol: "Benzine",
@@ -219,6 +220,7 @@ const nl = {
     pageTitle: "Alle bundeldeals",
     pageSubtitle: "Slim samengestelde pakketten — meer olie, minder betalen, altijd franco thuis.",
     perProductCta: "Bekijk bundels met dit product",
+    contains: "Deze bundel bevat",
   },
   certificates: {
     title: "Certificaten & kwaliteitsnormen",
@@ -390,6 +392,7 @@ const en: Dictionary = {
     bundleCta: "Bekijk bundeldeals",
     freeShipBadge: "Gratis verzending vanaf €50",
     bulkTitle: "Ook beschikbaar in groothandelmaten",
+    backToProduct: "Terug naar los product",
   },
   bestFor: {
     petrol: "Petrol",
@@ -494,6 +497,7 @@ const en: Dictionary = {
     pageTitle: "Alle bundeldeals",
     pageSubtitle: "Slim samengestelde pakketten — meer olie, minder betalen, altijd franco thuis.",
     perProductCta: "Bekijk bundels met dit product",
+    contains: "Deze bundel bevat",
   },
   certificates: {
     title: "Certificaten & kwaliteitsnormen",
@@ -658,6 +662,7 @@ const pl: Dictionary = {
     bundleCta: "Bekijk bundeldeals",
     freeShipBadge: "Gratis verzending vanaf €50",
     bulkTitle: "Ook beschikbaar in groothandelmaten",
+    backToProduct: "Terug naar los product",
   },
   bestFor: {
     petrol: "Benzyna",
@@ -762,6 +767,7 @@ const pl: Dictionary = {
     pageTitle: "Alle bundeldeals",
     pageSubtitle: "Slim samengestelde pakketten — meer olie, minder betalen, altijd franco thuis.",
     perProductCta: "Bekijk bundels met dit product",
+    contains: "Deze bundel bevat",
   },
   certificates: {
     title: "Certificaten & kwaliteitsnormen",
@@ -926,6 +932,7 @@ const ar: Dictionary = {
     bundleCta: "Bekijk bundeldeals",
     freeShipBadge: "Gratis verzending vanaf €50",
     bulkTitle: "Ook beschikbaar in groothandelmaten",
+    backToProduct: "Terug naar los product",
   },
   bestFor: {
     petrol: "بنزين",
@@ -1030,6 +1037,7 @@ const ar: Dictionary = {
     pageTitle: "Alle bundeldeals",
     pageSubtitle: "Slim samengestelde pakketten — meer olie, minder betalen, altijd franco thuis.",
     perProductCta: "Bekijk bundels met dit product",
+    contains: "Deze bundel bevat",
   },
   certificates: {
     title: "Certificaten & kwaliteitsnormen",
@@ -1194,6 +1202,7 @@ const tr: Dictionary = {
     bundleCta: "Bekijk bundeldeals",
     freeShipBadge: "Gratis verzending vanaf €50",
     bulkTitle: "Ook beschikbaar in groothandelmaten",
+    backToProduct: "Terug naar los product",
   },
   bestFor: {
     petrol: "Benzin",
@@ -1298,6 +1307,7 @@ const tr: Dictionary = {
     pageTitle: "Alle bundeldeals",
     pageSubtitle: "Slim samengestelde pakketten — meer olie, minder betalen, altijd franco thuis.",
     perProductCta: "Bekijk bundels met dit product",
+    contains: "Deze bundel bevat",
   },
   certificates: {
     title: "Certificaten & kwaliteitsnormen",

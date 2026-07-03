@@ -1,0 +1,34 @@
+Foto's voor bundeldeals toevoegen
+====================================
+
+Elke bundel in lib/bundles.ts verwijst al naar een bestandsnaam in deze map.
+Zet gewoon een foto neer met exact de juiste naam — geen code aanpassen
+nodig.
+
+  Bundel                       Bestandsnaam
+  ---------------------------------------------------------------------
+  Verversbeurt Compleet     -> verversbeurt-compleet.jpg
+  Winter Ready Pakket       -> winter-ready.jpg
+  Garage Bulk 3x5L          -> garage-bulk-synth.jpg
+  Performance Pakket        -> performance-pack.jpg
+
+Geen foto voor een bundel neergezet? Geen probleem: dan toont de site
+automatisch de foto's van de losse producten die in die bundel zitten (of,
+als die er ook niet zijn, de gegenereerde flesillustraties). Er verschijnt
+nooit een kapot plaatje.
+
+Wil je meerdere foto's per bundel (bijv. de doos + de losse flessen erin)?
+Voeg gewoon meerdere bestandsnamen toe aan de `images`-lijst van die bundel
+in lib/bundles.ts, net zoals bij producten:
+
+  images: [
+    "/products/bundles/verversbeurt-compleet.jpg",
+    "/products/bundles/verversbeurt-compleet-inhoud.jpg",
+  ],
+
+Waar wordt deze foto getoond?
+Als een bezoeker op een productpagina (bijv. Benzol Prime 5W30) op de
+bundeldeal-knop klikt, veranderen de foto's op diezelfde pagina automatisch
+naar de bundelfoto's hierboven (in plaats van naar de bundelpagina te
+navigeren). Ook op de bundeldeals-overzichtspagina (/bundels) en de
+bundel-sectie op de homepage.

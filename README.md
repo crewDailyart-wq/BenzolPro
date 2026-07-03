@@ -69,7 +69,28 @@ images: [
 
 Zodra een product 2 of meer foto's heeft, toont de productpagina automatisch een galerij: grote, duidelijk zichtbare pijlknoppen (links/rechts) om te wisselen, een klikbare miniaturenstrip om direct een hoek te kiezen, en ondersteuning voor pijltjestoetsen en swipen op mobiel (`components/ProductGallery.tsx`). Bij 1 foto verschijnt gewoon die ene foto zonder pijlen.
 
-Zie ook `public/products/LEES-MIJ.txt`.
+Werkt het pad niet? De code accepteert zowel `images: ["..."]` (een lijst) als een los `image: "..."` veld — welke vorm je ook gebruikt, hij wordt herkend. Zie ook `public/products/LEES-MIJ.txt`.
+
+### 📦 Foto's voor bundeldeals
+
+Elke bundel in `lib/bundles.ts` heeft ook een `images`-veld, met dezelfde padconventie maar in de submap `public/products/bundles/`:
+
+```ts
+images: ["/products/bundles/verversbeurt-compleet.jpg"],
+```
+
+| Bundel | Bestandsnaam |
+| --- | --- |
+| Verversbeurt Compleet | `verversbeurt-compleet.jpg` |
+| Winter Ready Pakket | `winter-ready.jpg` |
+| Garage Bulk 3×5L | `garage-bulk-synth.jpg` |
+| Performance Pakket | `performance-pack.jpg` |
+
+Zonder eigen bundelfoto vallen de bundelfoto's automatisch terug op de foto's van de losse producten die erin zitten. Zie ook `public/products/bundles/LEES-MIJ.txt`.
+
+### 🛍️ Bundeldeal direct op de productpagina bekijken
+
+Op elke productpagina (bijv. Benzol Prime 5W30) staat, direct naast de inhoud-/hoeveelheidsknoppen, een opvallende blauwe **bundeldeal-knop** wanneer dat product in een bundel zit. Een klik erop navigeert nergens heen — de foto's, prijs, inhoud en "In winkelwagen"-knop op diezelfde pagina veranderen direct naar die van de bundel. Zit een product in meerdere bundels, dan verschijnen er meerdere keuzeknoppen. Nogmaals klikken (of "Terug naar los product") zet alles terug.
 
 ## 🌌 Achtergrondafbeelding toevoegen (parallax)
 

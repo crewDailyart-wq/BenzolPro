@@ -83,6 +83,18 @@ body {
   animation: gold-pan 5s linear infinite;
 }
 
+/* Metallic azure-blue text (animated sheen) — used for subpage hero titles */
+.text-azure-metal {
+  background: linear-gradient(100deg, #2f7fd0 0%, #8fc7ff 25%, #ffffff 50%, #8fc7ff 75%, #2f7fd0 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-pan 5s linear infinite;
+  text-shadow: 0 0 26px rgba(77, 166, 255, 0.35);
+}
+
 /* fade-in on scroll reveal (used with IntersectionObserver .is-visible) */
 .reveal {
   opacity: 0;
@@ -139,7 +151,8 @@ body {
   .animate-twinkle,
   .animate-blue-sheen,
   .blue-sheen::after,
-  .text-gold-metal {
+  .text-gold-metal,
+  .text-azure-metal {
     animation: none !important;
   }
   .parallax-layer {

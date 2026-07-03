@@ -60,7 +60,7 @@ export default function Shop({ products, initialViscosity, initialSort }: ShopPr
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold sm:text-4xl">{t("filter.title")}</h1>
+        <h1 className="text-azure-metal text-3xl font-bold sm:text-4xl">{t("filter.title")}</h1>
         <p className="mt-2 text-zinc-400">{t("brand.tagline")}</p>
       </div>
 

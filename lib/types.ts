@@ -25,6 +25,10 @@ export interface Product {
    *  With 2+ entries the product page shows a gallery with arrows/thumbnails.
    *  When absent (or all fail to load), the generated SVG bottle is used instead. */
   images?: string[];
+  /** Legacy single-photo alias — also recognized if you (or an edit) sets a
+   *  single `image: "..."` instead of `images: [...]`. Use `resolveImages()`
+   *  from lib/media.ts to read either form; you don't need to set both. */
+  image?: string;
 }
 
 export interface CartLine {

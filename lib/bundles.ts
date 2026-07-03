@@ -1,6 +1,7 @@
 import type { Locale } from "./i18n/config";
 import { getProductById } from "./products";
 import { priceForSize } from "./format";
+import { resolveImages } from "./media";
 
 export interface BundleItem {
   productId: string;
@@ -19,7 +20,27 @@ export interface Bundle {
   gift?: string; // localized-later key handled in component copy
   name: Record<Locale, string>;
   desc: Record<Locale, string>;
+  /** Optional dedicated bundle photo(s), e.g. a shot of the whole pack.
+   *  Path convention: "/products/bundles/<slug>.jpg" (see LEES-MIJ.txt in
+   *  that folder). When absent, the gallery falls back to the photos of the
+   *  products included in the bundle. */
+  images?: string[];
+  image?: string;
 }
+
+export const GIFT_LABEL: Record<string, Record<string, string>> = {
+  funnel: { nl: "Gratis trechter", en: "Free funnel", pl: "Lejek gratis", ar: "قمع مجاني", tr: "Ücretsiz huni" },
+  gloves: { nl: "Gratis handschoenen", en: "Free gloves", pl: "Rękawice gratis", ar: "قفازات مجانية", tr: "Ücretsiz eldiven" },
+  drainpan: { nl: "Gratis opvangbak", en: "Free drain pan", pl: "Miska gratis", ar: "حوض تصريف مجاني", tr: "Ücretsiz tava" },
+  cap: { nl: "Gratis Benzol-cap", en: "Free Benzol cap", pl: "Czapka gratis", ar: "قبعة مجانية", tr: "Ücretsiz şapka" },
+};
+
+export const BADGE_LABEL: Record<string, Record<string, string>> = {
+  popular: { nl: "Populair", en: "Popular", pl: "Popularne", ar: "شائع", tr: "Popüler" },
+  value: { nl: "Voordeel", en: "Best value", pl: "Najlepsza cena", ar: "أفضل قيمة", tr: "En avantajlı" },
+  garage: { nl: "Voor garages", en: "For garages", pl: "Dla warsztatów", ar: "للورش", tr: "Servisler için" },
+  performance: { nl: "Performance", en: "Performance", pl: "Performance", ar: "أداء", tr: "Performans" },
+};
 
 export const BUNDLES: Bundle[] = [
   {
@@ -47,6 +68,7 @@ export const BUNDLES: Bundle[] = [
       ar: "5 لتر + 1 لتر Benzol Prime 5W30 — يكفي للتغيير مع احتياطي. قمع مجاني.",
       tr: "5L + 1L Benzol Prime 5W30 — değişim ve yedek için yeterli. Ücretsiz huni.",
     },
+    images: ["/products/bundles/verversbeurt-compleet.jpg"],
   },
   {
     id: "b-winter",
@@ -73,6 +95,7 @@ export const BUNDLES: Bundle[] = [
       ar: "2×5 لتر 5W30 للبنزين والديزل بفلتر DPF. تشغيل بارد مثالي. قفازات مجانية.",
       tr: "Benzin ve DPF dizel için 2×5L 5W30. Mükemmel soğuk çalıştırma. Ücretsiz eldiven.",
     },
+    images: ["/products/bundles/winter-ready.jpg"],
   },
   {
     id: "b-garage",
@@ -96,6 +119,7 @@ export const BUNDLES: Bundle[] = [
       ar: "3×5 لتر Benzol Synth 5W40 — حصان عمل الورشة. خصومات كمية إضافية متاحة.",
       tr: "3×5L Benzol Synth 5W40 — atölyenin yük beygiri. Ek hacim indirimleri mevcut.",
     },
+    images: ["/products/bundles/garage-bulk-synth.jpg"],
   },
   {
     id: "b-perf",
@@ -122,6 +146,7 @@ export const BUNDLES: Bundle[] = [
       ar: "5 لتر Race 10W60 + 1 لتر Turbo 5W40 للحلبة والمحركات الرياضية. قبعة Benzol مجانية.",
       tr: "Pist ve spor motorlar için 5L Race 10W60 + 1L Turbo 5W40. Ücretsiz Benzol şapka.",
     },
+    images: ["/products/bundles/performance-pack.jpg"],
   },
 ];
 
@@ -138,4 +163,19 @@ export function bundleOriginalPrice(bundle: Bundle): number {
 
 export function getBundleBySlug(slug: string): Bundle | undefined {
   return BUNDLES.find((b) => b.slug === slug);
+}
+
+/** All bundles that include the given product, in catalog order. */
+export function getBundlesForProduct(productId: string): Bundle[] {
+  return BUNDLES.filter((b) => b.items.some((it) => it.productId === productId));
+}
+
+/**
+ * Photos to show for a bundle: its own dedicated photo(s) if set, otherwise
+ * the photos of the products it contains (so the gallery is never empty).
+ */
+export function getBundleGalleryImages(bundle: Bundle): string[] {
+  const own = resolveImages(bundle);
+  if (own.length > 0) return own;
+  return bundle.items.flatMap((it) => resolveImages(getProductById(it.productId)));
 }

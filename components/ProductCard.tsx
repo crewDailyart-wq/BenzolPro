@@ -64,8 +64,10 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative block">
         <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-ink-soft to-ink">
           <div className="absolute inset-0 bg-grid-neon [background-size:22px_22px] opacity-40" />
-          <div className="relative h-full w-full p-6 transition duration-500 group-hover:scale-105">
-            <ProductVisual product={product} className="h-full w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]" />
+          {/* photo fills the whole tile (no letterbox borders); the card's
+              rounded top corners clip it. SVG-bottle fallback stays contained. */}
+          <div className="relative h-full w-full transition duration-500 group-hover:scale-105">
+            <ProductVisual product={product} cover className="h-full w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]" />
           </div>
         </div>
       </div>

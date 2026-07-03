@@ -60,14 +60,15 @@ export default function BestsellerSpotlight({
         <span className="animate-twinkle pointer-events-none absolute left-1/3 top-8 h-1.5 w-1.5 rounded-full bg-neon shadow-[0_0_10px_2px_rgba(246,217,137,0.6)] [animation-delay:0.7s]" />
 
         <div className="relative grid grow grid-cols-1 items-center gap-6 sm:grid-cols-2 sm:gap-8">
-          {/* floating bottle, big and central */}
-          <div className={`relative mx-auto w-full ${large ? "h-64 max-w-[280px] sm:h-96" : "h-56 max-w-[220px]"}`}>
-            <div className="absolute inset-x-6 bottom-3 h-6 rounded-[50%] bg-black/60 blur-md" />
+          {/* floating product visual, big and central — square frame so an
+              uploaded photo fills it completely (rounded corners, no borders) */}
+          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[320px]" : "max-w-[240px]"}`}>
             {/* soft blue ring behind bottle, gently pulsing */}
             <div className="animate-pulse-glow absolute inset-6 rounded-full bg-radial-azure opacity-90" />
-            <div className="animate-float relative h-full w-full">
+            <div className="animate-float relative h-full w-full overflow-hidden rounded-3xl">
               <ProductVisual
                 product={product}
+                cover
                 className="h-full w-full drop-shadow-[0_22px_54px_rgba(0,0,0,0.8)]"
               />
             </div>

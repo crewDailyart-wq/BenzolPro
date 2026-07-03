@@ -327,6 +327,8 @@ const nl = {
     listSubtitle: "Een greep uit de werkplaatsen die al op Benzol rijden.",
     countryNL: "Nederland",
     countryBE: "België",
+    mapTitle: "Overal in Nederland en België",
+    mapSubtitle: "Elke stip is een garage die met Benzol rijdt.",
   },
   faq: {
     nav: "FAQ",

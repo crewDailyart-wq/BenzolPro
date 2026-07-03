@@ -11,8 +11,20 @@ import OilBottle from "./OilBottle";
  * load. For a multi-photo gallery with navigation arrows, use
  * `ProductGallery` (used on the product detail page) instead.
  * See README.md ("Eigen productfoto's toevoegen") for how to add photos.
+ *
+ * `cover`: when true a real photo fills its frame edge-to-edge (object-cover,
+ * no letterbox borders) — used on the product cards and bestseller. The SVG
+ * bottle fallback always stays "contain" so the bottle is never cropped.
  */
-export default function ProductVisual({ product, className = "" }: { product: Product; className?: string }) {
+export default function ProductVisual({
+  product,
+  className = "",
+  cover = false,
+}: {
+  product: Product;
+  className?: string;
+  cover?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   const image = resolveImages(product)[0];
 
@@ -32,7 +44,7 @@ export default function ProductVisual({ product, className = "" }: { product: Pr
         ref={checkAlreadyFailed}
         src={image}
         alt={product.name}
-        className={`rounded-2xl object-contain ${className}`}
+        className={`${cover ? "h-full w-full object-cover" : "rounded-2xl object-contain"} ${className}`}
         onError={() => setFailed(true)}
         loading="lazy"
       />

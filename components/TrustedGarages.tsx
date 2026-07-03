@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useI18n } from "@/lib/i18n/provider";
 import { useAudience } from "@/lib/audience";
 import { GARAGES, getGarages, garageInitials, type Garage } from "@/lib/garages";
+import GarageMap from "./GarageMap";
 import { WrenchIcon, StarIcon, ShieldIcon, TruckIcon, ArrowRight, ClipboardIcon } from "./icons";
 
 /** Small logo (from public/garages/) or a lettered badge fallback. */
@@ -88,6 +89,9 @@ export default function TrustedGarages() {
           ))}
         </div>
       </div>
+
+      {/* map with a pin for every garage */}
+      <GarageMap />
 
       {/* full editable list, grouped by country */}
       <div className="section-pad mt-14">

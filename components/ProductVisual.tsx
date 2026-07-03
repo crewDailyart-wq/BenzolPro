@@ -32,7 +32,7 @@ export default function ProductVisual({ product, className = "" }: { product: Pr
         ref={checkAlreadyFailed}
         src={image}
         alt={product.name}
-        className={`object-contain ${className}`}
+        className={`rounded-2xl object-contain ${className}`}
         onError={() => setFailed(true)}
         loading="lazy"
       />

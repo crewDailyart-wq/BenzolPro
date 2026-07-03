@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import UspSection from "@/components/UspSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import BundleDeals from "@/components/BundleDeals";
+import ShippingInfo from "@/components/ShippingInfo";
 import TrustedGarages from "@/components/TrustedGarages";
 import FaqSection from "@/components/FaqSection";
 import { PRODUCTS } from "@/lib/products";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <BundleDeals />
       <FeaturedProducts products={list} />
       <UspSection />
+      <ShippingInfo />
       <TrustedGarages />
       <FaqSection />
     </>

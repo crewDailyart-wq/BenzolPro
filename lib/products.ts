@@ -5,12 +5,23 @@ import type { Product, Viscosity } from "./types";
  * other sizes (including bulk drums for garages: 20L / 60L / 208L) are derived
  * with tiered per-litre discounts — see `priceForSize` in lib/format.ts.
  *
- * Eigen productfoto's toevoegen: elk product hieronder heeft al een `image`-veld
+ * Eigen productfoto's toevoegen: elk product hieronder heeft al een `images`-veld
  * dat verwijst naar "/products/<slug>.jpg" (de slug staat in het veld ernaast).
  * Zet simpelweg een foto met exact die bestandsnaam in `public/products/` —
  * geen code aanpassen nodig. Bestaat het bestand niet, dan valt de site
  * automatisch terug op de gegenereerde flesillustratie (nooit een kapot
- * plaatje). Zie ook README.md → "Eigen productfoto's toevoegen".
+ * plaatje).
+ *
+ * Meerdere hoeken laten zien (bijv. voor-, achter- en zijkant)? Voeg gewoon
+ * extra bestandsnamen toe aan de array, bijvoorbeeld:
+ *   images: [
+ *     "/products/benzol-prime-5w30.jpg",
+ *     "/products/benzol-prime-5w30-achterkant.jpg",
+ *     "/products/benzol-prime-5w30-zijkant.jpg",
+ *   ],
+ * Zodra een product 2 of meer foto's heeft, verschijnt op de productpagina
+ * automatisch een galerij met grote pijlknoppen en miniaturen om te wisselen.
+ * Zie ook README.md → "Eigen productfoto's toevoegen".
  */
 export const PRODUCTS: Product[] = [
   {
@@ -30,7 +41,7 @@ export const PRODUCTS: Product[] = [
     accent: "#f6d989",
     badge: "new",
     stock: 42,
-    image: "/products/benzol-ultra-0w20.jpg",
+    images: ["/products/benzol-ultra-0w20.jpg"],
   },
   {
     id: "p-eco-0w30",
@@ -47,7 +58,7 @@ export const PRODUCTS: Product[] = [
     bestFor: ["petrol", "diesel", "modern", "winter"],
     accent: "#e8d9a0",
     stock: 30,
-    image: "/products/benzol-eco-0w30.jpg",
+    images: ["/products/benzol-eco-0w30.jpg"],
   },
   {
     id: "p-prime-5w30",
@@ -66,7 +77,7 @@ export const PRODUCTS: Product[] = [
     accent: "#e7b53c",
     badge: "bestseller",
     stock: 120,
-    image: "/products/benzol-prime-5w30.webp",
+    images: ["/products/benzol-prime-5w30.webp"],
   },
   {
     id: "p-diesel-5w30",
@@ -84,7 +95,7 @@ export const PRODUCTS: Product[] = [
     accent: "#5aa9d1",
     badge: "pro",
     stock: 64,
-    image: "/products/benzol-dpf-5w30.jpg",
+    images: ["/products/benzol-dpf-5w30.jpg"],
   },
   {
     id: "p-synth-5w40",
@@ -103,7 +114,7 @@ export const PRODUCTS: Product[] = [
     accent: "#e7b53c",
     badge: "bestseller",
     stock: 156,
-    image: "/products/benzol-synth-5w40.jpg",
+    images: ["/products/benzol-synth-5w40.jpg"],
   },
   {
     id: "p-turbo-5w40",
@@ -120,7 +131,7 @@ export const PRODUCTS: Product[] = [
     bestFor: ["petrol", "performance", "lpg"],
     accent: "#e08a3d",
     stock: 48,
-    image: "/products/benzol-turbo-5w40.jpg",
+    images: ["/products/benzol-turbo-5w40.jpg"],
   },
   {
     id: "p-classic-10w40",
@@ -139,7 +150,7 @@ export const PRODUCTS: Product[] = [
     accent: "#b8873f",
     badge: "sale",
     stock: 200,
-    image: "/products/benzol-classic-10w40.jpg",
+    images: ["/products/benzol-classic-10w40.jpg"],
   },
   {
     id: "p-guard-10w40",
@@ -156,7 +167,7 @@ export const PRODUCTS: Product[] = [
     bestFor: ["petrol", "diesel", "highMileage", "lpg"],
     accent: "#a678e0",
     stock: 88,
-    image: "/products/benzol-guard-10w40.jpg",
+    images: ["/products/benzol-guard-10w40.jpg"],
   },
   {
     id: "p-race-10w60",
@@ -174,7 +185,7 @@ export const PRODUCTS: Product[] = [
     accent: "#e0455e",
     badge: "pro",
     stock: 26,
-    image: "/products/benzol-race-10w60.jpg",
+    images: ["/products/benzol-race-10w60.jpg"],
   },
   {
     id: "p-work-15w40",
@@ -191,7 +202,7 @@ export const PRODUCTS: Product[] = [
     bestFor: ["diesel", "highMileage"],
     accent: "#8a8f98",
     stock: 34,
-    image: "/products/benzol-work-15w40.jpg",
+    images: ["/products/benzol-work-15w40.jpg"],
   },
 ];
 

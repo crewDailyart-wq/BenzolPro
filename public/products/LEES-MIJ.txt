@@ -21,19 +21,43 @@ Zet je foto (vierkant, min. 800x800px werkt het mooist) neer als:
   Benzol Work 15W40        -> benzol-work-15w40.jpg
 
 Let op: "Benzol Prime 5W30" verwacht een .webp bestand, alle andere
-verwachten .jpg. Wil je een ander formaat gebruiken (bijv. .png of .webp
-voor een ander product)? Pas dan in lib/products.ts de extensie in de
-regel `image: "/products/<naam>.<extensie>"` van dat product aan, zodat
-hij overeenkomt met je eigen bestand.
+verwachten .jpg. Let op: de extensie in de bestandsnaam moet ECHT bij het
+opgeslagen bestandstype horen (een PNG die je hernoemt naar .jpg werkt niet
+betrouwbaar). Wil je een ander formaat gebruiken? Pas dan in lib/products.ts
+de extensie in de regel `images: ["/products/<naam>.<extensie>"]` van dat
+product aan, zodat hij overeenkomt met je eigen bestand.
+
+Meerdere hoeken laten zien (foto-galerij met pijlknoppen)
+=============================================================
+Elk product heeft in lib/products.ts een `images`-veld — een LIJST van
+foto's, geen los veld. Voeg gewoon extra bestandsnamen toe aan die lijst om
+meerdere hoeken te tonen, bijvoorbeeld:
+
+  images: [
+    "/products/benzol-prime-5w30.jpg",
+    "/products/benzol-prime-5w30-achterkant.jpg",
+    "/products/benzol-prime-5w30-zijkant.jpg",
+    "/products/benzol-prime-5w30-etiket.jpg",
+  ],
+
+Zet die extra foto's ook gewoon in deze map (public/products/), met die
+exacte bestandsnamen. Zodra een product 2 of meer foto's heeft, verschijnt
+op de productpagina automatisch:
+  - grote, goed zichtbare pijlknoppen (links/rechts) om te wisselen
+  - een miniaturenstrip onder de hoofdfoto om direct een hoek te kiezen
+  - pijltjestoetsen (← →) en swipen op mobiel werken ook
+Bij 1 foto (of geen) verschijnt gewoon de normale enkele foto/illustratie
+zonder pijlen.
 
 Belangrijkste valkuil (Windows): bestandsnaamextensies zijn vaak verborgen
 in Verkenner, waardoor een bestand er uitziet als "foto.jpg" maar in
 werkelijkheid "foto.jpg.jpg" heet. Zet in Verkenner → Beeld →
 "Bestandsnaamextensies" aan om dit te controleren.
 
-Geen foto voor een product? Geen probleem — dan blijft automatisch de
-gegenereerde flesillustratie zichtbaar. Er verschijnt nooit een kapot
-plaatje-icoontje.
+Geen foto voor een product (of gaat er eentje niet laden)? Geen probleem —
+die specifieke foto wordt gewoon overgeslagen, en als er geen enkele foto
+overblijft valt de site terug op de gegenereerde flesillustratie. Er
+verschijnt nooit een kapot plaatje-icoontje.
 
 Achtergrondafbeelding op de homepage (parallax-effect)
 ========================================================

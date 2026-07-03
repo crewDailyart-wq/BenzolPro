@@ -5,18 +5,21 @@ import type { Product } from "@/lib/types";
 import OilBottle from "./OilBottle";
 
 /**
- * Renders a product's real photo when `product.image` is set, falling back
- * to the generated SVG bottle if there is no photo or it fails to load.
+ * Renders a product's first real photo when `product.images` is set, falling
+ * back to the generated SVG bottle if there are no photos or it fails to
+ * load. For a multi-photo gallery with navigation arrows, use
+ * `ProductGallery` (used on the product detail page) instead.
  * See README.md ("Eigen productfoto's toevoegen") for how to add photos.
  */
 export default function ProductVisual({ product, className = "" }: { product: Product; className?: string }) {
   const [failed, setFailed] = useState(false);
+  const image = product.images?.[0];
 
-  if (product.image && !failed) {
+  if (image && !failed) {
     // eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos, no next/image domain config needed
     return (
       <img
-        src={product.image}
+        src={image}
         alt={product.name}
         className={`object-contain ${className}`}
         onError={() => setFailed(true)}

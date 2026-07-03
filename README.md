@@ -47,14 +47,27 @@ npm run lint     # lint
 
 ## 🖼️ Eigen productfoto's toevoegen
 
-Standaard toont elk product een gegenereerde flesillustratie. Om een echte foto te gebruiken:
+Elk product in `lib/products.ts` heeft al een `images`-veld (een lijst) dat naar `/products/<slug>.jpg` wijst. Zet gewoon een foto met exact die bestandsnaam in `public/products/` — geen code aanpassen nodig:
 
-1. Zet een foto (JPG/PNG, bij voorkeur vierkant) in `public/products/`.
-2. Open `lib/products.ts`, zoek het product op en voeg een `image` regel toe:
-   ```ts
-   image: "/products/benzol-prime-5w30.jpg",
-   ```
-3. Klaar — de foto verschijnt overal (kaart, detailpagina, bestseller, bundels). Zonder dit veld (of als het bestand ontbreekt) valt de site automatisch terug op de flesillustratie.
+```ts
+images: ["/products/benzol-prime-5w30.jpg"],
+```
+
+Zonder een geldig bestand (of als het pad niet klopt) valt de site automatisch terug op de gegenereerde flesillustratie — er verschijnt nooit een kapot plaatje.
+
+### 📸 Meerdere hoeken tonen (foto-galerij met pijlknoppen)
+
+Voeg gewoon extra bestandsnamen toe aan dezelfde lijst:
+
+```ts
+images: [
+  "/products/benzol-prime-5w30.jpg",
+  "/products/benzol-prime-5w30-achterkant.jpg",
+  "/products/benzol-prime-5w30-zijkant.jpg",
+],
+```
+
+Zodra een product 2 of meer foto's heeft, toont de productpagina automatisch een galerij: grote, duidelijk zichtbare pijlknoppen (links/rechts) om te wisselen, een klikbare miniaturenstrip om direct een hoek te kiezen, en ondersteuning voor pijltjestoetsen en swipen op mobiel (`components/ProductGallery.tsx`). Bij 1 foto verschijnt gewoon die ene foto zonder pijlen.
 
 Zie ook `public/products/LEES-MIJ.txt`.
 

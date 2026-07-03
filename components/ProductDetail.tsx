@@ -9,6 +9,7 @@ import { useAudience } from "@/lib/audience";
 import { euro, priceForSize } from "@/lib/format";
 import { TAGLINES } from "@/lib/products";
 import ProductVisual from "./ProductVisual";
+import ProductGallery from "./ProductGallery";
 import PriceTag from "./PriceTag";
 import { StarIcon, CheckIcon, TruckIcon, ShieldIcon, ArrowRight, BoltIcon, CartIcon, PackageIcon } from "./icons";
 
@@ -36,12 +37,12 @@ export default function ProductDetail({ product, related }: { product: Product; 
       {/* main content (left) + related products beside it (right, sticky) */}
       <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_300px]">
         <div className="grid gap-10 lg:grid-cols-2">
-          {/* visual */}
-          <div className="relative overflow-hidden rounded-3xl border border-ink-line bg-gradient-to-b from-ink-soft to-ink">
+          {/* visual: gallery with arrows when the product has 2+ photos */}
+          <div className="relative overflow-hidden rounded-3xl border border-ink-line bg-gradient-to-b from-ink-soft to-ink p-6 sm:p-10">
             <div className="absolute inset-0 bg-grid-neon [background-size:28px_28px] opacity-30" />
             <div className="absolute inset-x-0 top-0 h-64 bg-radial-neon opacity-60" />
-            <div className="relative mx-auto aspect-square max-w-md p-10">
-              <ProductVisual product={product} className="h-full w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.7)]" />
+            <div className="relative">
+              <ProductGallery product={product} imageClassName="drop-shadow-[0_20px_50px_rgba(0,0,0,0.7)]" />
             </div>
           </div>
 

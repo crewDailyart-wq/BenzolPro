@@ -1,27 +1,40 @@
 Eigen productfoto's toevoegen
 ==============================
 
-1. Zet je foto (JPG of PNG, bij voorkeur vierkant, min. 800x800px) in deze map.
-   Bijvoorbeeld: benzol-prime-5w30.jpg
+Elk product in lib/products.ts verwijst al naar een bestandsnaam in deze map.
+Je hoeft dus GEEN code aan te passen — zet gewoon een foto neer met exact
+de juiste bestandsnaam en hij verschijnt automatisch.
 
-2. Open lib/products.ts en zoek het product op (bijv. "Benzol Prime 5W30").
-   Voeg een regel `image` toe met het pad naar je bestand:
+Zet je foto (vierkant, min. 800x800px werkt het mooist) neer als:
 
-     {
-       id: "p-prime-5w30",
-       slug: "benzol-prime-5w30",
-       name: "Benzol Prime 5W30",
-       ...
-       image: "/products/benzol-prime-5w30.jpg",   <-- deze regel toevoegen
-     },
+  Product                     Bestandsnaam
+  ---------------------------------------------------------------
+  Benzol Ultra 0W20        -> benzol-ultra-0w20.jpg
+  Benzol Eco 0W30          -> benzol-eco-0w30.jpg
+  Benzol Prime 5W30        -> benzol-prime-5w30.webp
+  Benzol DPF 5W30          -> benzol-dpf-5w30.jpg
+  Benzol Synth 5W40        -> benzol-synth-5w40.jpg
+  Benzol Turbo 5W40        -> benzol-turbo-5w40.jpg
+  Benzol Classic 10W40     -> benzol-classic-10w40.jpg
+  Benzol Guard 10W40       -> benzol-guard-10w40.jpg
+  Benzol Race 10W60        -> benzol-race-10w60.jpg
+  Benzol Work 15W40        -> benzol-work-15w40.jpg
 
-3. Sla op en herstart (of herlaad) de website. De foto verschijnt automatisch
-   op de productkaart, de productpagina, de bestseller-uitlichting en in
-   bundeldeals. Zonder dit veld wordt automatisch de gegenereerde
-   flesillustratie getoond — er gaat dus nooit iets kapot als je geen foto
-   toevoegt of het pad een keer fout typt.
+Let op: "Benzol Prime 5W30" verwacht een .webp bestand, alle andere
+verwachten .jpg. Wil je een ander formaat gebruiken (bijv. .png of .webp
+voor een ander product)? Pas dan in lib/products.ts de extensie in de
+regel `image: "/products/<naam>.<extensie>"` van dat product aan, zodat
+hij overeenkomt met je eigen bestand.
+
+Belangrijkste valkuil (Windows): bestandsnaamextensies zijn vaak verborgen
+in Verkenner, waardoor een bestand er uitziet als "foto.jpg" maar in
+werkelijkheid "foto.jpg.jpg" heet. Zet in Verkenner → Beeld →
+"Bestandsnaamextensies" aan om dit te controleren.
+
+Geen foto voor een product? Geen probleem — dan blijft automatisch de
+gegenereerde flesillustratie zichtbaar. Er verschijnt nooit een kapot
+plaatje-icoontje.
 
 Achtergrondafbeelding op de homepage (parallax-effect)
 ========================================================
-Zie de map hierboven (public/) voor hero-bg.jpg — lees de instructies in
-public/LEES-MIJ.txt voor de achtergrondafbeelding van de homepage.
+Zie public/LEES-MIJ.txt (één map hoger) voor hero-bg.jpg.

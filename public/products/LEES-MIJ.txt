@@ -1,38 +1,49 @@
 Eigen productfoto's toevoegen
 ==============================
 
-Elk product in lib/products.ts verwijst al naar een bestandsnaam in deze map.
-Je hoeft dus GEEN code aan te passen — zet gewoon een foto neer met exact
-de juiste bestandsnaam en hij verschijnt automatisch.
+Elk product in lib/products.ts heeft al 3 bestandsnamen klaarstaan
+(voorkant, achterkant, zijkant). Je hoeft dus GEEN code aan te passen —
+zet gewoon foto's neer met exact de juiste bestandsnamen en ze verschijnen
+automatisch, mét pijlknoppen om te wisselen zodra er 2 of meer aanwezig zijn.
 
-Zet je foto (vierkant, min. 800x800px werkt het mooist) neer als:
+Zet je foto's (vierkant, min. 800x800px werkt het mooist) neer als:
 
-  Product                     Bestandsnaam
-  ---------------------------------------------------------------
-  Benzol Ultra 0W20        -> benzol-ultra-0w20.jpg
-  Benzol Eco 0W30          -> benzol-eco-0w30.jpg
-  Benzol Prime 5W30        -> benzol-prime-5w30.jpg
-  Benzol DPF 5W30          -> benzol-dpf-5w30.jpg
-  Benzol Synth 5W40        -> benzol-synth-5w40.jpg
-  Benzol Turbo 5W40        -> benzol-turbo-5w40.jpg
-  Benzol Classic 10W40     -> benzol-classic-10w40.jpg
-  Benzol Guard 10W40       -> benzol-guard-10w40.jpg
-  Benzol Race 10W60        -> benzol-race-10w60.jpg
-  Benzol Work 15W40        -> benzol-work-15w40.jpg
+  Product                   Voorkant                          Achterkant                                  Zijkant
+  --------------------------------------------------------------------------------------------------------------------------------------------
+  Benzol Ultra 0W20      -> benzol-ultra-0w20.jpg           benzol-ultra-0w20-achterkant.jpg           benzol-ultra-0w20-zijkant.jpg
+  Benzol Eco 0W30        -> benzol-eco-0w30.jpg             benzol-eco-0w30-achterkant.jpg             benzol-eco-0w30-zijkant.jpg
+  Benzol Prime 5W30      -> benzol-prime-5w30.jpg           benzol-prime-5w30-achterkant.jpg           benzol-prime-5w30-zijkant.jpg
+  Benzol DPF 5W30        -> benzol-dpf-5w30.jpg             benzol-dpf-5w30-achterkant.jpg             benzol-dpf-5w30-zijkant.jpg
+  Benzol Synth 5W40      -> benzol-synth-5w40.jpg           benzol-synth-5w40-achterkant.jpg           benzol-synth-5w40-zijkant.jpg
+  Benzol Turbo 5W40      -> benzol-turbo-5w40.jpg           benzol-turbo-5w40-achterkant.jpg           benzol-turbo-5w40-zijkant.jpg
+  Benzol Classic 10W40   -> benzol-classic-10w40.jpg        benzol-classic-10w40-achterkant.jpg        benzol-classic-10w40-zijkant.jpg
+  Benzol Guard 10W40     -> benzol-guard-10w40.jpg          benzol-guard-10w40-achterkant.jpg          benzol-guard-10w40-zijkant.jpg
+  Benzol Race 10W60      -> benzol-race-10w60.jpg           benzol-race-10w60-achterkant.jpg           benzol-race-10w60-zijkant.jpg
+  Benzol Work 15W40      -> benzol-work-15w40.jpg           benzol-work-15w40-achterkant.jpg           benzol-work-15w40-zijkant.jpg
 
-Let op: de extensie in de bestandsnaam moet ECHT bij het opgeslagen
-bestandstype horen (een PNG die je hernoemt naar .jpg werkt niet
-betrouwbaar). Wil je een ander formaat gebruiken (.png, .webp, ...)? Pas dan
-in lib/products.ts de extensie in de regel
-`images: ["/products/<naam>.<extensie>"]` van dat product aan, zodat hij
-overeenkomt met je eigen bestand. Zowel .jpg, .jpeg, .png als .webp werken
-prima.
+Hoe werkt het precies?
+- Heb je alle 3 de foto's van een product? Dan zie je op de productpagina
+  een volledige galerij: grote pijlknoppen (links/rechts), een
+  miniaturenstrip om direct een hoek te kiezen, plus pijltjestoetsen en
+  swipen op mobiel.
+- Heb je er maar 1 of 2? Geen probleem — de ontbrekende foto('s) worden
+  gewoon overgeslagen, en de galerij toont alleen de foto's die je wél hebt
+  neergezet (met pijlen zodra dat er 2 of meer zijn).
+- Heb je er nul? Dan verschijnt de gegenereerde flesillustratie.
+Er verschijnt dus NOOIT een kapot plaatje-icoontje.
 
-Meerdere hoeken laten zien (foto-galerij met pijlknoppen)
-=============================================================
-Elk product heeft in lib/products.ts een `images`-veld — een LIJST van
-foto's, geen los veld. Voeg gewoon extra bestandsnamen toe aan die lijst om
-meerdere hoeken te tonen, bijvoorbeeld:
+Belangrijk:
+- Namen moeten EXACT overeenkomen (kleine letters, streepjes precies zo).
+- De extensie (.jpg) moet echt bij het opgeslagen bestandstype horen. Sla
+  je een foto op als PNG of WEBP? Pas dan in lib/products.ts de extensie
+  in de betreffende regel aan naar .png of .webp.
+- Windows verbergt vaak bestandsextensies, waardoor een bestand er uitziet
+  als "foto.jpg" maar in werkelijkheid "foto.jpg.jpg" heet. Zet in
+  Verkenner → Beeld → "Bestandsnaamextensies" aan om dit te controleren.
+
+Meer of andere hoeken dan voor/achter/zijkant?
+Voeg gewoon extra regels toe aan de `images`-lijst van dat product in
+lib/products.ts, bijvoorbeeld:
 
   images: [
     "/products/benzol-prime-5w30.jpg",
@@ -41,24 +52,9 @@ meerdere hoeken te tonen, bijvoorbeeld:
     "/products/benzol-prime-5w30-etiket.jpg",
   ],
 
-Zet die extra foto's ook gewoon in deze map (public/products/), met die
-exacte bestandsnamen. Zodra een product 2 of meer foto's heeft, verschijnt
-op de productpagina automatisch:
-  - grote, goed zichtbare pijlknoppen (links/rechts) om te wisselen
-  - een miniaturenstrip onder de hoofdfoto om direct een hoek te kiezen
-  - pijltjestoetsen (← →) en swipen op mobiel werken ook
-Bij 1 foto (of geen) verschijnt gewoon de normale enkele foto/illustratie
-zonder pijlen.
-
-Belangrijkste valkuil (Windows): bestandsnaamextensies zijn vaak verborgen
-in Verkenner, waardoor een bestand er uitziet als "foto.jpg" maar in
-werkelijkheid "foto.jpg.jpg" heet. Zet in Verkenner → Beeld →
-"Bestandsnaamextensies" aan om dit te controleren.
-
-Geen foto voor een product (of gaat er eentje niet laden)? Geen probleem —
-die specifieke foto wordt gewoon overgeslagen, en als er geen enkele foto
-overblijft valt de site terug op de gegenereerde flesillustratie. Er
-verschijnt nooit een kapot plaatje-icoontje.
+Bundeldeal-foto's
+===================
+Zie public/products/bundles/LEES-MIJ.txt voor de bundelfoto's.
 
 Achtergrondafbeelding op de homepage (parallax-effect)
 ========================================================

@@ -20,9 +20,11 @@ export interface Bundle {
   gift?: string; // localized-later key handled in component copy
   name: Record<Locale, string>;
   desc: Record<Locale, string>;
-  /** Optional dedicated bundle photo(s), e.g. a shot of the whole pack.
-   *  Path convention: "/products/bundles/<slug>.jpg" (see LEES-MIJ.txt in
-   *  that folder). When absent, the gallery falls back to the photos of the
+  /** Optional dedicated bundle photo(s) — a shot of the whole pack and, by
+   *  convention, a second shot of its contents: "/products/bundles/<slug>.jpg"
+   *  and "/products/bundles/<slug>-inhoud.jpg" (see LEES-MIJ.txt in that
+   *  folder). With 2+ photos the product-detail bundle preview shows the
+   *  gallery arrows. When absent, it falls back to the photos of the
    *  products included in the bundle. */
   images?: string[];
   image?: string;
@@ -68,7 +70,10 @@ export const BUNDLES: Bundle[] = [
       ar: "5 لتر + 1 لتر Benzol Prime 5W30 — يكفي للتغيير مع احتياطي. قمع مجاني.",
       tr: "5L + 1L Benzol Prime 5W30 — değişim ve yedek için yeterli. Ücretsiz huni.",
     },
-    images: ["/products/bundles/verversbeurt-compleet.jpg"],
+    images: [
+      "/products/bundles/verversbeurt-compleet.jpg",
+      "/products/bundles/verversbeurt-compleet-inhoud.jpg",
+    ],
   },
   {
     id: "b-winter",
@@ -95,7 +100,10 @@ export const BUNDLES: Bundle[] = [
       ar: "2×5 لتر 5W30 للبنزين والديزل بفلتر DPF. تشغيل بارد مثالي. قفازات مجانية.",
       tr: "Benzin ve DPF dizel için 2×5L 5W30. Mükemmel soğuk çalıştırma. Ücretsiz eldiven.",
     },
-    images: ["/products/bundles/winter-ready.jpg"],
+    images: [
+      "/products/bundles/winter-ready.jpg",
+      "/products/bundles/winter-ready-inhoud.jpg",
+    ],
   },
   {
     id: "b-garage",
@@ -119,7 +127,10 @@ export const BUNDLES: Bundle[] = [
       ar: "3×5 لتر Benzol Synth 5W40 — حصان عمل الورشة. خصومات كمية إضافية متاحة.",
       tr: "3×5L Benzol Synth 5W40 — atölyenin yük beygiri. Ek hacim indirimleri mevcut.",
     },
-    images: ["/products/bundles/garage-bulk-synth.jpg"],
+    images: [
+      "/products/bundles/garage-bulk-synth.jpg",
+      "/products/bundles/garage-bulk-synth-inhoud.jpg",
+    ],
   },
   {
     id: "b-perf",
@@ -146,7 +157,10 @@ export const BUNDLES: Bundle[] = [
       ar: "5 لتر Race 10W60 + 1 لتر Turbo 5W40 للحلبة والمحركات الرياضية. قبعة Benzol مجانية.",
       tr: "Pist ve spor motorlar için 5L Race 10W60 + 1L Turbo 5W40. Ücretsiz Benzol şapka.",
     },
-    images: ["/products/bundles/performance-pack.jpg"],
+    images: [
+      "/products/bundles/performance-pack.jpg",
+      "/products/bundles/performance-pack-inhoud.jpg",
+    ],
   },
 ];
 

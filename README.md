@@ -47,46 +47,52 @@ npm run lint     # lint
 
 ## 🖼️ Eigen productfoto's toevoegen
 
-Elk product in `lib/products.ts` heeft al een `images`-veld (een lijst) dat naar `/products/<slug>.jpg` wijst. Zet gewoon een foto met exact die bestandsnaam in `public/products/` — geen code aanpassen nodig:
+Elk product in `lib/products.ts` heeft al een `images`-veld met **3 bestandsnamen klaarstaan** (voorkant, achterkant, zijkant). Je hoeft dus geen code aan te passen — zet gewoon foto's neer met exact deze bestandsnamen in `public/products/`:
 
-```ts
-images: ["/products/benzol-prime-5w30.jpg"],
-```
+| Product | Voorkant | Achterkant | Zijkant |
+| --- | --- | --- | --- |
+| Benzol Ultra 0W20 | `benzol-ultra-0w20.jpg` | `benzol-ultra-0w20-achterkant.jpg` | `benzol-ultra-0w20-zijkant.jpg` |
+| Benzol Eco 0W30 | `benzol-eco-0w30.jpg` | `benzol-eco-0w30-achterkant.jpg` | `benzol-eco-0w30-zijkant.jpg` |
+| Benzol Prime 5W30 | `benzol-prime-5w30.jpg` | `benzol-prime-5w30-achterkant.jpg` | `benzol-prime-5w30-zijkant.jpg` |
+| Benzol DPF 5W30 | `benzol-dpf-5w30.jpg` | `benzol-dpf-5w30-achterkant.jpg` | `benzol-dpf-5w30-zijkant.jpg` |
+| Benzol Synth 5W40 | `benzol-synth-5w40.jpg` | `benzol-synth-5w40-achterkant.jpg` | `benzol-synth-5w40-zijkant.jpg` |
+| Benzol Turbo 5W40 | `benzol-turbo-5w40.jpg` | `benzol-turbo-5w40-achterkant.jpg` | `benzol-turbo-5w40-zijkant.jpg` |
+| Benzol Classic 10W40 | `benzol-classic-10w40.jpg` | `benzol-classic-10w40-achterkant.jpg` | `benzol-classic-10w40-zijkant.jpg` |
+| Benzol Guard 10W40 | `benzol-guard-10w40.jpg` | `benzol-guard-10w40-achterkant.jpg` | `benzol-guard-10w40-zijkant.jpg` |
+| Benzol Race 10W60 | `benzol-race-10w60.jpg` | `benzol-race-10w60-achterkant.jpg` | `benzol-race-10w60-zijkant.jpg` |
+| Benzol Work 15W40 | `benzol-work-15w40.jpg` | `benzol-work-15w40-achterkant.jpg` | `benzol-work-15w40-zijkant.jpg` |
 
-Zonder een geldig bestand (of als het pad niet klopt) valt de site automatisch terug op de gegenereerde flesillustratie — er verschijnt nooit een kapot plaatje.
+Zonder een geldig bestand (of als het pad niet klopt) valt de site automatisch terug op de gegenereerde flesillustratie — er verschijnt nooit een kapot plaatje. Heb je maar 1 of 2 van de 3 foto's? Geen probleem, de ontbrekende worden gewoon overgeslagen.
 
 ### 📸 Meerdere hoeken tonen (foto-galerij met pijlknoppen)
 
-Voeg gewoon extra bestandsnamen toe aan dezelfde lijst:
+Zodra een product 2 of meer van zijn foto's écht aanwezig zijn, toont de productpagina automatisch een galerij: grote, duidelijk zichtbare pijlknoppen (links/rechts) om te wisselen, een klikbare miniaturenstrip om direct een hoek te kiezen, en ondersteuning voor pijltjestoetsen en swipen op mobiel (`components/ProductGallery.tsx`). Bij 1 foto verschijnt gewoon die ene foto zonder pijlen.
+
+Wil je nóg meer of andere hoeken (bijv. een close-up van het etiket)? Voeg gewoon extra regels toe aan de `images`-lijst van dat product in `lib/products.ts`:
 
 ```ts
 images: [
   "/products/benzol-prime-5w30.jpg",
   "/products/benzol-prime-5w30-achterkant.jpg",
   "/products/benzol-prime-5w30-zijkant.jpg",
+  "/products/benzol-prime-5w30-etiket.jpg",
 ],
 ```
 
-Zodra een product 2 of meer foto's heeft, toont de productpagina automatisch een galerij: grote, duidelijk zichtbare pijlknoppen (links/rechts) om te wisselen, een klikbare miniaturenstrip om direct een hoek te kiezen, en ondersteuning voor pijltjestoetsen en swipen op mobiel (`components/ProductGallery.tsx`). Bij 1 foto verschijnt gewoon die ene foto zonder pijlen.
-
-Werkt het pad niet? De code accepteert zowel `images: ["..."]` (een lijst) als een los `image: "..."` veld — welke vorm je ook gebruikt, hij wordt herkend. Zie ook `public/products/LEES-MIJ.txt`.
+Belangrijk: de bestandsnaam moet exact overeenkomen (kleine letters, streepjes precies zo) en de extensie (`.jpg`) moet echt bij het opgeslagen bestandstype horen — sla je op als PNG of WEBP, pas dan de extensie in `lib/products.ts` aan. Windows verbergt vaak bestandsextensies (zet Verkenner → Beeld → "Bestandsnaamextensies" aan om te controleren). De code accepteert ook een los `image: "..."` veld naast `images: [...]`. Zie ook `public/products/LEES-MIJ.txt`.
 
 ### 📦 Foto's voor bundeldeals
 
-Elke bundel in `lib/bundles.ts` heeft ook een `images`-veld, met dezelfde padconventie maar in de submap `public/products/bundles/`:
+Elke bundel in `lib/bundles.ts` heeft al **2 bestandsnamen klaarstaan** (de bundel zelf + een inhoudsfoto), in de submap `public/products/bundles/`:
 
-```ts
-images: ["/products/bundles/verversbeurt-compleet.jpg"],
-```
+| Bundel | Hoofdfoto | Inhoudsfoto |
+| --- | --- | --- |
+| Verversbeurt Compleet | `verversbeurt-compleet.jpg` | `verversbeurt-compleet-inhoud.jpg` |
+| Winter Ready Pakket | `winter-ready.jpg` | `winter-ready-inhoud.jpg` |
+| Garage Bulk 3×5L | `garage-bulk-synth.jpg` | `garage-bulk-synth-inhoud.jpg` |
+| Performance Pakket | `performance-pack.jpg` | `performance-pack-inhoud.jpg` |
 
-| Bundel | Bestandsnaam |
-| --- | --- |
-| Verversbeurt Compleet | `verversbeurt-compleet.jpg` |
-| Winter Ready Pakket | `winter-ready.jpg` |
-| Garage Bulk 3×5L | `garage-bulk-synth.jpg` |
-| Performance Pakket | `performance-pack.jpg` |
-
-Zonder eigen bundelfoto vallen de bundelfoto's automatisch terug op de foto's van de losse producten die erin zitten. Zie ook `public/products/bundles/LEES-MIJ.txt`.
+Heb je beide foto's van een bundel? Dan verschijnt automatisch een galerij met pijlknoppen (net als bij producten). Heb je er maar 1, dan zie je gewoon die ene foto. Zonder eigen bundelfoto's vallen de bundelfoto's automatisch terug op de foto's van de losse producten die erin zitten. Zie ook `public/products/bundles/LEES-MIJ.txt`.
 
 ### 🛍️ Bundeldeal direct op de productpagina bekijken
 

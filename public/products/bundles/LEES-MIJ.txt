@@ -1,29 +1,35 @@
 Foto's voor bundeldeals toevoegen
 ====================================
 
-Elke bundel in lib/bundles.ts verwijst al naar een bestandsnaam in deze map.
-Zet gewoon een foto neer met exact de juiste naam — geen code aanpassen
-nodig.
+Elke bundel in lib/bundles.ts heeft al 2 bestandsnamen klaarstaan (de
+bundel zelf + een inhoudsfoto). Zet gewoon foto's neer met exact de
+juiste naam — geen code aanpassen nodig.
 
-  Bundel                       Bestandsnaam
-  ---------------------------------------------------------------------
-  Verversbeurt Compleet     -> verversbeurt-compleet.jpg
-  Winter Ready Pakket       -> winter-ready.jpg
-  Garage Bulk 3x5L          -> garage-bulk-synth.jpg
-  Performance Pakket        -> performance-pack.jpg
+  Bundel                       Hoofdfoto                            Inhoudsfoto
+  -------------------------------------------------------------------------------------------------------------
+  Verversbeurt Compleet     -> verversbeurt-compleet.jpg           verversbeurt-compleet-inhoud.jpg
+  Winter Ready Pakket       -> winter-ready.jpg                    winter-ready-inhoud.jpg
+  Garage Bulk 3x5L          -> garage-bulk-synth.jpg                garage-bulk-synth-inhoud.jpg
+  Performance Pakket        -> performance-pack.jpg                performance-pack-inhoud.jpg
 
-Geen foto voor een bundel neergezet? Geen probleem: dan toont de site
-automatisch de foto's van de losse producten die in die bundel zitten (of,
-als die er ook niet zijn, de gegenereerde flesillustraties). Er verschijnt
-nooit een kapot plaatje.
+Hoe werkt het?
+- Heb je beide foto's van een bundel? Dan verschijnt bij het bekijken van
+  die bundel (via de bundeldeal-knop op een productpagina, de
+  bundeldeals-pagina, of de homepage) automatisch een galerij met
+  pijlknoppen om te wisselen tussen de hoofdfoto en de inhoudsfoto.
+- Heb je er maar 1? Dan zie je gewoon die ene foto, zonder pijlen.
+- Heb je er geen? Dan toont de site automatisch de foto's van de losse
+  producten die in die bundel zitten (of, als die er ook niet zijn, de
+  gegenereerde flesillustraties). Er verschijnt nooit een kapot plaatje.
 
-Wil je meerdere foto's per bundel (bijv. de doos + de losse flessen erin)?
-Voeg gewoon meerdere bestandsnamen toe aan de `images`-lijst van die bundel
-in lib/bundles.ts, net zoals bij producten:
+Meer foto's per bundel toevoegen?
+Voeg gewoon extra bestandsnamen toe aan de `images`-lijst van die bundel
+in lib/bundles.ts, bijvoorbeeld:
 
   images: [
     "/products/bundles/verversbeurt-compleet.jpg",
     "/products/bundles/verversbeurt-compleet-inhoud.jpg",
+    "/products/bundles/verversbeurt-compleet-doos.jpg",
   ],
 
 Waar wordt deze foto getoond?

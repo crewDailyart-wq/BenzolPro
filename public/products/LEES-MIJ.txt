@@ -52,6 +52,29 @@ lib/products.ts, bijvoorbeeld:
     "/products/benzol-prime-5w30-etiket.jpg",
   ],
 
+Foto per hoeveelheid (bijv. een doos van 4 flessen bij 20 liter)
+=================================================================
+Klikt een klant op de productpagina op een grotere maat, dan kun je daar een
+aparte foto bij tonen (bijvoorbeeld een doos met 4 flessen bij 20 liter, of
+een vat bij 60/208 liter). Zet daarvoor een bestand neer met deze naam:
+
+  Maat        Bestandsnaam            Toont
+  -----------------------------------------------------------------
+  20 liter -> <slug>-20l.jpg          doos van 4×5 L flessen
+  60 liter -> <slug>-60l.jpg          vat
+  208 liter-> <slug>-208l.jpg         vat
+
+Bijvoorbeeld voor Benzol Prime 5W30:
+  benzol-prime-5w30-20l.jpg     (foto van de doos met 4 flessen)
+  benzol-prime-5w30-60l.jpg     (foto van het vat)
+  benzol-prime-5w30-208l.jpg    (foto van het grote vat)
+
+Zodra de klant op die maat klikt, verschijnt automatisch deze foto vooraan in
+de galerij (met de pijlen ziet hij nog steeds de gewone foto's). Heb je de
+foto nog niet geüpload? Geen probleem — dan blijft gewoon de normale
+productfoto staan; er verschijnt nooit een kapot plaatje. De losse maten
+1 L en 5 L gebruiken altijd de gewone productfoto's.
+
 Bundeldeal-foto's
 ===================
 Zie public/products/bundles/LEES-MIJ.txt voor de bundelfoto's.

@@ -9,7 +9,7 @@ import { useAudience } from "@/lib/audience";
 import { euro, priceForSize, sizeNote } from "@/lib/format";
 import { TAGLINES, getProductById } from "@/lib/products";
 import { getBundlesForProduct, getBundleGalleryImages, bundleOriginalPrice, GIFT_LABEL, type Bundle } from "@/lib/bundles";
-import { resolveImages } from "@/lib/media";
+import { resolveImages, sizeImageCandidates } from "@/lib/media";
 import ProductVisual from "./ProductVisual";
 import ProductGallery from "./ProductGallery";
 import BrandCompatibility from "./BrandCompatibility";
@@ -24,6 +24,7 @@ import {
   CartIcon,
   PackageIcon,
   SparkIcon,
+  WrenchIcon,
 } from "./icons";
 
 export default function ProductDetail({ product, related }: { product: Product; related: Product[] }) {
@@ -45,7 +46,11 @@ export default function ProductDetail({ product, related }: { product: Product; 
   const bundleOriginal = previewBundle ? bundleOriginalPrice(previewBundle) : 0;
   const bundleSavings = previewBundle ? Math.round((bundleOriginal - previewBundle.price) * 100) / 100 : 0;
 
-  const galleryImages = previewBundle ? getBundleGalleryImages(previewBundle) : resolveImages(product);
+  // When a bulk size (20/60/208 L) is selected, show its own photo first (e.g.
+  // the 4-bottle box for 20 L), then the normal product photos. If that size
+  // photo hasn't been uploaded yet the gallery just skips it — never breaks.
+  const productImages = [...sizeImageCandidates(product.slug, size), ...resolveImages(product)];
+  const galleryImages = previewBundle ? getBundleGalleryImages(previewBundle) : productImages;
 
   const stockLabel =
     product.stock === 0 ? t("product.outOfStock") : product.stock <= 10 ? t("product.lowStock") : t("product.inStock");
@@ -100,6 +105,11 @@ export default function ProductDetail({ product, related }: { product: Product; 
           {/* info */}
           <div>
             <div className="flex flex-wrap items-center gap-2">
+              {!previewBundle && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-neon px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-ink shadow-neon">
+                  <WrenchIcon width={13} height={13} /> {t("monteur.badge")}
+                </span>
+              )}
               <span className="chip">{product.viscosity}</span>
               <span className="chip">{t(`category.${product.category}`)}</span>
               {previewBundle && (

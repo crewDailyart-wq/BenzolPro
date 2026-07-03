@@ -77,7 +77,7 @@ export const PRODUCTS: Product[] = [
     accent: "#e7b53c",
     badge: "bestseller",
     stock: 120,
-    images: ["/products/benzol-prime-5w30.webp"],
+    images: ["/products/benzol-prime-5w30.jpg"],
   },
   {
     id: "p-diesel-5w30",

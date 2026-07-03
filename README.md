@@ -98,6 +98,31 @@ Heb je beide foto's van een bundel? Dan verschijnt automatisch een galerij met p
 
 Op elke productpagina (bijv. Benzol Prime 5W30) staat, direct naast de inhoud-/hoeveelheidsknoppen, een opvallende blauwe **bundeldeal-knop** wanneer dat product in een bundel zit. Een klik erop navigeert nergens heen — de foto's, prijs, inhoud en "In winkelwagen"-knop op diezelfde pagina veranderen direct naar die van de bundel. Zit een product in meerdere bundels, dan verschijnen er meerdere keuzeknoppen. Nogmaals klikken (of "Terug naar los product") zet alles terug.
 
+## 🔧 Garages die met Benzol rijden (zelf aanvullen)
+
+De lijst met garages (getoond in de sectie "Vertrouwd door garages" op de homepage) staat in **`lib/garages.ts`**. Voeg gewoon regels toe of pas ze aan:
+
+```ts
+{ name: "AutoService Jansen", city: "Amersfoort", country: "NL" },
+{ name: "Garage Peeters", city: "Antwerpen", country: "BE" },
+```
+
+`country` is `"NL"` (Nederland) of `"BE"` (België). Wil je een echt logo tonen? Zet een afbeelding in **`public/garages/`** en verwijs ernaar met `logo: "autoservice-jansen.png"`. Zonder logo tonen we automatisch een nette badge met de eerste letters. Zie `public/garages/LEES-MIJ.txt`.
+
+## 🚗 Automerken & specificaties (zelf aanpassen)
+
+Onderaan elke productpagina staat een band **"Geschikt voor deze merken"**. De merken, hun normen (gegevens) en uitvoering staan in **`lib/carBrands.ts`**:
+
+```ts
+{ name: "Volkswagen", spec: "VW 504.00 / 507.00", uitvoering: "TSI & TDI" },
+```
+
+Merklogo's zet je in **`public/merken/`** en koppel je met `logo: "volkswagen.png"`. Zonder logo tonen we netjes de merknaam. Zie `public/merken/LEES-MIJ.txt`.
+
+## 🚚 Verzending
+
+Verzending is **altijd gratis**, op elke bestelling — er is geen minimumbedrag meer. Dit is centraal geregeld in `lib/cart.tsx` (`shipping = 0`).
+
 ## 🌌 Achtergrondafbeelding toevoegen (parallax)
 
 De homepage-achtergrond (`components/ParallaxBackground.tsx`) ondersteunt een eigen foto:

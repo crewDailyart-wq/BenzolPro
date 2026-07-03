@@ -41,27 +41,34 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="group card-surface relative flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-neon/50 hover:shadow-neon">
+      {/* stretched link overlay: clicking anywhere on the card opens the product page */}
+      <Link
+        href={`/product/${product.slug}`}
+        className="absolute inset-0 z-10"
+        aria-label={product.name}
+      />
+
       {product.badge && (
         <span
-          className={`absolute start-3 top-3 z-10 rounded-full px-2.5 py-1 text-[11px] font-bold ${BADGE_STYLE[product.badge]}`}
+          className={`absolute start-3 top-3 z-20 rounded-full px-2.5 py-1 text-[11px] font-bold ${BADGE_STYLE[product.badge]}`}
         >
           {badgeLabel[product.badge]}
         </span>
       )}
       {product.compareAtPrice && !product.badge && (
-        <span className="absolute start-3 top-3 z-10 rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-bold text-white">
+        <span className="absolute start-3 top-3 z-20 rounded-full bg-red-500 px-2.5 py-1 text-[11px] font-bold text-white">
           -{Math.round((1 - product.price / product.compareAtPrice) * 100)}%
         </span>
       )}
 
-      <Link href={`/product/${product.slug}`} className="relative block">
+      <div className="relative block">
         <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-ink-soft to-ink">
           <div className="absolute inset-0 bg-grid-neon [background-size:22px_22px] opacity-40" />
           <div className="relative h-full w-full p-6 transition duration-500 group-hover:scale-105">
             <ProductVisual product={product} className="h-full w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.6)]" />
           </div>
         </div>
-      </Link>
+      </div>
 
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-center gap-1 text-xs text-zinc-400">
@@ -71,10 +78,12 @@ export default function ProductCard({ product }: { product: Product }) {
           <span className="ms-auto chip !px-2 !py-0.5">{product.viscosity}</span>
         </div>
 
-        <Link href={`/product/${product.slug}`} className="mt-2">
-          <h3 className="font-bold leading-tight transition group-hover:text-neon">{product.name}</h3>
-        </Link>
+        <h3 className="mt-2 font-bold leading-tight transition group-hover:text-neon">{product.name}</h3>
         {tagline && <p className="mt-0.5 text-xs text-zinc-500">{tagline}</p>}
+
+        {product.fitsNote && (
+          <p className="mt-1 text-[11px] font-semibold text-gold-metal">★ {product.fitsNote}</p>
+        )}
 
         <div className="mt-2 flex flex-wrap gap-1">
           {product.specs.slice(0, 2).map((s) => (
@@ -96,7 +105,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             type="button"
             onClick={quickAdd}
-            className={`grid h-11 w-11 place-items-center rounded-full transition active:scale-90 ${
+            className={`relative z-20 grid h-11 w-11 place-items-center rounded-full transition active:scale-90 ${
               justAdded ? "bg-neon text-ink" : "bg-ink-soft text-neon hover:bg-neon hover:text-ink"
             }`}
             aria-label={t("product.quickBuy")}
@@ -107,7 +116,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         <Link
           href="/bundels"
-          className="mt-2 flex items-center justify-center gap-1.5 rounded-full border border-azure/40 bg-azure/5 py-2 text-xs font-semibold text-azure transition hover:bg-azure/15"
+          className="relative z-20 mt-2 flex items-center justify-center gap-1.5 rounded-full border border-azure/40 bg-azure/5 py-2 text-xs font-semibold text-azure transition hover:bg-azure/15"
         >
           <PackageIcon width={14} height={14} /> {t("product.bundleCta")}
         </Link>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { BUNDLES, bundleOriginalPrice, BADGE_LABEL, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { getProductById } from "@/lib/products";
@@ -8,7 +9,7 @@ import { useCart } from "@/lib/cart";
 import { euro } from "@/lib/format";
 import type { CartLine } from "@/lib/types";
 import ProductVisual from "./ProductVisual";
-import { TruckIcon, CheckIcon, BoltIcon, SparkIcon } from "./icons";
+import { TruckIcon, CheckIcon, BoltIcon, SparkIcon, ArrowRight } from "./icons";
 
 /** The reusable grid of bundle cards — used on the homepage section and the standalone /bundels page. */
 export default function BundleGrid({ productId }: { productId?: string }) {
@@ -56,8 +57,15 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
 
   return (
     <div className="group card-surface relative flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-neon/50 hover:shadow-neon">
+      {/* stretched link overlay: clicking anywhere on the card opens the bundle page */}
+      <Link
+        href={`/bundel/${bundle.slug}`}
+        className="absolute inset-0 z-10"
+        aria-label={bundle.name[locale] ?? bundle.name.nl}
+      />
+
       {/* badges */}
-      <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-3">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-center justify-between p-3">
         {bundle.badge && (
           <span className="rounded-full bg-neon px-2.5 py-1 text-[11px] font-bold text-ink">
             {BADGE_LABEL[bundle.badge]?.[locale] ?? bundle.badge}
@@ -108,7 +116,7 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
           {savings > 0 && (
             <p className="text-[11px] text-neon">{t("bundle.save")} {euro(savings)}</p>
           )}
-          <button type="button" onClick={addBundle} className="btn-neon mt-3 w-full">
+          <button type="button" onClick={addBundle} className="btn-neon relative z-20 mt-3 w-full">
             {added ? (
               <>
                 <CheckIcon width={18} height={18} /> {t("product.added")}
@@ -119,6 +127,9 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
               </>
             )}
           </button>
+          <span className="mt-2 flex items-center justify-center gap-1 text-[11px] font-medium text-azure transition group-hover:gap-2">
+            {t("bundle.viewDeal")} <ArrowRight width={13} height={13} />
+          </span>
         </div>
       </div>
     </div>

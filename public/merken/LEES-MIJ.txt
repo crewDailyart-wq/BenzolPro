@@ -1,0 +1,34 @@
+Automerk-logo's & specificaties
+=================================
+
+DE LIJST AANPASSEN (merken, specificaties, uitvoering)
+------------------------------------------------------
+De lijst met automerken staat in het bestand:  lib/carBrands.ts
+Elke regel ziet er zo uit:
+
+  { name: "Volkswagen", spec: "VW 504.00 / 507.00", uitvoering: "TSI & TDI" },
+
+- name       = merknaam
+- spec       = de officiële norm / specificatie (de "gegevens")
+- uitvoering = (optioneel) welke motor/uitvoering het betreft
+
+Pas gerust de teksten aan of voeg merken toe. Ze verschijnen automatisch
+in de sectie "Geschikt voor deze merken" onderaan elke productpagina.
+
+
+LOGO'S TOEVOEGEN (optioneel)
+----------------------------
+Wil je het echte merklogo tonen?
+1. Zet het logo-bestand in DEZE map (public/merken/), bijvoorbeeld:
+      volkswagen.png
+2. Verwijs ernaar in lib/carBrands.ts met het veld "logo":
+      { name: "Volkswagen", logo: "volkswagen.png",
+        spec: "VW 504.00 / 507.00", uitvoering: "TSI & TDI" },
+
+- Gebruik bij voorkeur een PNG met transparante achtergrond, ongeveer
+  vierkant (bijv. 200×200 px).
+- Zonder logo tonen we netjes de merknaam als tekst — nooit een leeg vlak.
+
+Let op: gebruik alleen logo's waarvoor je toestemming hebt. Merknamen en
+logo's zijn eigendom van de betreffende fabrikanten en dienen hier enkel
+ter informatie (jouw olie voldoet aan hun specificaties).

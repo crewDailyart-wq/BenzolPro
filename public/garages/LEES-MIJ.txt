@@ -1,0 +1,32 @@
+Garages die met Benzol rijden — lijst & logo's
+================================================
+
+DE LIJST AANVULLEN (namen, plaatsen, landen)
+--------------------------------------------
+De lijst met garages staat in het bestand:  lib/garages.ts
+Daar mag je zelf zoveel garages toevoegen als je wilt. Elke regel ziet
+er zo uit:
+
+  { name: "AutoService Jansen", city: "Amersfoort", country: "NL" },
+
+- name    = naam van de garage
+- city    = plaats
+- country = "NL" voor Nederland of "BE" voor België
+
+Kopieer gewoon een regel, pas de tekst aan, en klaar. De garages
+verschijnen automatisch in de lopende balk op de homepage (sectie
+"Vertrouwd door garages").
+
+
+LOGO'S TOEVOEGEN (optioneel)
+----------------------------
+Wil je bij een garage een echt logo tonen in plaats van de letters?
+1. Zet het logo-bestand in DEZE map (public/garages/), bijvoorbeeld:
+      autoservice-jansen.png
+2. Verwijs ernaar in lib/garages.ts met het veld "logo":
+      { name: "AutoService Jansen", city: "Amersfoort", country: "NL",
+        logo: "autoservice-jansen.png" },
+
+- Gebruik bij voorkeur een PNG met transparante achtergrond.
+- Zonder logo tonen we automatisch een nette badge met de eerste
+  letter(s) van de naam — er verschijnt dus nooit een leeg vlak.

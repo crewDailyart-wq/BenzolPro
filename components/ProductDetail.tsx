@@ -6,12 +6,13 @@ import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
-import { euro, priceForSize } from "@/lib/format";
+import { euro, priceForSize, sizeNote } from "@/lib/format";
 import { TAGLINES, getProductById } from "@/lib/products";
 import { getBundlesForProduct, getBundleGalleryImages, bundleOriginalPrice, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { resolveImages } from "@/lib/media";
 import ProductVisual from "./ProductVisual";
 import ProductGallery from "./ProductGallery";
+import BrandCompatibility from "./BrandCompatibility";
 import PriceTag from "./PriceTag";
 import {
   StarIcon,
@@ -110,6 +111,9 @@ export default function ProductDetail({ product, related }: { product: Product; 
 
             <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">{product.name}</h1>
             <p className="mt-1 text-zinc-400">{previewBundle ? bundleDesc : tagline}</p>
+            {!previewBundle && product.fitsNote && (
+              <p className="mt-2 text-sm font-bold text-gold-metal">★ {product.fitsNote}</p>
+            )}
 
             <div className="mt-3 flex items-center gap-2 text-sm">
               <span className="flex text-neon">
@@ -180,22 +184,36 @@ export default function ProductDetail({ product, related }: { product: Product; 
                   {hasBulkSizes && <span className="ms-2 text-xs font-normal text-azure">· {t("product.bulkTitle")}</span>}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {product.sizesLiter.map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => setSize(s)}
-                      className={`rounded-xl border px-5 py-3 text-sm font-bold transition ${
-                        size === s
-                          ? "border-neon bg-neon text-ink"
-                          : s >= 20
-                            ? "border-azure/40 bg-azure/5 text-azure hover:border-azure/70"
-                            : "border-ink-line bg-ink-card text-zinc-200 hover:border-neon/60"
-                      }`}
-                    >
-                      {s} {t("product.liter")}
-                    </button>
-                  ))}
+                  {product.sizesLiter.map((s) => {
+                    const note = sizeNote(s);
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSize(s)}
+                        className={`flex flex-col items-center rounded-xl border px-5 py-2.5 text-sm font-bold transition ${
+                          size === s
+                            ? "border-neon bg-neon text-ink"
+                            : s >= 20
+                              ? "border-azure/40 bg-azure/5 text-azure hover:border-azure/70"
+                              : "border-ink-line bg-ink-card text-zinc-200 hover:border-neon/60"
+                        }`}
+                      >
+                        <span>
+                          {s} {t("product.liter")}
+                        </span>
+                        {note && (
+                          <span
+                            className={`mt-0.5 text-[10px] font-medium ${
+                              size === s ? "text-ink/70" : "text-zinc-500"
+                            }`}
+                          >
+                            {note}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -341,6 +359,10 @@ export default function ProductDetail({ product, related }: { product: Product; 
           </aside>
         )}
       </div>
+
+      {/* full-width band below — fills the space under the product and shows
+          which car brands the oil is approved for (editable in lib/carBrands.ts) */}
+      <BrandCompatibility />
     </div>
   );
 }

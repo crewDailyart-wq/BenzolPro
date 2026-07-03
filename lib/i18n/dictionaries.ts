@@ -3,7 +3,15 @@ import type { Locale } from "./config";
 /**
  * Full copy dictionary. Dutch (nl) is the source of truth / default language.
  * Access via dot-notation keys, e.g. t("hero.title").
+ *
+ * The site is Dutch-only, so only `nl` needs every key. The other languages
+ * are typed as a deep-partial of the Dutch dictionary: any key they omit falls
+ * back to Dutch at runtime (see the provider). That means new Dutch copy can be
+ * added here without having to translate it into four other languages first.
  */
+type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
+};
 
 const nl = {
   brand: { tagline: "Premium motorolie, ontworpen in Nederland" },
@@ -25,7 +33,7 @@ const nl = {
       "Voer je kenteken in en wij vertellen je direct welke Benzol-motorolie perfect bij jouw auto past. Premium bescherming, razendsnel geleverd.",
     ctaShop: "Bekijk alle olie",
     ctaFind: "Vind mijn olie",
-    trust1: "Gratis verzending vanaf €50",
+    trust1: "Altijd gratis verzending",
     trust2: "Voor 22:00 besteld, morgen in huis",
     trust3: "Veilig betalen met iDEAL",
   },
@@ -108,9 +116,18 @@ const nl = {
     back: "Terug naar de shop",
     guarantee: "Officiële specificaties gegarandeerd",
     bundleCta: "Bekijk bundeldeals",
-    freeShipBadge: "Gratis verzending vanaf €50",
+    freeShipBadge: "Altijd gratis verzending",
     bulkTitle: "Ook beschikbaar in groothandelmaten",
     backToProduct: "Terug naar los product",
+    relatedMore: "Meer olie ontdekken",
+    reviewsTitle: "Wat rijders zeggen",
+  },
+  brands: {
+    title: "Geschikt voor deze merken",
+    subtitle: "Benzol voldoet aan de officiële fabrieksnormen van o.a.:",
+    specLabel: "Norm",
+    versionLabel: "Uitvoering",
+    disclaimer: "Merknamen en normen dienen enkel ter informatie. Controleer altijd het instructieboekje van je auto voor de exacte specificatie.",
   },
   bestFor: {
     petrol: "Benzine",
@@ -136,7 +153,7 @@ const nl = {
     qty: "Aantal",
     each: "per stuk",
     freeShipHint: "Nog {amount} tot gratis verzending",
-    freeShipDone: "Je hebt gratis verzending! 🎉",
+    freeShipDone: "Altijd gratis verzending op elke bestelling 🎉",
   },
   checkout: {
     title: "Afrekenen",
@@ -221,6 +238,12 @@ const nl = {
     pageSubtitle: "Slim samengestelde pakketten — meer olie, minder betalen, altijd franco thuis.",
     perProductCta: "Bekijk bundels met dit product",
     contains: "Deze bundel bevat",
+    viewDeal: "Bekijk deze deal",
+    detailBack: "Terug naar alle bundels",
+    detailBadge: "Bundeldeal",
+    included: "Wat zit erin?",
+    total: "Totaalprijs bundel",
+    perProductLink: "Los product bekijken",
   },
   certificates: {
     title: "Certificaten & kwaliteitsnormen",
@@ -278,6 +301,10 @@ const nl = {
     ctaBody: "Schakel over naar de garage-ervaring en zie direct je zakelijke prijzen en bulkkortingen.",
     ctaButton: "Naar garage-prijzen",
     ctaActive: "Garage-modus actief",
+    listTitle: "Garages door heel Nederland en België",
+    listSubtitle: "Een greep uit de werkplaatsen die al op Benzol rijden.",
+    countryNL: "Nederland",
+    countryBE: "België",
   },
   faq: {
     nav: "FAQ",
@@ -285,8 +312,9 @@ const nl = {
     subtitle: "Alles wat je wilt weten over bestellen, olie en levering.",
     helpTitle: "Nog vragen?",
     helpBody: "Ons team helpt je graag verder, in het Nederlands, Engels of Turks.",
+    contactButton: "Stel je vraag",
     q1: { q: "Hoe weet ik welke olie mijn auto nodig heeft?", a: "Voer bovenaan je kenteken in. Wij halen je voertuiggegevens op bij de RDW en adviseren direct de juiste viscositeit en het passende Benzol-product." },
-    q2: { q: "Wanneer wordt mijn bestelling geleverd?", a: "Voor 22:00 besteld, morgen in huis. Boven €50 en bij alle bundels is de verzending gratis." },
+    q2: { q: "Wanneer wordt mijn bestelling geleverd?", a: "Voor 22:00 besteld, morgen in huis. De verzending is altijd gratis, op elke bestelling en bij alle bundels." },
     q3: { q: "Kan ik met iDEAL of Apple Pay betalen?", a: "Ja. Je rekent in seconden af met iDEAL, Apple Pay, creditcard of PayPal via onze snelle checkout." },
     q4: { q: "Krijgen garages andere prijzen?", a: "Zeker. Zet de schakelaar op 'Garage' voor zakelijke prijzen, extra staffelkorting bij grotere aantallen en altijd gratis levering." },
     q5: { q: "Is Benzol-olie geschikt voor mijn merk?", a: "Onze olie voldoet aan de officiële ACEA-, API- en OEM-specificaties (VW, MB, BMW en meer). Controleer altijd je instructieboekje voor de exacte norm." },
@@ -302,7 +330,7 @@ const nl = {
 
 export type Dictionary = typeof nl;
 
-const en: Dictionary = {
+const en: DeepPartial<Dictionary> = {
   brand: { tagline: "Premium motor oil, engineered in the Netherlands" },
   nav: { home: "Home", products: "Products", how: "How it works", about: "About", cart: "Cart", findOil: "Find your oil", certificates: "Certificaten", quote: "Offerte aanvragen" },
   hero: {
@@ -572,7 +600,7 @@ const en: Dictionary = {
   common: { close: "Close", loading: "Loading…", menu: "Menu", language: "Language" },
 };
 
-const pl: Dictionary = {
+const pl: DeepPartial<Dictionary> = {
   brand: { tagline: "Olej silnikowy premium, zaprojektowany w Holandii" },
   nav: { home: "Start", products: "Produkty", how: "Jak to działa", about: "O nas", cart: "Koszyk", findOil: "Znajdź olej", certificates: "Certificaten", quote: "Offerte aanvragen" },
   hero: {
@@ -842,7 +870,7 @@ const pl: Dictionary = {
   common: { close: "Zamknij", loading: "Ładowanie…", menu: "Menu", language: "Język" },
 };
 
-const ar: Dictionary = {
+const ar: DeepPartial<Dictionary> = {
   brand: { tagline: "زيت محرك فاخر، مصمَّم في هولندا" },
   nav: { home: "الرئيسية", products: "المنتجات", how: "كيف يعمل", about: "من نحن", cart: "السلة", findOil: "اعثر على زيتك", certificates: "Certificaten", quote: "Offerte aanvragen" },
   hero: {
@@ -1112,7 +1140,7 @@ const ar: Dictionary = {
   common: { close: "إغلاق", loading: "جارٍ التحميل…", menu: "القائمة", language: "اللغة" },
 };
 
-const tr: Dictionary = {
+const tr: DeepPartial<Dictionary> = {
   brand: { tagline: "Hollanda'da tasarlanan premium motor yağı" },
   nav: { home: "Ana sayfa", products: "Ürünler", how: "Nasıl çalışır", about: "Hakkımızda", cart: "Sepet", findOil: "Yağını bul", certificates: "Certificaten", quote: "Offerte aanvragen" },
   hero: {
@@ -1382,4 +1410,4 @@ const tr: Dictionary = {
   common: { close: "Kapat", loading: "Yükleniyor…", menu: "Menü", language: "Dil" },
 };
 
-export const DICTIONARIES: Record<Locale, Dictionary> = { nl, en, pl, ar, tr };
+export const DICTIONARIES: Record<Locale, DeepPartial<Dictionary>> = { nl, en, pl, ar, tr };

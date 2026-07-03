@@ -7,6 +7,17 @@ export function euro(amount: number): string {
 }
 
 /**
+ * Short note explaining what a container size actually is, so customers know
+ * what they're buying: a 20L is a box of 4×5L bottles, and 60L / 208L are
+ * drums (vaten). Returns null for the loose bottle sizes (1L / 5L).
+ */
+export function sizeNote(size: number): string | null {
+  if (size >= 60) return "vat";
+  if (size >= 20) return "1 doos · 4×5 L";
+  return null;
+}
+
+/**
  * Derive a bottle/drum-size price from the base (smallest) size price, with
  * steeper per-litre discounts the larger the container — mirroring how
  * garages buy in bulk (a 208L drum is far cheaper per litre than a 1L can).

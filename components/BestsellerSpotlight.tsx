@@ -82,6 +82,9 @@ export default function BestsellerSpotlight({
             </div>
             <h3 className={`mt-1 font-extrabold ${large ? "text-3xl sm:text-4xl" : "text-2xl"}`}>{product.name}</h3>
             {tagline && <p className={large ? "text-base text-zinc-400" : "text-sm text-zinc-400"}>{tagline}</p>}
+            {product.fitsNote && (
+              <p className="mt-1.5 text-sm font-bold text-gold-metal">★ {product.fitsNote}</p>
+            )}
 
             <div className="mt-3 flex flex-wrap justify-center gap-1 sm:justify-start">
               {product.specs.slice(0, 3).map((s) => (

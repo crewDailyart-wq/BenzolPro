@@ -3,27 +3,39 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import { useCart } from "@/lib/cart";
+import { useCart, PICKUP_DISCOUNT } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
 import { euro } from "@/lib/format";
 import OilBottle from "./OilBottle";
-import { LockIcon, CheckIcon, BoltIcon, ArrowRight } from "./icons";
+import { LockIcon, CheckIcon, BoltIcon, ArrowRight, TruckIcon, PackageIcon } from "./icons";
 
 type PayMethod = "ideal" | "applepay" | "card" | "paypal";
 
 const BANKS = ["ABN AMRO", "ING", "Rabobank", "bunq", "ASN Bank", "SNS", "Knab", "Revolut", "Triodos"];
 
+// A few example collection points customers can pick up from.
+const PICKUP_POINTS = [
+  "Benzol Afhaalpunt — Amsterdam Noord",
+  "Benzol Afhaalpunt — Rotterdam Alexander",
+  "Benzol Afhaalpunt — Utrecht Lage Weide",
+  "Benzol Afhaalpunt — Eindhoven De Hurk",
+  "Benzol Afhaalpunt — Antwerpen Merksem",
+];
+
 export default function Checkout() {
   const router = useRouter();
-  const { lines, subtotal, shipping, total, count, clear } = useCart();
+  const { lines, subtotal, shipping, discount, total, count, clear, deliveryMethod, setDeliveryMethod } = useCart();
   const { t } = useI18n();
 
   const [method, setMethod] = useState<PayMethod>("ideal");
   const [bank, setBank] = useState(BANKS[0]);
   const [email, setEmail] = useState("");
+  const [pickupPoint, setPickupPoint] = useState(PICKUP_POINTS[0]);
   const [form, setForm] = useState({ firstName: "", lastName: "", address: "", postal: "", city: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [processing, setProcessing] = useState(false);
+
+  const isPickup = deliveryMethod === "pickup";
 
   function update(key: keyof typeof form, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -35,9 +47,13 @@ export default function Checkout() {
     if (!express) {
       if (!form.firstName) e.firstName = t("checkout.required");
       if (!form.lastName) e.lastName = t("checkout.required");
-      if (!form.address) e.address = t("checkout.required");
-      if (!form.postal) e.postal = t("checkout.required");
-      if (!form.city) e.city = t("checkout.required");
+      // A full delivery address is only required for home delivery; when
+      // picking up at a collection point just the name + pickup point suffice.
+      if (!isPickup) {
+        if (!form.address) e.address = t("checkout.required");
+        if (!form.postal) e.postal = t("checkout.required");
+        if (!form.city) e.city = t("checkout.required");
+      }
     }
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -137,8 +153,49 @@ export default function Checkout() {
             </Field>
           </Section>
 
-          {/* delivery */}
-          <Section title={t("checkout.delivery")}>
+          {/* delivery method: home delivery vs pickup point (with discount) */}
+          <Section title={t("checkout.deliveryMethod")}>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => setDeliveryMethod("home")}
+                className={`relative flex flex-col items-start gap-1 rounded-xl border p-4 text-start transition ${
+                  !isPickup ? "border-neon bg-neon/10" : "border-ink-line bg-ink-card hover:border-neon/50"
+                }`}
+              >
+                <span className="flex items-center gap-2 font-semibold">
+                  <TruckIcon width={18} height={18} className="text-emerald-400" /> {t("checkout.methodHome")}
+                </span>
+                <span className="text-xs text-zinc-400">{t("checkout.methodHomeHint")}</span>
+                <span className="mt-1 rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] font-bold text-emerald-400">
+                  {t("checkout.freeLabel")}
+                </span>
+                {!isPickup && <CheckIcon width={16} height={16} className="absolute end-3 top-3 text-neon" />}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setDeliveryMethod("pickup")}
+                className={`relative flex flex-col items-start gap-1 rounded-xl border p-4 text-start transition ${
+                  isPickup ? "border-azure bg-azure/10" : "border-ink-line bg-ink-card hover:border-azure/50"
+                }`}
+              >
+                <span className="flex items-center gap-2 font-semibold">
+                  <PackageIcon width={18} height={18} className="text-azure" /> {t("checkout.methodPickup")}
+                </span>
+                <span className="text-xs text-zinc-400">
+                  {t("checkout.methodPickupHint", { amount: euro(PICKUP_DISCOUNT) })}
+                </span>
+                <span className="mt-1 rounded-full bg-azure/20 px-2 py-0.5 text-[11px] font-bold text-azure">
+                  − {euro(PICKUP_DISCOUNT)}
+                </span>
+                {isPickup && <CheckIcon width={16} height={16} className="absolute end-3 top-3 text-azure" />}
+              </button>
+            </div>
+          </Section>
+
+          {/* address (home) or pickup point (pickup) */}
+          <Section title={isPickup ? t("checkout.pickupPoint") : t("checkout.delivery")}>
             <div className="grid gap-3 sm:grid-cols-2">
               <Field label={t("checkout.firstName")} error={errors.firstName}>
                 <input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} className="input-field" autoComplete="given-name" />
@@ -147,17 +204,31 @@ export default function Checkout() {
                 <input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} className="input-field" autoComplete="family-name" />
               </Field>
             </div>
-            <Field label={t("checkout.address")} error={errors.address}>
-              <input value={form.address} onChange={(e) => update("address", e.target.value)} className="input-field" autoComplete="street-address" />
-            </Field>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Field label={t("checkout.postal")} error={errors.postal}>
-                <input value={form.postal} onChange={(e) => update("postal", e.target.value)} className="input-field" placeholder="1234 AB" autoComplete="postal-code" />
+
+            {isPickup ? (
+              <Field label={t("checkout.pickupPoint")}>
+                <select value={pickupPoint} onChange={(e) => setPickupPoint(e.target.value)} className="input-field cursor-pointer">
+                  {PICKUP_POINTS.map((p) => (
+                    <option key={p} value={p}>{p}</option>
+                  ))}
+                </select>
               </Field>
-              <Field label={t("checkout.city")} error={errors.city}>
-                <input value={form.city} onChange={(e) => update("city", e.target.value)} className="input-field" autoComplete="address-level2" />
-              </Field>
-            </div>
+            ) : (
+              <>
+                <Field label={t("checkout.address")} error={errors.address}>
+                  <input value={form.address} onChange={(e) => update("address", e.target.value)} className="input-field" autoComplete="street-address" />
+                </Field>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label={t("checkout.postal")} error={errors.postal}>
+                    <input value={form.postal} onChange={(e) => update("postal", e.target.value)} className="input-field" placeholder="1234 AB" autoComplete="postal-code" />
+                  </Field>
+                  <Field label={t("checkout.city")} error={errors.city}>
+                    <input value={form.city} onChange={(e) => update("city", e.target.value)} className="input-field" autoComplete="address-level2" />
+                  </Field>
+                </div>
+              </>
+            )}
+
             <Field label={t("checkout.phone")}>
               <input value={form.phone} onChange={(e) => update("phone", e.target.value)} className="input-field" autoComplete="tel" />
             </Field>
@@ -245,9 +316,18 @@ export default function Checkout() {
                 <span className="text-zinc-100">{euro(subtotal)}</span>
               </div>
               <div className="flex justify-between text-zinc-400">
-                <span>{t("cart.shipping")}</span>
+                <span className="flex items-center gap-1.5">
+                  {isPickup ? <PackageIcon width={14} height={14} className="text-azure" /> : <TruckIcon width={14} height={14} className="text-emerald-400" />}
+                  {t("cart.shipping")}
+                </span>
                 <span className="text-zinc-100">{shipping === 0 ? t("cart.free") : euro(shipping)}</span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-azure">
+                  <span>{t("checkout.discountLabel")}</span>
+                  <span>− {euro(discount)}</span>
+                </div>
+              )}
               <div className="flex justify-between border-t border-ink-line pt-2 text-lg font-bold">
                 <span>{t("cart.total")}</span>
                 <span className="text-neon">{euro(total)}</span>

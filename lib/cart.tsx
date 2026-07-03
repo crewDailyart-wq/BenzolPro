@@ -9,11 +9,19 @@ import { priceForSize } from "./format";
 export const FREE_SHIPPING_THRESHOLD = 0;
 export const SHIPPING_COST = 0;
 
+/** Flat discount when the customer picks up at a collection point instead of home delivery. */
+export const PICKUP_DISCOUNT = 2.5;
+
+export type DeliveryMethod = "home" | "pickup";
+
 interface CartContextValue {
   lines: CartLine[];
   count: number;
   subtotal: number;
   shipping: number;
+  discount: number;
+  deliveryMethod: DeliveryMethod;
+  setDeliveryMethod: (m: DeliveryMethod) => void;
   total: number;
   isOpen: boolean;
   setOpen: (open: boolean) => void;
@@ -36,6 +44,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isOpen, setOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>("home");
 
   useEffect(() => {
     try {
@@ -113,13 +122,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const subtotal = useMemo(() => lines.reduce((s, l) => s + l.price * l.qty, 0), [lines]);
   const count = useMemo(() => lines.reduce((s, l) => s + l.qty, 0), [lines]);
-  // Every order ships free, always.
+  // Every order ships free, always. Picking up at a collection point instead
+  // of home delivery gives a small discount.
   const shipping = 0;
-  const total = subtotal + shipping;
+  const discount = deliveryMethod === "pickup" && subtotal > 0 ? PICKUP_DISCOUNT : 0;
+  const total = Math.max(0, subtotal + shipping - discount);
 
   const value = useMemo<CartContextValue>(
-    () => ({ lines, count, subtotal, shipping, total, isOpen, setOpen, add, addLine, remove, setQty, clear }),
-    [lines, count, subtotal, shipping, total, isOpen, add, addLine, remove, setQty, clear],
+    () => ({ lines, count, subtotal, shipping, discount, deliveryMethod, setDeliveryMethod, total, isOpen, setOpen, add, addLine, remove, setQty, clear }),
+    [lines, count, subtotal, shipping, discount, deliveryMethod, total, isOpen, add, addLine, remove, setQty, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

@@ -54,11 +54,12 @@ export default function CartDrawer() {
           </div>
         ) : (
           <>
-            {/* always free shipping */}
+            {/* always free shipping + pickup discount hint */}
             <div className="border-b border-ink-line p-5">
               <p className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
                 <TruckIcon width={16} height={16} /> {t("cart.freeShipDone")}
               </p>
+              <p className="mt-1 text-xs text-azure">{t("cart.pickupHint")}</p>
             </div>
 
             <div className="flex-1 space-y-3 overflow-y-auto p-5">

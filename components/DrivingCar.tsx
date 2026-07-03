@@ -62,16 +62,18 @@ export default function DrivingCar({ className = "" }: { className?: string }) {
             {/* wheels */}
             <g>
               <circle cx="53" cy="51" r="12" fill="#0a0a0b" stroke="#2c2a22" strokeWidth="2" />
-              <g className="origin-center animate-wheel" style={{ transformBox: "fill-box", transformOrigin: "53px 51px" }}>
+              {/* spokes spin about their own centre (fill-box + center keeps
+                  the rotation perfectly on the hub — no wobble) */}
+              <g className="animate-wheel" style={{ transformBox: "fill-box", transformOrigin: "center" }}>
                 <circle cx="53" cy="51" r="5.4" fill="#16150f" stroke="#4da6ff" strokeWidth="1.5" />
-                <path d="M53 46v11M47 51h12" stroke="#2f7fd0" strokeWidth="1.3" />
+                <path d="M53 45.6v10.8M47.6 51h10.8" stroke="#2f7fd0" strokeWidth="1.3" />
               </g>
             </g>
             <g>
               <circle cx="138" cy="51" r="12" fill="#0a0a0b" stroke="#2c2a22" strokeWidth="2" />
-              <g className="origin-center animate-wheel" style={{ transformBox: "fill-box", transformOrigin: "138px 51px" }}>
+              <g className="animate-wheel" style={{ transformBox: "fill-box", transformOrigin: "center" }}>
                 <circle cx="138" cy="51" r="5.4" fill="#16150f" stroke="#4da6ff" strokeWidth="1.5" />
-                <path d="M138 46v11M132 51h12" stroke="#2f7fd0" strokeWidth="1.3" />
+                <path d="M138 45.6v10.8M132.6 51h10.8" stroke="#2f7fd0" strokeWidth="1.3" />
               </g>
             </g>
           </svg>

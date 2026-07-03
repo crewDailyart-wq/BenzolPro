@@ -112,7 +112,7 @@ export default function ProductGallery({
           ref={(el) => checkAlreadyFailed(el, current)}
           src={current}
           alt={`${name} — foto ${safeIndex + 1} van ${total}`}
-          className={`h-full w-full object-contain ${imageClassName}`}
+          className={`h-full w-full rounded-3xl object-contain ${imageClassName}`}
           onError={() => markFailed(allImages.indexOf(current))}
         />
 

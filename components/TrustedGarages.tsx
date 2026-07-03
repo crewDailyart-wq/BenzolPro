@@ -1,24 +1,41 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useI18n } from "@/lib/i18n/provider";
 import { useAudience } from "@/lib/audience";
+import { GARAGES, getGarages, garageInitials, type Garage } from "@/lib/garages";
 import { WrenchIcon, StarIcon, ShieldIcon, TruckIcon, ArrowRight, ClipboardIcon } from "./icons";
 
-const GARAGES = [
-  "AutoService Jansen",
-  "GarageBox Amsterdam",
-  "PitStop Rotterdam",
-  "De Vries Automotive",
-  "TurboTech Utrecht",
-  "Garage El Amrani",
-  "Van Dijk Onderhoud",
-  "Motoreske Eindhoven",
-  "Kaya Auto",
-  "Noord Garage",
-  "SpeedFix Den Haag",
-  "Benzine & Co",
-];
+/** Small logo (from public/garages/) or a lettered badge fallback. */
+function GarageLogo({ garage, size = 28 }: { garage: Garage; size?: number }) {
+  const [failed, setFailed] = useState(false);
+  if (garage.logo && !failed) {
+    // eslint-disable-next-line @next/next/no-img-element -- local, user-provided garage logos
+    return (
+      <img
+        src={`/garages/${garage.logo}`}
+        alt={garage.name}
+        width={size}
+        height={size}
+        className="shrink-0 rounded object-contain"
+        style={{ width: size, height: size }}
+        onError={() => setFailed(true)}
+        ref={(el) => {
+          if (el && el.complete && el.naturalWidth === 0) setFailed(true);
+        }}
+      />
+    );
+  }
+  return (
+    <span
+      className="grid shrink-0 place-items-center rounded bg-neon/15 text-[10px] font-extrabold text-neon"
+      style={{ width: size, height: size }}
+    >
+      {garageInitials(garage.name)}
+    </span>
+  );
+}
 
 export default function TrustedGarages() {
   const { t } = useI18n();
@@ -31,7 +48,10 @@ export default function TrustedGarages() {
     { icon: ShieldIcon, value: "100%", label: t("garages.stat4") },
   ];
 
+  // marquee row (doubled for a seamless loop)
   const row = [...GARAGES, ...GARAGES];
+  const nl = getGarages("NL");
+  const be = getGarages("BE");
 
   return (
     <section id="garages" className="scroll-mt-20 border-y border-ink-line bg-ink-soft py-16">
@@ -57,14 +77,52 @@ export default function TrustedGarages() {
       {/* marquee */}
       <div className="marquee-mask relative mt-12 flex overflow-hidden">
         <div className="flex w-max animate-marquee gap-3 pe-3">
-          {row.map((name, i) => (
+          {row.map((g, i) => (
             <span
               key={i}
-              className="flex items-center gap-2 whitespace-nowrap rounded-full border border-ink-line bg-ink-card px-5 py-2.5 text-sm font-semibold text-zinc-300"
+              className="flex items-center gap-2 whitespace-nowrap rounded-full border border-ink-line bg-ink-card px-4 py-2 text-sm font-semibold text-zinc-300"
             >
-              <WrenchIcon width={14} height={14} className="text-neon" />
-              {name}
+              <GarageLogo garage={g} size={22} />
+              {g.name}
             </span>
+          ))}
+        </div>
+      </div>
+
+      {/* full editable list, grouped by country */}
+      <div className="section-pad mt-14">
+        <div className="mx-auto max-w-2xl text-center">
+          <h3 className="text-2xl font-bold">{t("garages.listTitle")}</h3>
+          <p className="mt-1 text-sm text-zinc-400">{t("garages.listSubtitle")}</p>
+        </div>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+          {[
+            { flag: "🇳🇱", label: t("garages.countryNL"), list: nl },
+            { flag: "🇧🇪", label: t("garages.countryBE"), list: be },
+          ].map((group) => (
+            <div key={group.label} className="card-surface p-5 sm:p-6">
+              <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-zinc-300">
+                <span aria-hidden>{group.flag}</span> {group.label}
+                <span className="ms-auto rounded-full bg-ink-soft px-2 py-0.5 text-[11px] font-semibold text-zinc-400">
+                  {group.list.length}
+                </span>
+              </p>
+              <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                {group.list.map((g) => (
+                  <li
+                    key={`${g.name}-${g.city}`}
+                    className="flex items-center gap-2.5 rounded-xl border border-ink-line bg-ink-card px-3 py-2"
+                  >
+                    <GarageLogo garage={g} size={26} />
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-semibold text-zinc-100">{g.name}</span>
+                      <span className="block truncate text-[11px] text-zinc-500">{g.city}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </div>
@@ -82,7 +140,7 @@ export default function TrustedGarages() {
               <button
                 type="button"
                 onClick={() => setAudience("garage")}
-                className="btn-neon"
+                className="btn-azure"
                 disabled={isGarage}
               >
                 {isGarage ? t("garages.ctaActive") : t("garages.ctaButton")}

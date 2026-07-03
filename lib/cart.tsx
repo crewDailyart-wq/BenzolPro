@@ -4,8 +4,10 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import type { CartLine, Product } from "./types";
 import { priceForSize } from "./format";
 
-export const FREE_SHIPPING_THRESHOLD = 50;
-export const SHIPPING_COST = 4.95;
+// Shipping is always free on every order — no minimum. Kept as constants so
+// any older references still resolve; both are effectively "always free" now.
+export const FREE_SHIPPING_THRESHOLD = 0;
+export const SHIPPING_COST = 0;
 
 interface CartContextValue {
   lines: CartLine[];
@@ -111,9 +113,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const subtotal = useMemo(() => lines.reduce((s, l) => s + l.price * l.qty, 0), [lines]);
   const count = useMemo(() => lines.reduce((s, l) => s + l.qty, 0), [lines]);
-  const hasFreeShipLine = useMemo(() => lines.some((l) => l.alwaysFreeShip), [lines]);
-  const shipping =
-    subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD || hasFreeShipLine ? 0 : SHIPPING_COST;
+  // Every order ships free, always.
+  const shipping = 0;
   const total = subtotal + shipping;
 
   const value = useMemo<CartContextValue>(

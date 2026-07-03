@@ -1,18 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useCart, FREE_SHIPPING_THRESHOLD } from "@/lib/cart";
+import { useCart } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
 import { euro } from "@/lib/format";
 import OilBottle from "./OilBottle";
-import { CloseIcon, TrashIcon, PlusIcon, MinusIcon, BoltIcon, ArrowRight } from "./icons";
+import { CloseIcon, TrashIcon, PlusIcon, MinusIcon, BoltIcon, ArrowRight, TruckIcon } from "./icons";
 
 export default function CartDrawer() {
   const { lines, subtotal, shipping, total, isOpen, setOpen, remove, setQty } = useCart();
   const { t } = useI18n();
-
-  const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
-  const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
 
   return (
     <>
@@ -57,14 +54,11 @@ export default function CartDrawer() {
           </div>
         ) : (
           <>
-            {/* free shipping progress */}
+            {/* always free shipping */}
             <div className="border-b border-ink-line p-5">
-              <p className="mb-2 text-xs text-zinc-400">
-                {remaining > 0 ? t("cart.freeShipHint", { amount: euro(remaining) }) : t("cart.freeShipDone")}
+              <p className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+                <TruckIcon width={16} height={16} /> {t("cart.freeShipDone")}
               </p>
-              <div className="h-1.5 overflow-hidden rounded-full bg-ink-card">
-                <div className="h-full rounded-full bg-neon transition-all duration-500" style={{ width: `${progress}%` }} />
-              </div>
             </div>
 
             <div className="flex-1 space-y-3 overflow-y-auto p-5">

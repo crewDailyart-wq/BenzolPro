@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n/provider";
-import { ChevronDown } from "./icons";
+import { ChevronDown, ChatIcon } from "./icons";
 
 const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5", "q6"];
 
@@ -20,6 +20,9 @@ export default function FaqSection() {
           <div className="mt-6 hidden rounded-2xl border border-ink-line bg-ink-card p-5 lg:block">
             <p className="text-sm font-semibold">{t("faq.helpTitle")}</p>
             <p className="mt-1 text-sm text-zinc-400">{t("faq.helpBody")}</p>
+            <a href="mailto:hallo@benzolpro.nl" className="btn-azure mt-4 w-full">
+              <ChatIcon width={17} height={17} /> {t("faq.contactButton")}
+            </a>
             <a href="mailto:hallo@benzolpro.nl" className="mt-3 inline-block text-sm font-medium text-neon hover:underline">
               hallo@benzolpro.nl
             </a>

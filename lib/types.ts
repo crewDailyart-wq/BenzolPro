@@ -20,6 +20,9 @@ export interface Product {
   accent: string; // hex accent for the bottle visual
   badge?: "bestseller" | "new" | "sale" | "pro";
   stock: number;
+  /** Optional gold highlight line shown on the spotlight/detail page, e.g.
+   *  "Geschikt voor ruim 50% van de Nederlandse auto's". */
+  fitsNote?: string;
   /** Optional real product photos, one path per angle, e.g.
    *  ["/products/benzol-prime-5w30.jpg", "/products/benzol-prime-5w30-achterkant.jpg"].
    *  With 2+ entries the product page shows a gallery with arrows/thumbnails.

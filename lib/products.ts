@@ -41,7 +41,9 @@ export const PRODUCTS: Product[] = [
     accent: "#f6d989",
     badge: "new",
     stock: 42,
-    images: ["/products/benzol-ultra-0w20.jpg"],
+    images: ["/products/benzol-ultra-0w20.jpg"
+             "/products/benzol-ultra-0w20-1.jpg"
+            ],
   },
   {
     id: "p-eco-0w30",

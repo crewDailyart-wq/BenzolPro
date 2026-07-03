@@ -186,8 +186,8 @@ export default function Checkout() {
                 <span className="text-xs text-zinc-400">
                   {t("checkout.methodPickupHint", { amount: euro(PICKUP_DISCOUNT) })}
                 </span>
-                <span className="mt-1 rounded-full bg-azure/20 px-2 py-0.5 text-[11px] font-bold text-azure">
-                  − {euro(PICKUP_DISCOUNT)}
+                <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold text-emerald-400">
+                  <CheckIcon width={12} height={12} /> {t("checkout.methodPickupSave", { amount: euro(PICKUP_DISCOUNT) })}
                 </span>
                 {isPickup && <CheckIcon width={16} height={16} className="absolute end-3 top-3 text-azure" />}
               </button>
@@ -323,7 +323,7 @@ export default function Checkout() {
                 <span className="text-zinc-100">{shipping === 0 ? t("cart.free") : euro(shipping)}</span>
               </div>
               {discount > 0 && (
-                <div className="flex justify-between text-azure">
+                <div className="flex justify-between font-semibold text-emerald-400">
                   <span>{t("checkout.discountLabel")}</span>
                   <span>− {euro(discount)}</span>
                 </div>

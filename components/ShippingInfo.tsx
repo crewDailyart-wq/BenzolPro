@@ -47,8 +47,8 @@ export default function ShippingInfo() {
             </span>
             <h3 className="mt-4 text-xl font-bold">{t("shippingInfo.pickupTitle")}</h3>
             <p className="mt-1 text-sm text-zinc-400">{t("shippingInfo.pickupBody")}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-azure/20 px-3 py-1 text-xs font-bold text-azure">
-              {t("shippingInfo.pickupBadge")}
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-400">
+              <CheckIcon width={13} height={13} /> {t("shippingInfo.pickupBadge")}
             </span>
           </div>
         </div>

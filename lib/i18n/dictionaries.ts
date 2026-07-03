@@ -85,7 +85,7 @@ const nl = {
     homeBadge: "Altijd gratis",
     pickupTitle: "Afhalen met korting",
     pickupBody: "Kies bij het afrekenen voor een afhaalpunt bij jou in de buurt en betaal € 2,50 minder.",
-    pickupBadge: "− € 2,50 korting",
+    pickupBadge: "Je bespaart € 2,50",
     note: "Je kiest je bezorgmethode eenvoudig tijdens het afrekenen.",
   },
   filter: {
@@ -195,9 +195,10 @@ const nl = {
     methodHome: "Thuisbezorgd",
     methodHomeHint: "Voor 22:00 besteld, morgen in huis — altijd gratis.",
     methodPickup: "Afhalen bij afhaalpunt",
-    methodPickupHint: "Haal je bestelling op bij een punt in de buurt en krijg {amount} korting.",
+    methodPickupHint: "Haal je bestelling op bij een punt in de buurt — je krijgt {amount} korting op je bestelling.",
+    methodPickupSave: "Je bespaart {amount}",
     pickupPoint: "Kies je afhaalpunt",
-    discountLabel: "Korting (afhalen)",
+    discountLabel: "Korting afhalen",
     freeLabel: "Gratis",
   },
   pay: {

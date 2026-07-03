@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0b;
+  color: #f4f4f5;
+  font-feature-settings: "ss01", "cv01";
+  overflow-x: hidden;
+}
+
+/* Thin gold scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0b;
+}
+::-webkit-scrollbar-thumb {
+  background: #2c2a22;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e7b53c;
+}
+
+::selection {
+  background: #e7b53c;
+  color: #0a0a0b;
+}
+
+/* RTL adjustments for Arabic */
+[dir="rtl"] {
+  text-align: right;
+}
+
+@layer components {
+  .btn-neon {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-neon px-6 py-3 text-sm font-bold uppercase tracking-wide text-ink transition-all duration-200 hover:shadow-neon-lg hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-line px-6 py-3 text-sm font-semibold text-zinc-100 transition-all duration-200 hover:border-neon hover:text-neon active:scale-95;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink-line bg-ink-card px-3 py-1 text-xs font-medium text-zinc-300;
+  }
+  .card-surface {
+    @apply rounded-2xl border border-ink-line bg-ink-card;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-ink-line bg-ink-soft px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition focus:border-neon focus:ring-2 focus:ring-neon/30;
+  }
+  .section-pad {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}
+
+.text-glow {
+  text-shadow: 0 0 24px rgba(231, 181, 60, 0.45);
+}
+
+/* Metallic gold text (animated sheen) */
+.text-gold-metal {
+  background: linear-gradient(100deg, #b78a2b 0%, #f6d989 25%, #fffdf5 50%, #f6d989 75%, #b78a2b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-pan 5s linear infinite;
+}
+
+/* Metallic azure-blue text (animated sheen) — used for subpage hero titles */
+.text-azure-metal {
+  background: linear-gradient(100deg, #2f7fd0 0%, #8fc7ff 25%, #ffffff 50%, #8fc7ff 75%, #2f7fd0 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-pan 5s linear infinite;
+  text-shadow: 0 0 26px rgba(77, 166, 255, 0.35);
+}
+
+/* fade-in on scroll reveal (used with IntersectionObserver .is-visible) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* subtle blue glow + sweeping sheen (used on select elements) */
+.text-blue-glow {
+  text-shadow: 0 0 20px rgba(77, 166, 255, 0.5);
+}
+.blue-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.blue-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(143, 199, 255, 0.14), transparent);
+  transform: translateX(-120%);
+  animation: blue-sheen 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* parallax layers move via a --p variable set from scroll position */
+.parallax-layer {
+  will-change: transform;
+  transform: translate3d(0, calc(var(--p, 0) * 1px), 0);
+}
+
+/* marquee track */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.animate-delay-1 { animation-delay: 0.08s; }
+.animate-delay-2 { animation-delay: 0.16s; }
+.animate-delay-3 { animation-delay: 0.24s; }
+.animate-delay-4 { animation-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drive,
+  .animate-float,
+  .animate-marquee,
+  .animate-twinkle,
+  .animate-blue-sheen,
+  .blue-sheen::after,
+  .text-gold-metal,
+  .text-azure-metal {
+    animation: none !important;
+  }
+  .parallax-layer {
+    transform: none !important;
+  }
+}

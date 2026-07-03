@@ -27,3 +27,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# generated delivery archives (built on demand via `git archive`, not source)
+*.zip

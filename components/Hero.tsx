@@ -20,11 +20,6 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* driving car, continuously cruising across the top */}
-      <div className="relative h-0">
-        <DrivingCar className="top-1 sm:top-3" />
-      </div>
-
       <div className="section-pad relative pt-12 pb-14 lg:pt-16 lg:pb-20">
         {/* searcher + bigger bestseller, right at the top */}
         <div className="grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
@@ -49,8 +44,13 @@ export default function Hero() {
           <BestsellerSpotlight product={bestseller} large className="mt-4 animate-fade-up animate-delay-2 lg:mt-0" />
         </div>
 
+        {/* the car cruises along a road just below the searcher + bestseller */}
+        <div className="relative mt-8 h-24 sm:h-28">
+          <DrivingCar />
+        </div>
+
         {/* trust row */}
-        <ul className="mt-10 grid animate-fade-up animate-delay-4 gap-3 sm:grid-cols-3">
+        <ul className="mt-4 grid animate-fade-up animate-delay-4 gap-3 sm:grid-cols-3">
           {trust.map((item) => (
             <li
               key={item.label}

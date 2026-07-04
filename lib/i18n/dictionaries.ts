@@ -247,6 +247,18 @@ const nl = {
     badge: "Bestseller",
     seeAll: "Bekijk alle bestsellers",
   },
+  monteur: {
+    badge: "Monteurskeuze",
+    tag: "Gekozen door monteurs",
+    title: "De keuze van de monteur",
+    subtitle: "Waar professionele monteurs en garages dag in, dag uit op vertrouwen — nu ook voor jouw eigen oprit.",
+    point1Title: "Werkplaatskwaliteit",
+    point1Body: "Dezelfde volsynthetische olie die professionele garages gebruiken bij onderhoud.",
+    point2Title: "Voldoet aan OEM-normen",
+    point2Body: "Officiële ACEA-, API- en fabrieksspecificaties — precies wat de monteur voorschrijft.",
+    point3Title: "240+ garages",
+    point3Body: "Vertrouwd door meer dan 240 werkplaatsen in Nederland en België.",
+  },
   bundle: {
     nav: "Bundeldeals",
     badge: "Bundeldeals",

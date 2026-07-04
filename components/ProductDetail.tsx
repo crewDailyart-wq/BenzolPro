@@ -6,13 +6,14 @@ import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
-import { euro, priceForSize, sizeNote } from "@/lib/format";
+import { euro, priceForSize, sizeNote, defaultSize } from "@/lib/format";
 import { TAGLINES, getProductById } from "@/lib/products";
 import { getBundlesForProduct, getBundleGalleryImages, bundleOriginalPrice, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { resolveImages, sizeImageCandidates } from "@/lib/media";
 import ProductVisual from "./ProductVisual";
 import ProductGallery from "./ProductGallery";
 import BrandCompatibility from "./BrandCompatibility";
+import Reviews from "./Reviews";
 import PriceTag from "./PriceTag";
 import {
   StarIcon,
@@ -31,7 +32,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
   const { t, locale } = useI18n();
   const { add, addLine, setOpen } = useCart();
   const { price: audiencePrice, isGarage } = useAudience();
-  const [size, setSize] = useState(product.sizesLiter[0]);
+  const [size, setSize] = useState(defaultSize(product.sizesLiter));
   const [qty, setQty] = useState(1);
   const [previewBundle, setPreviewBundle] = useState<Bundle | null>(null);
 
@@ -221,6 +222,15 @@ export default function ProductDetail({ product, related }: { product: Product; 
                             {note}
                           </span>
                         )}
+                        {s === 20 && (
+                          <span
+                            className={`mt-0.5 text-[10px] font-bold ${
+                              size === s ? "text-emerald-800" : "text-emerald-400"
+                            }`}
+                          >
+                            {t("product.valueChoice")}
+                          </span>
+                        )}
                       </button>
                     );
                   })}
@@ -353,15 +363,41 @@ export default function ProductDetail({ product, related }: { product: Product; 
                 <Link
                   key={p.id}
                   href={`/product/${p.slug}`}
-                  className="group flex items-center gap-3 rounded-2xl border border-ink-line bg-ink-card p-3 transition hover:border-neon/50 hover:shadow-neon"
+                  className="group block rounded-2xl border border-ink-line bg-ink-card p-3.5 transition hover:border-neon/50 hover:shadow-neon"
                 >
-                  <div className="h-16 w-16 shrink-0 rounded-xl bg-ink-soft p-1.5">
-                    <ProductVisual product={p} className="h-full w-full" />
+                  <div className="flex items-start gap-3">
+                    <div className="h-20 w-20 shrink-0 rounded-xl bg-ink-soft p-1.5">
+                      <ProductVisual product={p} className="h-full w-full" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold leading-tight transition group-hover:text-neon">{p.name}</p>
+                      <div className="mt-1 flex items-center gap-1 text-[11px] text-zinc-400">
+                        <span className="flex text-neon">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <StarIcon key={i} width={11} height={11} className={i < Math.round(p.rating) ? "" : "opacity-25"} />
+                          ))}
+                        </span>
+                        <span className="font-semibold text-zinc-200">{p.rating.toFixed(1)}</span>
+                        <span>({p.reviews})</span>
+                      </div>
+                      <span className="mt-1 inline-block chip !px-2 !py-0.5 !text-[10px]">{p.viscosity}</span>
+                    </div>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold transition group-hover:text-neon">{p.name}</p>
-                    <p className="text-xs text-zinc-500">{p.viscosity}</p>
-                    <PriceTag base={p.price} size="xs" className="mt-1" />
+
+                  {/* a couple of key specs so each card carries more info */}
+                  <div className="mt-2.5 flex flex-wrap gap-1">
+                    {p.specs.slice(0, 3).map((s) => (
+                      <span key={s} className="rounded bg-ink-soft px-1.5 py-0.5 text-[10px] text-zinc-400">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-2.5 flex items-center justify-between">
+                    <PriceTag base={p.price} size="xs" />
+                    <span className="flex items-center gap-1 text-[11px] font-medium text-azure transition group-hover:gap-1.5">
+                      {t("plate.viewProduct")} <ArrowRight width={12} height={12} />
+                    </span>
                   </div>
                 </Link>
               ))}
@@ -373,6 +409,9 @@ export default function ProductDetail({ product, related }: { product: Product; 
       {/* full-width band below — fills the space under the product and shows
           which car brands the oil is approved for (editable in lib/carBrands.ts) */}
       <BrandCompatibility />
+
+      {/* reviews for this specific product */}
+      <Reviews scope={product.slug} seedRating={product.rating} seedCount={product.reviews} />
     </div>
   );
 }

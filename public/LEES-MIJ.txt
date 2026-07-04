@@ -22,6 +22,19 @@ Tip: gebruik een donkere of niet te drukke foto (bijv. een garage, motor,
 of asfalt bij nacht) zodat de gouden/blauwe teksten en knoppen goed
 leesbaar blijven.
 
+Eigen logo toevoegen (linksboven op elke pagina)
+=================================================
+Wil je jouw eigen Benzol-logo linksboven tonen in plaats van de standaard
+"BenzolPro"-tekst? Zet een afbeelding in DEZE map (public/) met de naam:
+
+     logo.png
+
+- Gebruik bij voorkeur een PNG met transparante achtergrond.
+- Een breed logo (bijv. 380x100 px) werkt het mooist; het schaalt
+  automatisch mee tot een hoogte die in de balk past.
+- Geen logo geplaatst? Dan blijft gewoon de standaard "BenzolPro"-tekst met
+  het bliksem-icoon staan — er verschijnt nooit een kapot plaatje.
+
 Productfoto's toevoegen
 =========================
 Zie public/products/LEES-MIJ.txt voor het toevoegen van foto's per product.

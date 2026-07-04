@@ -33,6 +33,14 @@ export default function ProductGallery({
   const [failed, setFailed] = useState<Set<number>>(new Set());
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
+  const [zoom, setZoom] = useState<{ active: boolean; x: number; y: number }>({ active: false, x: 50, y: 50 });
+
+  function onZoomMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    setZoom({ active: true, x, y });
+  }
 
   // reset to the first photo whenever the source list actually changes (e.g. switching into bundle preview)
   useEffect(() => {
@@ -95,9 +103,9 @@ export default function ProductGallery({
 
   return (
     <div>
-      {/* main photo + arrows */}
+      {/* main photo + arrows — hover to zoom in (like Amazon) */}
       <div
-        className="relative mx-auto aspect-square max-w-md outline-none"
+        className="relative mx-auto aspect-square max-w-md cursor-zoom-in overflow-hidden rounded-3xl outline-none"
         tabIndex={0}
         role="group"
         aria-roledescription="carousel"
@@ -105,6 +113,8 @@ export default function ProductGallery({
         onKeyDown={onKeyDown}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        onMouseMove={onZoomMove}
+        onMouseLeave={() => setZoom((z) => ({ ...z, active: false }))}
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos */}
         <img
@@ -112,7 +122,11 @@ export default function ProductGallery({
           ref={(el) => checkAlreadyFailed(el, current)}
           src={current}
           alt={`${name} — foto ${safeIndex + 1} van ${total}`}
-          className={`h-full w-full rounded-3xl object-contain ${imageClassName}`}
+          className={`h-full w-full rounded-3xl object-contain transition-transform duration-200 ease-out ${imageClassName}`}
+          style={{
+            transform: zoom.active ? "scale(2.2)" : "scale(1)",
+            transformOrigin: `${zoom.x}% ${zoom.y}%`,
+          }}
           onError={() => markFailed(allImages.indexOf(current))}
         />
 

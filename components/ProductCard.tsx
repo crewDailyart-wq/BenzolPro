@@ -7,6 +7,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
 import { TAGLINES } from "@/lib/products";
+import { defaultSize, priceForSize } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
 import { StarIcon, BoltIcon, CheckIcon, TruckIcon, PackageIcon } from "./icons";
@@ -32,7 +33,9 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   function quickAdd() {
-    add(product, product.sizesLiter[0], 1, price(product.price));
+    const s = defaultSize(product.sizesLiter);
+    const unit = price(priceForSize(product.price, product.sizesLiter[0], s));
+    add(product, s, 1, unit);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1400);
   }

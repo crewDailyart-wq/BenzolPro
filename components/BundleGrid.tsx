@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { BUNDLES, bundleOriginalPrice, BADGE_LABEL, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { getProductById } from "@/lib/products";
+import { resolveImages } from "@/lib/media";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { euro } from "@/lib/format";
@@ -36,6 +37,9 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
   const items = bundle.items
     .map((it) => ({ product: getProductById(it.productId), it }))
     .filter((x) => x.product);
+
+  // the bundle's own uploaded photo, shown large; falls back to mini bottles
+  const ownPhoto = resolveImages(bundle)[0];
 
   function addBundle() {
     const line: CartLine = {
@@ -78,23 +82,33 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
         )}
       </div>
 
-      {/* visual: mini bottles */}
-      <div className="relative flex h-40 items-end justify-center gap-1 overflow-hidden bg-gradient-to-b from-ink-soft to-ink px-4 pt-8">
+      {/* visual: the bundle's own uploaded photo (large), or mini bottles as fallback */}
+      <div className="relative flex h-52 items-end justify-center gap-1 overflow-hidden bg-gradient-to-b from-ink-soft to-ink px-4 pt-8">
         <div className="absolute inset-0 bg-grid-neon [background-size:20px_20px] opacity-30" />
-        {items.map(({ product, it }, i) => (
-          <div
-            key={i}
-            className="relative h-32 w-16 transition duration-500 group-hover:scale-105"
-            style={{ zIndex: 10 - i }}
-          >
-            <ProductVisual product={product!} className="h-full w-full" />
-            {it.qty > 1 && (
-              <span className="absolute -right-1 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-neon px-1 text-[10px] font-bold text-ink">
-                ×{it.qty}
-              </span>
-            )}
-          </div>
-        ))}
+        {ownPhoto ? (
+          // eslint-disable-next-line @next/next/no-img-element -- local, user-provided bundle photo
+          <img
+            src={ownPhoto}
+            alt={bundle.name[locale] ?? bundle.name.nl}
+            className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          />
+        ) : (
+          items.map(({ product, it }, i) => (
+            <div
+              key={i}
+              className="relative h-40 w-20 transition duration-500 group-hover:scale-105"
+              style={{ zIndex: 10 - i }}
+            >
+              <ProductVisual product={product!} className="h-full w-full" />
+              {it.qty > 1 && (
+                <span className="absolute -right-1 top-1 grid h-5 min-w-5 place-items-center rounded-full bg-neon px-1 text-[10px] font-bold text-ink">
+                  ×{it.qty}
+                </span>
+              )}
+            </div>
+          ))
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-4">

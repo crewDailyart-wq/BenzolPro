@@ -133,6 +133,7 @@ const nl = {
     backToProduct: "Terug naar los product",
     relatedMore: "Meer olie ontdekken",
     reviewsTitle: "Wat rijders zeggen",
+    valueChoice: "Voordelige keuze",
   },
   brands: {
     title: "Geschikt voor deze merken",
@@ -249,6 +250,7 @@ const nl = {
   },
   monteur: {
     badge: "Monteurskeuze",
+    bar: "Monteurskeuze — de motorolie die 240+ professionele garages vertrouwen",
     tag: "Gekozen door monteurs",
     title: "De keuze van de monteur",
     subtitle: "Waar professionele monteurs en garages dag in, dag uit op vertrouwen — nu ook voor jouw eigen oprit.",
@@ -258,6 +260,22 @@ const nl = {
     point2Body: "Officiële ACEA-, API- en fabrieksspecificaties — precies wat de monteur voorschrijft.",
     point3Title: "240+ garages",
     point3Body: "Vertrouwd door meer dan 240 werkplaatsen in Nederland en België.",
+  },
+  reviews: {
+    title: "Reviews",
+    subtitle: "Lees ervaringen van andere klanten of deel die van jou.",
+    write: "Schrijf een review",
+    name: "Je naam",
+    namePlaceholder: "Bijv. Jeroen uit Utrecht",
+    text: "Je review",
+    textPlaceholder: "Deel je ervaring met dit product of de service…",
+    ratingLabel: "Jouw beoordeling",
+    submit: "Review plaatsen",
+    empty: "Nog geen reviews — wees de eerste!",
+    thanks: "Bedankt voor je review!",
+    anonymous: "Anoniem",
+    based: "op basis van {count} reviews",
+    demoNote: "In deze demo worden reviews alleen in je eigen browser bewaard (nog geen server).",
   },
   bundle: {
     nav: "Bundeldeals",

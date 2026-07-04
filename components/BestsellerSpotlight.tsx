@@ -7,6 +7,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
 import { TAGLINES } from "@/lib/products";
+import { defaultSize, priceForSize } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
 import { StarIcon, BoltIcon, CheckIcon, ArrowRight } from "./icons";
@@ -28,7 +29,9 @@ export default function BestsellerSpotlight({
   const tagline = TAGLINES[product.tagline]?.[locale] ?? "";
 
   function quickBuy() {
-    add(product, product.sizesLiter[0], 1, price(product.price));
+    const s = defaultSize(product.sizesLiter);
+    const unit = price(priceForSize(product.price, product.sizesLiter[0], s));
+    add(product, s, 1, unit);
     setAdded(true);
     setTimeout(() => setAdded(false), 1400);
   }
@@ -62,7 +65,7 @@ export default function BestsellerSpotlight({
         <div className="relative grid grow grid-cols-1 items-center gap-6 sm:grid-cols-2 sm:gap-8">
           {/* floating product visual, big and central — square frame so an
               uploaded photo fills it completely (rounded corners, no borders) */}
-          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[320px]" : "max-w-[240px]"}`}>
+          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[440px]" : "max-w-[300px]"}`}>
             {/* soft blue ring behind bottle, gently pulsing */}
             <div className="animate-pulse-glow absolute inset-6 rounded-full bg-radial-azure opacity-90" />
             <div className="animate-float relative h-full w-full overflow-hidden rounded-3xl">

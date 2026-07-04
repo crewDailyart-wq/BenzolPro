@@ -7,6 +7,14 @@ export function euro(amount: number): string {
 }
 
 /**
+ * The size that should be selected by default for a product: 5 L when
+ * available (the most popular consumer size), otherwise the first listed size.
+ */
+export function defaultSize(sizesLiter: number[]): number {
+  return sizesLiter.includes(5) ? 5 : sizesLiter[0];
+}
+
+/**
  * Short note explaining what a container size actually is, so customers know
  * what they're buying: a 20L is a box of 4×5L bottles, and 60L / 208L are
  * drums (vaten). Returns null for the loose bottle sizes (1L / 5L).

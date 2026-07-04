@@ -119,6 +119,14 @@ Onderaan elke productpagina staat een band **"Geschikt voor deze merken"**. De m
 
 Merklogo's zet je in **`public/merken/`** en koppel je met `logo: "volkswagen.png"`. Zonder logo tonen we netjes de merknaam. Zie `public/merken/LEES-MIJ.txt`.
 
+## 🏷️ Eigen logo linksboven
+
+Zet een `logo.png` in `public/` en het verschijnt automatisch linksboven op elke pagina (in plaats van de "BenzolPro"-tekst). Zonder bestand blijft de standaard tekst-logo staan. Zie `public/LEES-MIJ.txt`.
+
+## 🗺️ Garagekaart (OpenStreetMap)
+
+De garagesectie toont een echte kaart (Leaflet + OpenStreetMap/CARTO-tegels) met een stip per garage. De stippen worden geplaatst op basis van de stad in `lib/garages.ts` (coördinaten in `components/GarageLeafletMap.tsx`).
+
 ## 🚚 Verzending
 
 Verzending is **altijd gratis**, op elke bestelling — er is geen minimumbedrag meer. Dit is centraal geregeld in `lib/cart.tsx` (`shipping = 0`).

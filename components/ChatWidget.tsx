@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n/provider";
-import { ChatIcon, CloseIcon, SendIcon, BoltIcon } from "./icons";
+import { ChatIcon, CloseIcon, SendIcon, BoltIcon, WhatsAppIcon } from "./icons";
+
+// WhatsApp business number in international format (0685163960 -> +31 6 85163960)
+const WHATSAPP_NUMBER = "31685163960";
 
 interface Msg {
   id: number;
@@ -53,6 +56,8 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t("chat.waPrefill"))}`;
 
   useEffect(() => {
     if (open && messages.length === 0) {
@@ -105,6 +110,23 @@ export default function ChatWidget() {
             <CloseIcon width={16} height={16} />
           </button>
         </div>
+
+        {/* direct WhatsApp line to the shop */}
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 border-b border-ink-line bg-[#25D366]/10 px-4 py-3 transition hover:bg-[#25D366]/20"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#25D366] text-white">
+            <WhatsAppIcon width={20} height={20} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-bold text-[#25D366]">{t("chat.whatsapp")}</span>
+            <span className="block truncate text-[11px] text-zinc-400">{t("chat.whatsappSub")}</span>
+          </span>
+          <SendIcon width={16} height={16} className="shrink-0 -rotate-45 text-[#25D366]" />
+        </a>
 
         <div ref={scrollRef} className="flex-1 space-y-2 overflow-y-auto p-4">
           {messages.map((m) => (

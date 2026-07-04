@@ -339,6 +339,9 @@ const nl = {
     closeLabel: "Chat sluiten",
     greeting: "Hoi! Ik ben de BenzolPro-assistent. Vraag me gerust naar kentekens, bezorging, betalen, garageprijzen of retourneren.",
     fallback: "Goede vraag! Daar kan ons team je het beste mee helpen — mail naar hallo@benzolpro.nl.",
+    whatsapp: "Chat via WhatsApp",
+    whatsappSub: "Direct antwoord van ons team",
+    waPrefill: "Hoi Benzol, ik heb een vraag over jullie motorolie.",
   },
   garages: {
     nav: "Voor garages",

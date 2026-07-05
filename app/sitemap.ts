@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
 import { BUNDLES } from "@/lib/bundles";
+import { getMakeEntries, getAllModelEntries } from "@/lib/carModels";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths: { path: string; priority: number; freq: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
     { path: "/", priority: 1, freq: "daily" },
     { path: "/products", priority: 0.9, freq: "daily" },
+    { path: "/olie", priority: 0.8, freq: "weekly" },
     { path: "/bundels", priority: 0.8, freq: "weekly" },
     { path: "/certificaten", priority: 0.5, freq: "yearly" },
     { path: "/offerte", priority: 0.6, freq: "monthly" },
@@ -39,5 +41,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...productEntries, ...bundleEntries];
+  const makeEntries: MetadataRoute.Sitemap = getMakeEntries().map((e) => ({
+    url: `${SITE_URL}/olie/${e.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  const modelEntries: MetadataRoute.Sitemap = getAllModelEntries().map((e) => ({
+    url: `${SITE_URL}/olie/${e.makeSlug}/${e.modelSlug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...productEntries, ...bundleEntries, ...makeEntries, ...modelEntries];
 }

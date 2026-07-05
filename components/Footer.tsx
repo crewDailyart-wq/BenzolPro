@@ -15,6 +15,7 @@ export default function Footer() {
         { label: t("footer.allProducts"), href: "/products" },
         { label: t("footer.bestsellers"), href: "/products?sort=popular" },
         { label: t("bundle.nav"), href: "/bundels" },
+        { label: "Motorolie per auto", href: "/olie" },
         { label: t("footer.findOil"), href: "/#plate" },
       ],
     },

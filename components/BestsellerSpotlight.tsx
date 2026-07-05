@@ -10,6 +10,7 @@ import { TAGLINES } from "@/lib/products";
 import { defaultSize, priceForSize } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
+import SizeChip from "./SizeChip";
 import { StarIcon, BoltIcon, CheckIcon, ArrowRight } from "./icons";
 
 export default function BestsellerSpotlight({
@@ -107,7 +108,7 @@ export default function BestsellerSpotlight({
 
             <div className="mt-4 flex flex-wrap items-baseline justify-center gap-2 sm:justify-start">
               <PriceTag base={stdPrice} compareAt={stdCompare} size={large ? "lg" : "md"} />
-              <span className="text-xs font-medium text-zinc-500">/ {stdSize} {t("product.liter")}</span>
+              <SizeChip liters={stdSize} />
             </div>
             <p className="mt-1.5 flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-400 sm:justify-start">
               <CheckIcon width={13} height={13} /> {t("product.freeShipBadge")}

@@ -42,6 +42,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
   const tagline = TAGLINES[product.tagline]?.[locale] ?? "";
 
+  // Show the 5 L price as the standard headline price (not the 1 L price)
+  const stdSize = defaultSize(product.sizesLiter);
+  const stdPrice = priceForSize(product.price, product.sizesLiter[0], stdSize);
+  const stdCompare = product.compareAtPrice
+    ? priceForSize(product.compareAtPrice, product.sizesLiter[0], stdSize)
+    : undefined;
+
   return (
     <div className="group card-surface relative flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-neon/50 hover:shadow-neon">
       {/* stretched link overlay: clicking anywhere on the card opens the product page */}
@@ -104,8 +111,8 @@ export default function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-auto flex items-end justify-between pt-3">
           <div>
-            <p className="text-[11px] text-zinc-500">{t("product.from")}</p>
-            <PriceTag base={product.price} compareAt={product.compareAtPrice} size="sm" />
+            <p className="text-[11px] text-zinc-500">{stdSize} {t("product.liter")}</p>
+            <PriceTag base={stdPrice} compareAt={stdCompare} size="sm" />
           </div>
           <button
             type="button"

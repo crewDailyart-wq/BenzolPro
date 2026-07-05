@@ -45,6 +45,13 @@ automatisch gegenereerde landingspagina's per automerk en -model (data in
 breadcrumb-structured-data en de kentekencheck-CTA. Voeg gerust merken/modellen
 toe aan `lib/carModels.ts` — pagina's, sitemap en interne links volgen vanzelf.
 
+**Fabrieksnorm op elke auto-pagina:** elke model- en generatiepagina toont nu de
+vereiste ACEA/OEM-norm (bijv. `VW 504.00 / 507.00`, `BMW LL-04`), niet alleen de
+viscositeit. De norm komt uit een merk-standaard (`BRAND_SPEC` in `lib/carModels.ts`)
+en is per model/generatie/uitvoering te overschrijven via een `spec`-veld
+(`resolveSpec` kiest de meest specifieke). Het blijft een gangbare indicatie — het
+instructieboekje is leidend.
+
 **Motoruitvoeringen, olie-inhoud & verversingskosten (ultra long-tail):** modellen
 kunnen naast generaties ook **motoruitvoeringen** (`engines`) en een **olie-inhoud**
 (`oilCapacityL`) hebben (data in `lib/carModels.ts`). Daaruit genereert de site:
@@ -57,6 +64,15 @@ en `BreadcrumbList`-structured-data, plus `speakable`-markup voor voice search. 
 De kentekencheck (RDW) linkt de uitslag automatisch door naar de bijbehorende
 `/olie/[merk]/[model]`-pagina (server-side gematcht, houdt de database uit de
 client-bundle). Voeg gerust uitvoeringen/capaciteiten toe — alles volgt vanzelf.
+
+**Linkbait-tool & E-E-A-T:** de kentekencheck heeft een eigen, deelbare
+landingspagina op `/kenteken-check` ("Welke motorolie past bij mijn kenteken?")
+met `WebApplication`-, `HowTo`-, `FAQPage`- en `BreadcrumbList`-structured-data —
+een citeerbaar, gratis hulpmiddel dat backlinks kan aantrekken. Daarnaast draagt
+de site nu een merk-brede `AggregateRating` op de `Organization` (afgeleid uit alle
+productbeoordelingen via `getBrandAggregateRating`), zodat er sterren in de
+zoekresultaten kunnen verschijnen. Productpagina's hadden al een eigen
+`AggregateRating`.
 
 **Lokale SEO — "olie verversen in [stad]":** onder `/olie-verversen` staan
 automatisch gegenereerde pagina's per plaats waar een aangesloten Benzol-garage

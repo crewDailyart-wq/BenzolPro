@@ -32,6 +32,8 @@ export interface Generation {
   fuel: FuelLabel;
   /** circa olie-inhoud incl. filter, in liters (voor "hoeveel liter"-advies) */
   oilCapacityL?: number;
+  /** afwijkende fabrieksnorm voor deze generatie (overschrijft de merk-standaard) */
+  spec?: string;
 }
 
 /**
@@ -62,6 +64,8 @@ export interface CarModel {
   fuel: FuelLabel;
   /** circa olie-inhoud incl. filter, in liters (voor "hoeveel liter"-advies) */
   oilCapacityL?: number;
+  /** afwijkende fabrieksnorm voor dit model (overschrijft de merk-standaard) */
+  spec?: string;
   /** optionele generaties met elk een eigen advies + eigen pagina */
   generations?: Generation[];
   /** optionele motoruitvoeringen met elk een eigen advies + eigen pagina */
@@ -728,6 +732,61 @@ export function viscosityReason(v: Viscosity): string {
     default:
       return "de aanbevolen viscositeit voor dit model";
   }
+}
+
+/**
+ * Gangbare fabrieksnorm (ACEA/OEM) per merk. Wordt gebruikt als standaard op de
+ * model- en generatiepagina's zodat élke auto-pagina de vereiste norm toont, niet
+ * alleen de viscositeit. Een model of generatie mag dit overschrijven via `spec`,
+ * en een motoruitvoering heeft altijd zijn eigen `spec`. Dit is een gangbare
+ * indicatie — het instructieboekje blijft leidend voor de exacte norm.
+ */
+export const BRAND_SPEC: Record<string, string> = {
+  Volkswagen: "VW 504.00 / 507.00",
+  Audi: "VW 504.00 / 507.00",
+  Škoda: "VW 504.00 / 507.00",
+  SEAT: "VW 504.00 / 507.00",
+  Cupra: "VW 504.00 / 507.00",
+  "Mercedes-Benz": "MB 229.51 / 229.52",
+  Smart: "MB 229.51",
+  BMW: "BMW LL-04",
+  MINI: "BMW LL-04",
+  Toyota: "API SP / ACEA C5",
+  Lexus: "API SP / ACEA C5",
+  Renault: "RN17 / RN0720",
+  Dacia: "RN17 / RN0720",
+  Peugeot: "PSA B71 2312",
+  Citroën: "PSA B71 2312",
+  Opel: "dexos2 / dexosD",
+  Chevrolet: "dexos1 Gen2",
+  Ford: "Ford WSS-M2C948-B / WSS-M2C913-D",
+  Volvo: "ACEA C3 / VCC RBS0-2AE",
+  Nissan: "ACEA C4 / Nissan",
+  Mazda: "ACEA C5 / API SP",
+  Suzuki: "ACEA C2 / C3",
+  Honda: "API SP / ACEA C5",
+  Mitsubishi: "ACEA C2 / C3",
+  Fiat: "9.55535-S1 / S3",
+  "Alfa Romeo": "9.55535-S1 / S3",
+  Jeep: "MS-6395 / 9.55535",
+  Kia: "API SP / ACEA C2/C3",
+  Hyundai: "API SP / ACEA C2/C3",
+  MG: "ACEA C3 / API SP",
+  Subaru: "ACEA C3 / API SP",
+  "Land Rover": "ACEA C1 / STJLR",
+};
+
+/**
+ * De effectieve fabrieksnorm voor een auto-pagina: motoruitvoering > generatie >
+ * model > merk-standaard. Geeft `undefined` als er (nog) geen norm bekend is.
+ */
+export function resolveSpec(
+  makeName: string,
+  model?: Pick<CarModel, "spec">,
+  generation?: Pick<Generation, "spec">,
+  engine?: Pick<Engine, "spec">,
+): string | undefined {
+  return engine?.spec ?? generation?.spec ?? model?.spec ?? BRAND_SPEC[makeName];
 }
 
 /**

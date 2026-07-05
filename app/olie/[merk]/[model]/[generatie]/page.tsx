@@ -5,6 +5,7 @@ import {
   getAllGenerationEntries,
   getGenerationBySlug,
   viscosityReason,
+  resolveSpec,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
 import { oilChangeHowTo } from "@/lib/schema";
@@ -48,6 +49,7 @@ export default function GenerationPage({
   const { make, model, generation } = entry;
   const siblings = (model.generations ?? []).filter((g) => g.slug !== params.generatie);
   const capacity = generation.oilCapacityL ?? model.oilCapacityL;
+  const spec = resolveSpec(make.name, model, generation);
 
   const pageUrl = absoluteUrl(`/olie/${params.merk}/${params.model}/${params.generatie}`);
   const breadcrumb = {
@@ -70,7 +72,9 @@ export default function GenerationPage({
         name: `Welke motorolie heeft de ${make.name} ${generation.name} (${generation.era}) nodig?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Voor de ${make.name} ${generation.name} adviseren wij een ${generation.viscosity} motorolie — ${viscosityReason(
+          text: `Voor de ${make.name} ${generation.name} adviseren wij een ${generation.viscosity} motorolie${
+            spec ? ` volgens de gangbare norm ${spec}` : ""
+          } — ${viscosityReason(
             generation.viscosity,
           )}. Controleer altijd je instructieboekje of de olievuldop voor de exacte fabrieksnorm.`,
         },
@@ -110,12 +114,18 @@ export default function GenerationPage({
       <h1 className="mt-3 max-w-3xl text-3xl font-bold sm:text-4xl">
         Welke motorolie voor de {make.name} {generation.name}?
       </h1>
+      {spec && (
+        <p className="mt-2 text-sm text-zinc-400">
+          Gangbare fabrieksnorm: <span className="font-semibold text-zinc-200">{spec}</span>
+        </p>
+      )}
 
       <OilAdviceBody
         subject={`${make.name} ${generation.name}`}
         era={generation.era}
         fuel={generation.fuel}
         viscosity={generation.viscosity}
+        spec={spec}
       />
 
       {capacity && <OilCapacityCost subject={`${make.name} ${generation.name}`} viscosity={generation.viscosity} capacityL={capacity} />}

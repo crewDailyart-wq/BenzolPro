@@ -22,6 +22,7 @@ export default function Footer() {
     {
       title: t("garages.nav"),
       links: [
+        { label: "Olie verversen per plaats", href: "/olie-verversen" },
         { label: t("quote.title"), href: "/offerte" },
         { label: t("audience.garage"), href: "/#garages" },
         { label: t("nav.certificates"), href: "/certificaten" },

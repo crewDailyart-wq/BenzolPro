@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { CAR_MAKES, carSlug } from "@/lib/carModels";
-import { absoluteUrl } from "@/lib/site";
+import { CAR_MAKES, carSlug, getAllModelEntries, getAllEngineEntries } from "@/lib/carModels";
+import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/site";
 import JsonLd from "@/components/JsonLd";
 
 export const metadata: Metadata = {
@@ -20,10 +20,24 @@ export default function OilByCarIndex() {
       { "@type": "ListItem", position: 2, name: "Motorolie per auto", item: absoluteUrl("/olie") },
     ],
   };
+  const modelCount = getAllModelEntries().length;
+  const engineCount = getAllEngineEntries().length;
+  // Dataset-schema: onze olie-per-auto-database als citeerbare dataset.
+  const dataset = {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: "Motorolie-adviesdatabase per auto",
+    description: `Aanbevolen motorolie-viscositeit, fabrieksnorm en olie-inhoud voor ${CAR_MAKES.length} automerken, ${modelCount} modellen en ${engineCount} motoruitvoeringen. Samengesteld door ${SITE_NAME}.`,
+    url: absoluteUrl("/olie"),
+    inLanguage: "nl-NL",
+    keywords: ["motorolie", "viscositeit", "olie per auto", "olie-inhoud", "5W30", "5W40"],
+    creator: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    license: absoluteUrl("/olie"),
+  };
 
   return (
     <div className="section-pad py-10">
-      <JsonLd data={breadcrumb} />
+      <JsonLd data={[breadcrumb, dataset]} />
       <nav className="text-xs text-zinc-500">
         <Link href="/" className="hover:text-neon">Home</Link> <span className="mx-1">/</span> Motorolie per auto
       </nav>

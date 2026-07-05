@@ -82,10 +82,19 @@ export interface RdwVehicle {
   color?: string;
 }
 
+export interface CarPageLink {
+  makeSlug: string;
+  modelSlug: string;
+  makeName: string;
+  modelName: string;
+}
+
 export interface OilRecommendation {
   vehicle: RdwVehicle;
   viscosity: Viscosity | null;
   reasonKey: string; // i18n key explaining why
   productSlug: string | null;
   isElectric: boolean;
+  /** matchende /olie-pagina voor dit merk/model (server-side bepaald), of null */
+  carPage?: CarPageLink | null;
 }

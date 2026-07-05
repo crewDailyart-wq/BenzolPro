@@ -45,6 +45,28 @@ automatisch gegenereerde landingspagina's per automerk en -model (data in
 breadcrumb-structured-data en de kentekencheck-CTA. Voeg gerust merken/modellen
 toe aan `lib/carModels.ts` — pagina's, sitemap en interne links volgen vanzelf.
 
+**Motoruitvoeringen, olie-inhoud & verversingskosten (ultra long-tail):** modellen
+kunnen naast generaties ook **motoruitvoeringen** (`engines`) en een **olie-inhoud**
+(`oilCapacityL`) hebben (data in `lib/carModels.ts`). Daaruit genereert de site:
+extra pagina's per uitvoering (`/olie/[merk]/[model]/motor/[motor]`, bijv. "Golf 1.4
+TSI"), en op élke auto-pagina een antwoord-eerst blok dat **"hoeveel liter olie heeft
+de [auto] nodig?"** en **"wat kost een olieverversing?"** beantwoordt — precies de
+featured-snippet-queries. Deze pagina's dragen `HowTo`- (olie verversen), `FAQPage`-
+en `BreadcrumbList`-structured-data, plus `speakable`-markup voor voice search. De
+`/olie`-index draagt een `Dataset`-schema zodat de hele database citeerbaar is.
+De kentekencheck (RDW) linkt de uitslag automatisch door naar de bijbehorende
+`/olie/[merk]/[model]`-pagina (server-side gematcht, houdt de database uit de
+client-bundle). Voeg gerust uitvoeringen/capaciteiten toe — alles volgt vanzelf.
+
+**Lokale SEO — "olie verversen in [stad]":** onder `/olie-verversen` staan
+automatisch gegenereerde pagina's per plaats waar een aangesloten Benzol-garage
+zit (data in `lib/garages.ts`). Elke stadspagina toont de lokale garages, een
+indicatie van de verversingskosten en een olie-CTA, met `AutoRepair`/
+`LocalBusiness`-, `CollectionPage`-, `FAQPage`- en `BreadcrumbList`-structured-data
+(inclusief geo-coördinaten uit `CITY_COORDS`). Zo maak je kans op de lokale
+"local pack"-resultaten voor zoekopdrachten met koopintentie. Voeg een garage met
+plaats toe aan `lib/garages.ts` — de stadspagina, kaart, sitemap en links volgen vanzelf.
+
 **Kennisbank — informatieve gidsen:** onder `/gids` staat een kennisbank met
 artikelen die de veelgestelde motorolie-vragen beantwoorden ("hoe vaak
 verversen", "5W30 of 5W40", viscositeit, synthetisch vs. mineraal, ACEA/API-

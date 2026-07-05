@@ -9,6 +9,7 @@ import CartDrawer from "@/components/CartDrawer";
 import ChatWidget from "@/components/ChatWidget";
 import JsonLd from "@/components/JsonLd";
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL } from "@/lib/site";
+import { getBrandAggregateRating } from "@/lib/products";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,6 +40,8 @@ export const metadata: Metadata = {
 };
 
 // Globale structured data: wie is het bedrijf + welke website is dit.
+const BRAND_RATING = getBrandAggregateRating();
+
 const ORG_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -53,6 +56,13 @@ const ORG_JSONLD = {
     email: CONTACT_EMAIL,
     contactType: "customer support",
     availableLanguage: ["Dutch", "English"],
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: BRAND_RATING.ratingValue,
+    reviewCount: BRAND_RATING.reviewCount,
+    bestRating: BRAND_RATING.bestRating,
+    worstRating: BRAND_RATING.worstRating,
   },
 };
 

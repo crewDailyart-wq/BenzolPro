@@ -295,4 +295,23 @@ export function getProductsByViscosity(v: Viscosity): Product[] {
   return PRODUCTS.filter((p) => p.viscosity === v);
 }
 
+export interface BrandRating {
+  ratingValue: number;
+  reviewCount: number;
+  bestRating: number;
+  worstRating: number;
+}
+
+/**
+ * Merk-brede beoordeling, afgeleid uit alle productratings (het aantal reviews
+ * per product weegt mee). Voedt de `AggregateRating` in de Organization-
+ * structured-data zodat er sterren in de zoekresultaten kunnen verschijnen.
+ */
+export function getBrandAggregateRating(): BrandRating {
+  const reviewCount = PRODUCTS.reduce((s, p) => s + p.reviews, 0);
+  const weighted = PRODUCTS.reduce((s, p) => s + p.rating * p.reviews, 0);
+  const ratingValue = reviewCount > 0 ? Math.round((weighted / reviewCount) * 10) / 10 : 0;
+  return { ratingValue, reviewCount, bestRating: 5, worstRating: 1 };
+}
+
 export const ALL_VISCOSITIES: Viscosity[] = ["0W20", "0W30", "5W30", "5W40", "10W40", "10W60", "15W40"];

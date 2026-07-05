@@ -58,6 +58,15 @@ De kentekencheck (RDW) linkt de uitslag automatisch door naar de bijbehorende
 `/olie/[merk]/[model]`-pagina (server-side gematcht, houdt de database uit de
 client-bundle). Voeg gerust uitvoeringen/capaciteiten toe — alles volgt vanzelf.
 
+**Linkbait-tool & E-E-A-T:** de kentekencheck heeft een eigen, deelbare
+landingspagina op `/kenteken-check` ("Welke motorolie past bij mijn kenteken?")
+met `WebApplication`-, `HowTo`-, `FAQPage`- en `BreadcrumbList`-structured-data —
+een citeerbaar, gratis hulpmiddel dat backlinks kan aantrekken. Daarnaast draagt
+de site nu een merk-brede `AggregateRating` op de `Organization` (afgeleid uit alle
+productbeoordelingen via `getBrandAggregateRating`), zodat er sterren in de
+zoekresultaten kunnen verschijnen. Productpagina's hadden al een eigen
+`AggregateRating`.
+
 **Lokale SEO — "olie verversen in [stad]":** onder `/olie-verversen` staan
 automatisch gegenereerde pagina's per plaats waar een aangesloten Benzol-garage
 zit (data in `lib/garages.ts`). Elke stadspagina toont de lokale garages, een

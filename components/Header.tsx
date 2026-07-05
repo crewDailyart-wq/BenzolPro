@@ -85,7 +85,7 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/#plate"
+              href="/kenteken-check"
               onClick={() => setMobileOpen(false)}
               className="mt-2 flex items-center justify-center gap-2 rounded-full bg-neon px-4 py-3 text-sm font-bold text-ink"
             >

@@ -58,6 +58,15 @@ De kentekencheck (RDW) linkt de uitslag automatisch door naar de bijbehorende
 `/olie/[merk]/[model]`-pagina (server-side gematcht, houdt de database uit de
 client-bundle). Voeg gerust uitvoeringen/capaciteiten toe — alles volgt vanzelf.
 
+**Lokale SEO — "olie verversen in [stad]":** onder `/olie-verversen` staan
+automatisch gegenereerde pagina's per plaats waar een aangesloten Benzol-garage
+zit (data in `lib/garages.ts`). Elke stadspagina toont de lokale garages, een
+indicatie van de verversingskosten en een olie-CTA, met `AutoRepair`/
+`LocalBusiness`-, `CollectionPage`-, `FAQPage`- en `BreadcrumbList`-structured-data
+(inclusief geo-coördinaten uit `CITY_COORDS`). Zo maak je kans op de lokale
+"local pack"-resultaten voor zoekopdrachten met koopintentie. Voeg een garage met
+plaats toe aan `lib/garages.ts` — de stadspagina, kaart, sitemap en links volgen vanzelf.
+
 **Kennisbank — informatieve gidsen:** onder `/gids` staat een kennisbank met
 artikelen die de veelgestelde motorolie-vragen beantwoorden ("hoe vaak
 verversen", "5W30 of 5W40", viscositeit, synthetisch vs. mineraal, ACEA/API-

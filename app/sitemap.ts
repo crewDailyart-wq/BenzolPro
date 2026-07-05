@@ -3,6 +3,7 @@ import { PRODUCTS } from "@/lib/products";
 import { BUNDLES } from "@/lib/bundles";
 import { getMakeEntries, getAllModelEntries, getAllGenerationEntries, getAllEngineEntries } from "@/lib/carModels";
 import { GUIDES } from "@/lib/guides";
+import { getCities } from "@/lib/garages";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", priority: 1, freq: "daily" },
     { path: "/products", priority: 0.9, freq: "daily" },
     { path: "/olie", priority: 0.8, freq: "weekly" },
+    { path: "/olie-verversen", priority: 0.7, freq: "weekly" },
     { path: "/gids", priority: 0.7, freq: "weekly" },
     { path: "/bundels", priority: 0.8, freq: "weekly" },
     { path: "/certificaten", priority: 0.5, freq: "yearly" },
@@ -78,6 +80,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const cityEntries: MetadataRoute.Sitemap = getCities().map((c) => ({
+    url: `${SITE_URL}/olie-verversen/${c.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
     ...productEntries,
@@ -87,5 +96,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...generationEntries,
     ...engineEntries,
     ...guideEntries,
+    ...cityEntries,
   ];
 }

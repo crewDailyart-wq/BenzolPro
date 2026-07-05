@@ -30,6 +30,20 @@ Futuristic, premium feel in a **black + gold** palette with subtle azure-blue ac
 - A server-side API route (`/api/rdw`) that safely proxies the RDW Open Data API
 - No heavy dependencies — chat, uploads and parallax are all plain React/CSS
 
+## 🔍 SEO & vindbaarheid
+
+De shop heeft een technisch SEO-fundament ingebouwd:
+
+- **`sitemap.xml`** en **`robots.txt`** worden automatisch gegenereerd (`app/sitemap.ts`, `app/robots.ts`).
+- **Structured data (JSON-LD)**: `Product` (met prijs, voorraad en sterrenbeoordeling), `Organization`, `WebSite`, `BreadcrumbList` en een `FAQPage` op de homepage — hierdoor kan Google sterren, prijs en veelgestelde vragen direct in de zoekresultaten tonen.
+- **Canonical-URLs** en per-pagina titels/omschrijvingen (voorkomt duplicate content).
+- **Social-share afbeeldingen** worden automatisch gegenereerd (`app/opengraph-image.tsx` en per product) — geen losse afbeeldingsbestanden nodig.
+
+> **Belangrijk:** zet in productie je echte domein via de omgevingsvariabele
+> `NEXT_PUBLIC_SITE_URL` (bijv. `https://www.benzolpro.nl`). Alle canonical-URLs,
+> de sitemap en de structured data gebruiken die waarde. Dien daarna je sitemap
+> in bij **Google Search Console** (`/sitemap.xml`).
+
 ## 🚀 Getting started
 
 ```bash

@@ -8,7 +8,9 @@ import {
   viscosityReason,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
+import { oilChangeHowTo } from "@/lib/schema";
 import OilAdviceBody from "@/components/OilAdviceBody";
+import OilCapacityCost from "@/components/OilCapacityCost";
 import JsonLd from "@/components/JsonLd";
 
 export function generateStaticParams() {
@@ -35,6 +37,8 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
   const { make, model } = entry;
   const otherModels = make.models.filter((m) => carSlug(m.model) !== params.model);
   const generations = model.generations ?? [];
+  const engines = model.engines ?? [];
+  const capacity = model.oilCapacityL;
 
   const pageUrl = absoluteUrl(`/olie/${params.merk}/${params.model}`);
   const breadcrumb = {
@@ -61,12 +65,30 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
           )}. Controleer altijd je instructieboekje of de olievuldop voor de exacte fabrieksnorm.`,
         },
       },
+      ...(capacity
+        ? [
+            {
+              "@type": "Question",
+              name: `Hoeveel liter olie gaat er in de ${make.name} ${model.model}?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: `De ${make.name} ${model.model} heeft bij een verversing inclusief filter circa ${capacity} liter ${model.viscosity} motorolie nodig.`,
+              },
+            },
+          ]
+        : []),
     ],
+    // speakable: laat voice-assistenten de kernvraag/antwoord voorlezen
+    speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".speakable-answer"] },
   };
+  const schemas: object[] = [breadcrumb, faq];
+  if (capacity) {
+    schemas.push(oilChangeHowTo({ subject: `${make.name} ${model.model}`, viscosity: model.viscosity, capacityL: capacity, url: pageUrl }));
+  }
 
   return (
     <div className="section-pad py-10">
-      <JsonLd data={[breadcrumb, faq]} />
+      <JsonLd data={schemas} />
 
       <nav className="text-xs text-zinc-500">
         <Link href="/" className="hover:text-neon">Home</Link> <span className="mx-1">/</span>
@@ -80,6 +102,35 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
       </h1>
 
       <OilAdviceBody subject={`${make.name} ${model.model}`} era={model.era} fuel={model.fuel} viscosity={model.viscosity} />
+
+      {capacity && <OilCapacityCost subject={`${make.name} ${model.model}`} viscosity={model.viscosity} capacityL={capacity} />}
+
+      {/* motoruitvoeringen (interne links + eigen pagina's) */}
+      {engines.length > 0 && (
+        <div className="mt-10 max-w-3xl">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-300">Kies je motor</h2>
+          <p className="mt-1 text-sm text-zinc-400">Het advies en de olie-inhoud verschillen per uitvoering — kies je motor voor de exacte aanbeveling.</p>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {engines.map((e) => (
+              <Link
+                key={e.slug}
+                href={`/olie/${params.merk}/${params.model}/motor/${e.slug}`}
+                className="card-surface flex items-center justify-between gap-3 p-3.5 transition hover:border-neon/50"
+              >
+                <span>
+                  <span className="block text-sm font-semibold text-zinc-100">{make.name} {model.model} {e.name}</span>
+                  <span className="block text-[11px] text-zinc-500">
+                    {e.power ? `${e.power} · ` : ""}{e.oilCapacityL ? `± ${e.oilCapacityL} L` : e.fuel}
+                  </span>
+                </span>
+                <span className="rounded-full border border-neon/40 bg-neon/10 px-2 py-0.5 text-[11px] font-bold text-neon">
+                  {e.viscosity}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* generaties (interne links + eigen pagina's) */}
       {generations.length > 0 && (

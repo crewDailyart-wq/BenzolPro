@@ -52,6 +52,7 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
   }
 
   const product = result?.productSlug ? getProductBySlug(result.productSlug) : undefined;
+  const carPage = result?.carPage ?? null;
 
   return (
     <div id="plate" className={`scroll-mt-24 ${className}`}>
@@ -159,12 +160,23 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
                     </div>
                   )}
 
-                  <Link
-                    href={`/products?v=${result.viscosity}`}
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-neon hover:underline"
-                  >
-                    {t("plate.shopAll")} <ArrowRight width={16} height={16} />
-                  </Link>
+                  <div className="mt-4 flex flex-col gap-2">
+                    {carPage && (
+                      <Link
+                        href={`/olie/${carPage.makeSlug}/${carPage.modelSlug}`}
+                        className="inline-flex items-center gap-1 text-sm font-semibold text-azure hover:underline"
+                      >
+                        Bekijk het volledige olie-advies voor de {carPage.makeName} {carPage.modelName}
+                        <ArrowRight width={16} height={16} />
+                      </Link>
+                    )}
+                    <Link
+                      href={`/products?v=${result.viscosity}`}
+                      className="inline-flex items-center gap-1 text-sm font-medium text-neon hover:underline"
+                    >
+                      {t("plate.shopAll")} <ArrowRight width={16} height={16} />
+                    </Link>
+                  </div>
                 </>
               )}
             </div>

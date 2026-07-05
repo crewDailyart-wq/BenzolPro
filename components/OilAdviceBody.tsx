@@ -30,7 +30,7 @@ export default function OilAdviceBody({
 
   return (
     <>
-      <p className="mt-3 max-w-3xl text-lg leading-relaxed text-zinc-300">
+      <p className="speakable-answer mt-3 max-w-3xl text-lg leading-relaxed text-zinc-300">
         Voor de <strong>{subject}</strong>
         {era ? ` (${era}, ${fuel})` : ` (${fuel})`} adviseren wij{" "}
         <strong className="text-neon">Benzol {viscosity}</strong> motorolie — {viscosityReason(viscosity)}.

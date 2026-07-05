@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { RdwVehicle } from "@/lib/types";
 import { isPlausiblePlate, normalizePlate, recommendOil } from "@/lib/rdw";
+import { findCarPageByRdw } from "@/lib/carModels";
 
 /**
  * Server-side proxy to the official RDW Open Data API.
@@ -75,6 +76,13 @@ export async function GET(request: Request) {
     };
 
     const recommendation = recommendOil(vehicle);
+
+    // Koppel de RDW-uitslag aan onze /olie-pagina (server-side, houdt de
+    // auto-database uit de client-bundle).
+    const match = recommendation.isElectric ? null : findCarPageByRdw(vehicle.make, vehicle.model);
+    recommendation.carPage = match
+      ? { makeSlug: match.makeSlug, modelSlug: match.modelSlug, makeName: match.make.name, modelName: match.model.model }
+      : null;
 
     return NextResponse.json(recommendation, {
       headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400" },

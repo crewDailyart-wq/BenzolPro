@@ -7,7 +7,9 @@ import {
   viscosityReason,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
+import { oilChangeHowTo } from "@/lib/schema";
 import OilAdviceBody from "@/components/OilAdviceBody";
+import OilCapacityCost from "@/components/OilCapacityCost";
 import JsonLd from "@/components/JsonLd";
 
 export function generateStaticParams() {
@@ -45,6 +47,7 @@ export default function GenerationPage({
   if (!entry) notFound();
   const { make, model, generation } = entry;
   const siblings = (model.generations ?? []).filter((g) => g.slug !== params.generatie);
+  const capacity = generation.oilCapacityL ?? model.oilCapacityL;
 
   const pageUrl = absoluteUrl(`/olie/${params.merk}/${params.model}/${params.generatie}`);
   const breadcrumb = {
@@ -72,12 +75,29 @@ export default function GenerationPage({
           )}. Controleer altijd je instructieboekje of de olievuldop voor de exacte fabrieksnorm.`,
         },
       },
+      ...(capacity
+        ? [
+            {
+              "@type": "Question",
+              name: `Hoeveel liter olie gaat er in de ${make.name} ${generation.name}?`,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: `De ${make.name} ${generation.name} heeft bij een verversing inclusief filter circa ${capacity} liter ${generation.viscosity} motorolie nodig.`,
+              },
+            },
+          ]
+        : []),
     ],
+    speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".speakable-answer"] },
   };
+  const schemas: object[] = [breadcrumb, faq];
+  if (capacity) {
+    schemas.push(oilChangeHowTo({ subject: `${make.name} ${generation.name}`, viscosity: generation.viscosity, capacityL: capacity, url: pageUrl }));
+  }
 
   return (
     <div className="section-pad py-10">
-      <JsonLd data={[breadcrumb, faq]} />
+      <JsonLd data={schemas} />
 
       <nav className="text-xs text-zinc-500">
         <Link href="/" className="hover:text-neon">Home</Link> <span className="mx-1">/</span>
@@ -97,6 +117,8 @@ export default function GenerationPage({
         fuel={generation.fuel}
         viscosity={generation.viscosity}
       />
+
+      {capacity && <OilCapacityCost subject={`${make.name} ${generation.name}`} viscosity={generation.viscosity} capacityL={capacity} />}
 
       {/* andere generaties van dit model */}
       {siblings.length > 0 && (

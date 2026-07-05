@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
 import { BUNDLES } from "@/lib/bundles";
-import { getMakeEntries, getAllModelEntries, getAllGenerationEntries } from "@/lib/carModels";
+import { getMakeEntries, getAllModelEntries, getAllGenerationEntries, getAllEngineEntries } from "@/lib/carModels";
 import { GUIDES } from "@/lib/guides";
 import { SITE_URL } from "@/lib/site";
 
@@ -64,6 +64,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  const engineEntries: MetadataRoute.Sitemap = getAllEngineEntries().map((e) => ({
+    url: `${SITE_URL}/olie/${e.makeSlug}/${e.modelSlug}/motor/${e.engineSlug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.65,
+  }));
+
   const guideEntries: MetadataRoute.Sitemap = GUIDES.map((g) => ({
     url: `${SITE_URL}/gids/${g.slug}`,
     lastModified: new Date(g.updated),
@@ -78,6 +85,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...makeEntries,
     ...modelEntries,
     ...generationEntries,
+    ...engineEntries,
     ...guideEntries,
   ];
 }

@@ -250,7 +250,7 @@ const nl = {
   },
   monteur: {
     badge: "Monteurskeuze",
-    bar: "Monteurskeuze — de motorolie die 240+ professionele garages vertrouwen",
+    bar: "Monteurskeuze — de motorolie die monteurs door heel Nederland en België vertrouwen",
     tag: "Gekozen door monteurs",
     title: "De keuze van de monteur",
     subtitle: "Waar professionele monteurs en garages dag in, dag uit op vertrouwen — nu ook voor jouw eigen oprit.",
@@ -258,8 +258,8 @@ const nl = {
     point1Body: "Dezelfde volsynthetische olie die professionele garages gebruiken bij onderhoud.",
     point2Title: "Voldoet aan OEM-normen",
     point2Body: "Officiële ACEA-, API- en fabrieksspecificaties — precies wat de monteur voorschrijft.",
-    point3Title: "240+ garages",
-    point3Body: "Vertrouwd door meer dan 240 werkplaatsen in Nederland en België.",
+    point3Title: "Heel Nederland en België",
+    point3Body: "Vertrouwd door monteurs en werkplaatsen door heel Nederland en België.",
   },
   reviews: {
     title: "Reviews",
@@ -347,7 +347,7 @@ const nl = {
   garages: {
     nav: "Voor garages",
     badge: "Vertrouwd door garages",
-    title: "Al 240+ garages rijden op Benzol",
+    title: "Monteurs door heel Nederland en België rijden op Benzol",
     subtitle: "Scherpe inkoopprijzen, staffelkorting en levering de volgende dag.",
     stat1: "Aangesloten garages",
     stat2: "Gemiddelde beoordeling",
@@ -358,7 +358,7 @@ const nl = {
     ctaButton: "Naar garage-prijzen",
     ctaActive: "Garage-modus actief",
     listTitle: "Garages door heel Nederland en België",
-    listSubtitle: "Een greep uit de werkplaatsen die al op Benzol rijden.",
+    listSubtitle: "Onder andere deze garages rijden al op Benzol.",
     countryNL: "Nederland",
     countryBE: "België",
     mapTitle: "Overal in Nederland en België",

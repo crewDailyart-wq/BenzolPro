@@ -43,7 +43,7 @@ export default function TrustedGarages() {
   const { setAudience, isGarage } = useAudience();
 
   const stats = [
-    { icon: WrenchIcon, value: "240+", label: t("garages.stat1") },
+    { icon: WrenchIcon, value: "NL & BE", label: t("garages.stat1") },
     { icon: StarIcon, value: "4.9", label: t("garages.stat2") },
     { icon: TruckIcon, value: "18k L", label: t("garages.stat3") },
     { icon: ShieldIcon, value: "100%", label: t("garages.stat4") },

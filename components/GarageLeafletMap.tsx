@@ -17,6 +17,11 @@ const CITY: Record<string, [number, number]> = {
   Brussel: [4.352, 50.847], Leuven: [4.7, 50.879], Hasselt: [5.338, 50.93],
   Luik: [5.573, 50.633], Mechelen: [4.48, 51.028], Kortrijk: [3.265, 50.828],
   Oostende: [2.918, 51.233],
+  // steden van de echte garages
+  Roosendaal: [4.465, 51.531], Delft: [4.357, 52.011], Alblasserdam: [4.662, 51.865],
+  "Beek en Donk": [5.634, 51.535], Maassluis: [4.249, 51.923], Vlaardingen: [4.341, 51.912],
+  Helmond: [5.661, 51.481], Oosterhout: [4.86, 51.645], Spijkenisse: [4.329, 51.845],
+  "Bergen op Zoom": [4.291, 51.494], Maasland: [4.271, 51.943],
 };
 const CENTROID: Record<"NL" | "BE", [number, number]> = { NL: [5.2, 52.2], BE: [4.4, 50.95] };
 

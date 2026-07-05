@@ -34,6 +34,16 @@ export interface Product {
   /** Optional gold highlight line shown on the spotlight/detail page, e.g.
    *  "Geschikt voor ruim 50% van de Nederlandse auto's". */
   fitsNote?: string;
+  /** Optionele uitgebreide omschrijving voor het tabblad "Omschrijving" op de
+   *  productpagina. Zonder deze regel wordt automatisch een nette tekst
+   *  samengesteld uit de naam, tagline en specificaties. */
+  description?: string;
+  /** Optioneel pad naar een specificatieblad-PDF voor het tabblad
+   *  "Specificatieblad", bijv. "/products/benzol-prime-5w30-specs.pdf".
+   *  Zonder deze regel zoekt de site automatisch naar
+   *  "/products/<slug>-specs.pdf"; bestaat die niet, dan kun je in dat tabblad
+   *  zelf een PDF kiezen om te tonen. */
+  specSheet?: string;
   /** Optional real product photos, one path per angle, e.g.
    *  ["/products/benzol-prime-5w30.jpg", "/products/benzol-prime-5w30-achterkant.jpg"].
    *  With 2+ entries the product page shows a gallery with arrows/thumbnails.

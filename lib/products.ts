@@ -1,9 +1,15 @@
 import type { Product, Viscosity } from "./types";
 
 /**
- * Sample Benzol catalog. Prices are for the first (default) size in `sizesLiter`;
- * other sizes (including bulk drums for garages: 20L / 60L / 208L) are derived
- * with tiered per-litre discounts — see `priceForSize` in lib/format.ts.
+ * Sample Benzol catalog.
+ *
+ * PRIJZEN PER MAAT: elke maat heeft zijn eigen vaste prijs in het `prices`-veld
+ * (sleutel = aantal liter), bijv. `prices: { 1: 14.95, 5: 65.78, 20: 239.2, ... }`.
+ * Er wordt niets meer automatisch uit de 1L-prijs berekend — je past gewoon per
+ * maat het getal aan. Een "was"-prijs (doorgestreept) zet je optioneel per maat
+ * in `compareAtPrices` in dezelfde vorm. Het losse `price`/`compareAtPrice`-veld
+ * blijft als referentie voor de standaardmaat (en moet gelijk zijn aan de
+ * eerste maat in `prices`).
  *
  * Eigen productfoto's toevoegen: elk product hieronder heeft al een `images`-
  * veld met 3 bestandsnamen (voorkant / achterkant / zijkant) die verwijzen
@@ -33,6 +39,8 @@ export const PRODUCTS: Product[] = [
     sizesLiter: [1, 5, 20, 60, 208],
     price: 16.95,
     compareAtPrice: 19.95,
+    prices: { 1: 16.95, 5: 74.58, 20: 271.2, 60: 732.24, 208: 2185.87 },
+    compareAtPrices: { 1: 19.95, 5: 87.78, 20: 319.2, 60: 861.84, 208: 2572.75 },
     rating: 4.9,
     reviews: 214,
     bestFor: ["petrol", "modern", "winter"],
@@ -55,6 +63,7 @@ export const PRODUCTS: Product[] = [
     specs: ["API SP", "ACEA C2"],
     sizesLiter: [1, 5, 20, 60, 208],
     price: 17.5,
+    prices: { 1: 17.5, 5: 77, 20: 280, 60: 756, 208: 2256.8 },
     rating: 4.8,
     reviews: 168,
     bestFor: ["petrol", "diesel", "modern", "winter"],
@@ -77,6 +86,8 @@ export const PRODUCTS: Product[] = [
     sizesLiter: [1, 5, 20, 60, 208],
     price: 14.95,
     compareAtPrice: 17.95,
+    prices: { 1: 14.95, 5: 65.78, 20: 239.2, 60: 645.84, 208: 1927.95 },
+    compareAtPrices: { 1: 17.95, 5: 78.98, 20: 287.2, 60: 775.44, 208: 2314.83 },
     rating: 4.9,
     reviews: 512,
     bestFor: ["petrol", "diesel", "modern"],
@@ -100,6 +111,7 @@ export const PRODUCTS: Product[] = [
     specs: ["API SQ", "ILSAC GF-7A"],
     sizesLiter: [1, 5, 20, 60, 208],
     price: 15.5,
+    prices: { 1: 15.5, 5: 68.2, 20: 248, 60: 669.6, 208: 1998.88 },
     rating: 4.8,
     reviews: 289,
     bestFor: ["diesel", "modern"],
@@ -123,6 +135,8 @@ export const PRODUCTS: Product[] = [
     sizesLiter: [1, 5, 20, 60, 208],
     price: 13.95,
     compareAtPrice: 16.5,
+    prices: { 1: 13.95, 5: 61.38, 20: 223.2, 60: 602.64, 208: 1798.99 },
+    compareAtPrices: { 1: 16.5, 5: 72.6, 20: 264, 60: 712.8, 208: 2127.84 },
     rating: 4.9,
     reviews: 638,
     bestFor: ["petrol", "diesel", "lpg", "performance"],
@@ -145,6 +159,7 @@ export const PRODUCTS: Product[] = [
     specs: ["API SP", "ACEA A3/B4"],
     sizesLiter: [1, 5, 20, 60, 208],
     price: 15.95,
+    prices: { 1: 15.95, 5: 70.18, 20: 255.2, 60: 689.04, 208: 2056.91 },
     rating: 4.7,
     reviews: 174,
     bestFor: ["petrol", "performance", "lpg"],
@@ -167,6 +182,8 @@ export const PRODUCTS: Product[] = [
     sizesLiter: [1, 5, 20, 60, 208],
     price: 9.95,
     compareAtPrice: 12.95,
+    prices: { 1: 9.95, 5: 43.78, 20: 159.2, 60: 429.84, 208: 1283.15 },
+    compareAtPrices: { 1: 12.95, 5: 56.98, 20: 207.2, 60: 559.44, 208: 1670.03 },
     rating: 4.7,
     reviews: 421,
     bestFor: ["petrol", "diesel", "highMileage"],
@@ -189,6 +206,7 @@ export const PRODUCTS: Product[] = [
     specs: ["API SL/CF", "ACEA A3/B4"],
     sizesLiter: [1, 5, 20, 60, 208],
     price: 10.5,
+    prices: { 1: 10.5, 5: 46.2, 20: 168, 60: 453.6, 208: 1354.08 },
     rating: 4.6,
     reviews: 133,
     bestFor: ["petrol", "diesel", "highMileage", "lpg"],
@@ -210,6 +228,7 @@ export const PRODUCTS: Product[] = [
     specs: ["API SN/CF", "ACEA A3/B4"],
     sizesLiter: [1, 5, 20, 60, 208],
     price: 22.95,
+    prices: { 1: 22.95, 5: 100.98, 20: 367.2, 60: 991.44, 208: 2959.63 },
     rating: 5.0,
     reviews: 97,
     bestFor: ["petrol", "performance"],
@@ -232,6 +251,7 @@ export const PRODUCTS: Product[] = [
     specs: ["API CK-4/SN", "ACEA E9/E11"],
     sizesLiter: [5],
     price: 34.95,
+    prices: { 5: 34.95, 20: 111.84, 60: 301.97, 208: 901.43 },
     rating: 4.8,
     reviews: 61,
     bestFor: ["diesel", "highMileage"],

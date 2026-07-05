@@ -1,9 +1,42 @@
+import type { Product } from "./types";
+
 export function euro(amount: number): string {
   return new Intl.NumberFormat("nl-NL", {
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: 2,
   }).format(amount);
+}
+
+/**
+ * De verkoopprijs voor één specifieke maat. Leest de vaste, per-maat prijs uit
+ * `product.prices[size]` — elke maat heeft dus zijn eigen unieke prijs. Staat
+ * die maat (nog) niet in `prices`, dan valt de code terug op de oude
+ * automatische staffelberekening zodat er nooit iets breekt.
+ */
+export function sizePrice(
+  product: Pick<Product, "prices" | "price" | "sizesLiter">,
+  size: number,
+): number {
+  const explicit = product.prices?.[size];
+  if (explicit != null) return explicit;
+  return priceForSize(product.price, product.sizesLiter[0], size);
+}
+
+/**
+ * De optionele "was"-prijs (doorgestreept) voor één specifieke maat, uit
+ * `product.compareAtPrices[size]`. Valt terug op de oude afleiding uit
+ * `compareAtPrice`, of geeft `undefined` als er geen was-prijs is.
+ */
+export function sizeCompareAt(
+  product: Pick<Product, "compareAtPrices" | "compareAtPrice" | "sizesLiter">,
+  size: number,
+): number | undefined {
+  const explicit = product.compareAtPrices?.[size];
+  if (explicit != null) return explicit;
+  if (product.compareAtPrice != null)
+    return priceForSize(product.compareAtPrice, product.sizesLiter[0], size);
+  return undefined;
 }
 
 /**
@@ -26,9 +59,10 @@ export function sizeNote(size: number): string | null {
 }
 
 /**
- * Derive a bottle/drum-size price from the base (smallest) size price, with
- * steeper per-litre discounts the larger the container — mirroring how
- * garages buy in bulk (a 208L drum is far cheaper per litre than a 1L can).
+ * FALLBACK-berekening. Sinds elke maat een eigen vaste prijs heeft (zie
+ * `product.prices` en `sizePrice`) wordt dit alleen nog gebruikt als een maat
+ * per ongeluk geen eigen prijs heeft. Leidt een maatprijs af uit de basisprijs
+ * met staffelkorting per liter.
  */
 export function priceForSize(basePrice: number, baseSize: number, size: number): number {
   if (size === baseSize) return basePrice;

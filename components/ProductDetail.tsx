@@ -6,7 +6,7 @@ import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
-import { euro, priceForSize, sizeNote, defaultSize } from "@/lib/format";
+import { euro, sizePrice, sizeCompareAt, sizeNote, defaultSize } from "@/lib/format";
 import { TAGLINES, getProductById } from "@/lib/products";
 import { getBundlesForProduct, getBundleGalleryImages, bundleOriginalPrice, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { resolveImages, sizeImageCandidates } from "@/lib/media";
@@ -36,7 +36,8 @@ export default function ProductDetail({ product, related }: { product: Product; 
   const [qty, setQty] = useState(1);
   const [previewBundle, setPreviewBundle] = useState<Bundle | null>(null);
 
-  const basePrice = priceForSize(product.price, product.sizesLiter[0], size);
+  const basePrice = sizePrice(product, size);
+  const compareAtForSize = sizeCompareAt(product, size);
   const price = audiencePrice(basePrice, qty);
   const tagline = TAGLINES[product.tagline]?.[locale] ?? "";
   const hasBulkSizes = product.sizesLiter.some((s) => s >= 20);
@@ -155,7 +156,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
               ) : (
                 <PriceTag
                   base={basePrice}
-                  compareAt={size === product.sizesLiter[0] ? product.compareAtPrice : undefined}
+                  compareAt={compareAtForSize}
                   size="lg"
                 />
               )}
@@ -394,7 +395,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
                   </div>
 
                   <div className="mt-2.5 flex items-center justify-between">
-                    <PriceTag base={p.price} size="xs" />
+                    <PriceTag base={sizePrice(p, defaultSize(p.sizesLiter))} size="xs" />
                     <span className="flex items-center gap-1 text-[11px] font-medium text-azure transition group-hover:gap-1.5">
                       {t("plate.viewProduct")} <ArrowRight width={12} height={12} />
                     </span>

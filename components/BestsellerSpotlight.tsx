@@ -7,7 +7,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
 import { TAGLINES } from "@/lib/products";
-import { defaultSize, priceForSize } from "@/lib/format";
+import { defaultSize, sizePrice, sizeCompareAt } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
 import SizeChip from "./SizeChip";
@@ -31,14 +31,12 @@ export default function BestsellerSpotlight({
 
   // Standard headline price is for 5 L, not 1 L
   const stdSize = defaultSize(product.sizesLiter);
-  const stdPrice = priceForSize(product.price, product.sizesLiter[0], stdSize);
-  const stdCompare = product.compareAtPrice
-    ? priceForSize(product.compareAtPrice, product.sizesLiter[0], stdSize)
-    : undefined;
+  const stdPrice = sizePrice(product, stdSize);
+  const stdCompare = sizeCompareAt(product, stdSize);
 
   function quickBuy() {
     const s = defaultSize(product.sizesLiter);
-    const unit = price(priceForSize(product.price, product.sizesLiter[0], s));
+    const unit = price(sizePrice(product, s));
     add(product, s, 1, unit);
     setAdded(true);
     setTimeout(() => setAdded(false), 1400);

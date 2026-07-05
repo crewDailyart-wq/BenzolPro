@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { CartLine, Product } from "./types";
-import { priceForSize } from "./format";
+import { sizePrice } from "./format";
 
 // Shipping is always free on every order — no minimum. Kept as constants so
 // any older references still resolve; both are effectively "always free" now.
@@ -69,7 +69,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setLines((prev) => {
       const key = lineKey(product.id, sizeLiter);
       const existing = prev.find((l) => lineKey(l.productId, l.sizeLiter) === key);
-      const price = unitPrice ?? priceForSize(product.price, product.sizesLiter[0], sizeLiter);
+      const price = unitPrice ?? sizePrice(product, sizeLiter);
       if (existing) {
         return prev.map((l) =>
           lineKey(l.productId, l.sizeLiter) === key ? { ...l, qty: l.qty + qty, price } : l,

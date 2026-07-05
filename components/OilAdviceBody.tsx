@@ -19,11 +19,14 @@ export default function OilAdviceBody({
   era,
   fuel,
   viscosity,
+  spec,
 }: {
   subject: string; // bijv. "Volkswagen Golf 7"
   era?: string;
   fuel: string;
   viscosity: Viscosity;
+  /** vereiste fabrieksnorm (ACEA/OEM), indien bekend */
+  spec?: string;
 }) {
   const product = pickProductForViscosity(viscosity);
   const price = product ? euro(sizePrice(product, defaultSize(product.sizesLiter))) : null;
@@ -79,7 +82,12 @@ export default function OilAdviceBody({
         <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-300">Waarom {viscosity} voor deze auto?</h2>
         <ul className="mt-3 space-y-2 text-sm text-zinc-300">
           <li className="flex gap-2"><CheckIcon width={16} height={16} className="mt-0.5 shrink-0 text-neon" /> {viscosityReason(viscosity)}.</li>
-          <li className="flex gap-2"><CheckIcon width={16} height={16} className="mt-0.5 shrink-0 text-neon" /> Voldoet aan de officiële ACEA-, API- en OEM-specificaties.</li>
+          <li className="flex gap-2">
+            <CheckIcon width={16} height={16} className="mt-0.5 shrink-0 text-neon" />
+            {spec
+              ? <>Voldoet aan de gangbare fabrieksnorm voor dit merk: <strong>{spec}</strong>.</>
+              : <>Voldoet aan de officiële ACEA-, API- en OEM-specificaties.</>}
+          </li>
           <li className="flex gap-2"><CheckIcon width={16} height={16} className="mt-0.5 shrink-0 text-neon" /> Altijd gratis verzending, voor 22:00 besteld is morgen in huis.</li>
         </ul>
         <p className="mt-4 text-xs text-zinc-500">

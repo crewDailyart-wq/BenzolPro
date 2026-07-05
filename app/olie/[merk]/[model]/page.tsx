@@ -6,6 +6,7 @@ import {
   getModelBySlug,
   carSlug,
   viscosityReason,
+  resolveSpec,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
 import { oilChangeHowTo } from "@/lib/schema";
@@ -39,6 +40,7 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
   const generations = model.generations ?? [];
   const engines = model.engines ?? [];
   const capacity = model.oilCapacityL;
+  const spec = resolveSpec(make.name, model);
 
   const pageUrl = absoluteUrl(`/olie/${params.merk}/${params.model}`);
   const breadcrumb = {
@@ -60,7 +62,9 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
         name: `Welke motorolie heeft de ${make.name} ${model.model} nodig?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Voor de ${make.name} ${model.model} adviseren wij een ${model.viscosity} motorolie — ${viscosityReason(
+          text: `Voor de ${make.name} ${model.model} adviseren wij een ${model.viscosity} motorolie${
+            spec ? ` volgens de gangbare norm ${spec}` : ""
+          } — ${viscosityReason(
             model.viscosity,
           )}. Controleer altijd je instructieboekje of de olievuldop voor de exacte fabrieksnorm.`,
         },
@@ -100,8 +104,13 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
       <h1 className="mt-3 max-w-3xl text-3xl font-bold sm:text-4xl">
         Welke motorolie voor de {make.name} {model.model}?
       </h1>
+      {spec && (
+        <p className="mt-2 text-sm text-zinc-400">
+          Gangbare fabrieksnorm: <span className="font-semibold text-zinc-200">{spec}</span>
+        </p>
+      )}
 
-      <OilAdviceBody subject={`${make.name} ${model.model}`} era={model.era} fuel={model.fuel} viscosity={model.viscosity} />
+      <OilAdviceBody subject={`${make.name} ${model.model}`} era={model.era} fuel={model.fuel} viscosity={model.viscosity} spec={spec} />
 
       {capacity && <OilCapacityCost subject={`${make.name} ${model.model}`} viscosity={model.viscosity} capacityL={capacity} />}
 

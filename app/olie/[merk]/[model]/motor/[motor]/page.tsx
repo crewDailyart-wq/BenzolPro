@@ -116,7 +116,7 @@ export default function EnginePage({
         </p>
       )}
 
-      <OilAdviceBody subject={subject} era={model.era} fuel={engine.fuel} viscosity={engine.viscosity} />
+      <OilAdviceBody subject={subject} era={model.era} fuel={engine.fuel} viscosity={engine.viscosity} spec={engine.spec} />
 
       {capacity && <OilCapacityCost subject={subject} viscosity={engine.viscosity} capacityL={capacity} />}
 

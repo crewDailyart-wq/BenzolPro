@@ -45,6 +45,13 @@ automatisch gegenereerde landingspagina's per automerk en -model (data in
 breadcrumb-structured-data en de kentekencheck-CTA. Voeg gerust merken/modellen
 toe aan `lib/carModels.ts` — pagina's, sitemap en interne links volgen vanzelf.
 
+**Fabrieksnorm op elke auto-pagina:** elke model- en generatiepagina toont nu de
+vereiste ACEA/OEM-norm (bijv. `VW 504.00 / 507.00`, `BMW LL-04`), niet alleen de
+viscositeit. De norm komt uit een merk-standaard (`BRAND_SPEC` in `lib/carModels.ts`)
+en is per model/generatie/uitvoering te overschrijven via een `spec`-veld
+(`resolveSpec` kiest de meest specifieke). Het blijft een gangbare indicatie — het
+instructieboekje is leidend.
+
 **Motoruitvoeringen, olie-inhoud & verversingskosten (ultra long-tail):** modellen
 kunnen naast generaties ook **motoruitvoeringen** (`engines`) en een **olie-inhoud**
 (`oilCapacityL`) hebben (data in `lib/carModels.ts`). Daaruit genereert de site:

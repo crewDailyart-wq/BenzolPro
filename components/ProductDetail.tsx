@@ -145,7 +145,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
                 <>
                   <div className="flex flex-wrap items-baseline gap-2">
                     <span className="text-3xl font-extrabold text-neon">{euro(previewBundle.price)}</span>
-                    <span className="text-sm text-zinc-600 line-through">{euro(bundleOriginal)}</span>
+                    <span className="text-sm text-red-500 line-through">{euro(bundleOriginal)}</span>
                   </div>
                   {bundleSavings > 0 && (
                     <p className="mt-1 text-sm text-neon">

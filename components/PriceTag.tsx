@@ -30,13 +30,18 @@ export default function PriceTag({ base, compareAt, size = "md", className = "" 
       <span className={`font-extrabold text-neon ${SIZE[size]}`}>{euro(current)}</span>
       {isGarage ? (
         <>
-          <span className="text-sm text-zinc-600 line-through">{euro(base)}</span>
+          <span className="text-sm text-red-500 line-through">{euro(base)}</span>
           <span className="rounded bg-neon/15 px-1.5 py-0.5 text-[11px] font-bold text-neon">
             {t("audience.garageTag")} −{garageDiscountPct}%
           </span>
         </>
       ) : (
-        compareAt && <span className="text-sm text-zinc-600 line-through">{euro(compareAt)}</span>
+        compareAt && <span className="text-sm text-red-500 line-through">{euro(compareAt)}</span>
+      )}
+      {!isGarage && compareAt && size !== "xs" && (
+        <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 px-2 py-0.5 text-[11px] font-bold text-orange-300 ring-1 ring-red-500/40">
+          🔥 Zomerknaller · tijdelijk
+        </span>
       )}
     </div>
   );

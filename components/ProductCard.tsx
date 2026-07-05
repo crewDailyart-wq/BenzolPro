@@ -10,6 +10,7 @@ import { TAGLINES } from "@/lib/products";
 import { defaultSize, priceForSize } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
+import SizeChip from "./SizeChip";
 import { StarIcon, BoltIcon, CheckIcon, TruckIcon, PackageIcon } from "./icons";
 
 const BADGE_STYLE: Record<string, string> = {
@@ -111,7 +112,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-auto flex items-end justify-between pt-3">
           <div>
-            <p className="text-[11px] text-zinc-500">{stdSize} {t("product.liter")}</p>
+            <SizeChip liters={stdSize} className="mb-1" />
             <PriceTag base={stdPrice} compareAt={stdCompare} size="sm" />
           </div>
           <button

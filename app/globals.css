@@ -118,6 +118,46 @@ body {
   text-shadow: 0 0 26px rgba(77, 166, 255, 0.35);
 }
 
+/* Blue glittering size chip (e.g. "5 L") — marks which size the headline
+   price is for. Animated azure metallic text + a sweeping glitter highlight. */
+.size-chip {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(77, 166, 255, 0.5);
+  background: linear-gradient(135deg, rgba(30, 99, 179, 0.28), rgba(111, 183, 255, 0.14));
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(77, 166, 255, 0.12), 0 0 16px -5px rgba(77, 166, 255, 0.75);
+}
+.size-chip > span {
+  background: linear-gradient(100deg, #6fb7ff 0%, #bfe0ff 25%, #ffffff 50%, #bfe0ff 75%, #6fb7ff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gold-pan 4s linear infinite;
+}
+.size-chip::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(200, 230, 255, 0.6), transparent);
+  transform: translateX(-140%);
+  animation: blue-sheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* fade-in on scroll reveal (used with IntersectionObserver .is-visible) */
 .reveal {
   opacity: 0;
@@ -176,7 +216,9 @@ body {
   .blue-sheen::after,
   .btn-azure::after,
   .text-gold-metal,
-  .text-azure-metal {
+  .text-azure-metal,
+  .size-chip > span,
+  .size-chip::after {
     animation: none !important;
   }
   .parallax-layer {

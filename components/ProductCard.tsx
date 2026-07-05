@@ -7,7 +7,7 @@ import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
 import { TAGLINES } from "@/lib/products";
-import { defaultSize, priceForSize } from "@/lib/format";
+import { defaultSize, sizePrice, sizeCompareAt } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import PriceTag from "./PriceTag";
 import SizeChip from "./SizeChip";
@@ -35,7 +35,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   function quickAdd() {
     const s = defaultSize(product.sizesLiter);
-    const unit = price(priceForSize(product.price, product.sizesLiter[0], s));
+    const unit = price(sizePrice(product, s));
     add(product, s, 1, unit);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1400);
@@ -45,10 +45,8 @@ export default function ProductCard({ product }: { product: Product }) {
 
   // Show the 5 L price as the standard headline price (not the 1 L price)
   const stdSize = defaultSize(product.sizesLiter);
-  const stdPrice = priceForSize(product.price, product.sizesLiter[0], stdSize);
-  const stdCompare = product.compareAtPrice
-    ? priceForSize(product.compareAtPrice, product.sizesLiter[0], stdSize)
-    : undefined;
+  const stdPrice = sizePrice(product, stdSize);
+  const stdCompare = sizeCompareAt(product, stdSize);
 
   return (
     <div className="group card-surface relative flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-neon/50 hover:shadow-neon">

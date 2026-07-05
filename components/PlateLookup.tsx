@@ -8,7 +8,7 @@ import { useAudience } from "@/lib/audience";
 import { getProductBySlug } from "@/lib/products";
 import { formatPlate, isPlausiblePlate, normalizePlate } from "@/lib/rdw";
 import type { OilRecommendation } from "@/lib/types";
-import { euro, priceForSize, defaultSize } from "@/lib/format";
+import { euro, sizePrice, defaultSize } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import LicensePlate from "./LicensePlate";
 import SizeChip from "./SizeChip";
@@ -136,7 +136,7 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
                         <p className="text-sm text-zinc-400">{product.specs.slice(0, 3).join(" · ")}</p>
                         <p className="mt-1 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
                           <span className="text-lg font-bold text-neon">
-                            {euro(price(priceForSize(product.price, product.sizesLiter[0], defaultSize(product.sizesLiter))))}
+                            {euro(price(sizePrice(product, defaultSize(product.sizesLiter))))}
                           </span>
                           <SizeChip liters={defaultSize(product.sizesLiter)} />
                         </p>
@@ -146,7 +146,7 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
                           type="button"
                           onClick={() => {
                             const s = defaultSize(product.sizesLiter);
-                            add(product, s, 1, price(priceForSize(product.price, product.sizesLiter[0], s)));
+                            add(product, s, 1, price(sizePrice(product, s)));
                           }}
                           className="btn-neon"
                         >

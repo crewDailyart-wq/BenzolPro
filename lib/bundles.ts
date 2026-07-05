@@ -1,6 +1,6 @@
 import type { Locale } from "./i18n/config";
 import { getProductById } from "./products";
-import { priceForSize } from "./format";
+import { sizePrice } from "./format";
 import { resolveImages } from "./media";
 
 export interface BundleItem {
@@ -170,7 +170,7 @@ export function bundleOriginalPrice(bundle: Bundle): number {
   for (const item of bundle.items) {
     const product = getProductById(item.productId);
     if (!product) continue;
-    total += priceForSize(product.price, product.sizesLiter[0], item.sizeLiter) * item.qty;
+    total += sizePrice(product, item.sizeLiter) * item.qty;
   }
   return Math.round(total * 100) / 100;
 }

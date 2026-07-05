@@ -45,6 +45,32 @@ npm run start    # run the production build
 npm run lint     # lint
 ```
 
+## 💶 Prijzen per maat aanpassen
+
+Elke maat heeft zijn **eigen vaste prijs** — er wordt niets meer automatisch uit
+de 1L-prijs berekend. Je vindt ze in `lib/products.ts` bij elk product in het
+`prices`-veld (de sleutel is het aantal liter):
+
+```ts
+prices: { 1: 14.95, 5: 65.78, 20: 239.20, 60: 645.84, 208: 1927.95 },
+```
+
+Wil je bijvoorbeeld de 5L-prijs op € 64,95 zetten? Verander gewoon `5: 65.78`
+in `5: 64.95`. Alle andere maten blijven staan zoals ze zijn.
+
+Een doorgestreepte **"was"-prijs** (kortingsactie) zet je optioneel per maat in
+`compareAtPrices`, in exact dezelfde vorm:
+
+```ts
+compareAtPrices: { 1: 17.95, 5: 78.98, 20: 287.20, 60: 775.44, 208: 2314.83 },
+```
+
+Laat je een maat weg uit `compareAtPrices`, dan heeft die maat simpelweg geen
+was-prijs. Het losse `price`/`compareAtPrice`-veld erboven is alleen nog een
+referentie voor de standaardmaat — houd die gelijk aan de eerste maat in
+`prices`. Bundelprijzen staan los in `lib/bundles.ts` (het `price`-veld per
+bundel).
+
 ## 🖼️ Eigen productfoto's toevoegen
 
 Elk product in `lib/products.ts` heeft al een `images`-veld met **3 bestandsnamen klaarstaan** (voorkant, achterkant, zijkant). Je hoeft dus geen code aan te passen — zet gewoon foto's neer met exact deze bestandsnamen in `public/products/`:

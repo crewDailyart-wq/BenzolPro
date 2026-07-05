@@ -12,8 +12,19 @@ export interface Product {
   tagline: string;
   specs: string[]; // e.g. ["ACEA C3", "API SN", "VW 504.00/507.00"]
   sizesLiter: number[]; // available bottle sizes
-  price: number; // price for the default (first) size in EUR
-  compareAtPrice?: number;
+  price: number; // reference price for the default (first) size in EUR (= prices[firstSize])
+  compareAtPrice?: number; // reference "was" price for the default size
+  /**
+   * Vaste verkoopprijs per maat (in euro), sleutel = aantal liter. Elke maat
+   * heeft hier zijn eigen unieke prijs — er wordt NIETS meer automatisch uit de
+   * 1L-prijs afgeleid. Wil je een prijs veranderen? Pas gewoon het getal bij die
+   * maat aan (bijv. `5: 64.95`). Zorg dat elke maat uit `sizesLiter` hier een
+   * prijs heeft. Ontbreekt een maat toch, dan valt de code terug op de oude
+   * automatische berekening zodat er nooit iets breekt.
+   */
+  prices?: Record<number, number>;
+  /** Optionele "was"-prijs (doorgestreept) per maat, zelfde vorm als `prices`. */
+  compareAtPrices?: Record<number, number>;
   rating: number;
   reviews: number;
   bestFor: string[]; // fuel/usage tags e.g. ["petrol","diesel","modern"]

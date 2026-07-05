@@ -21,42 +21,39 @@ export interface Garage {
   logo?: string;
 }
 
+// Echte garages die — onder andere — met Benzol rijden. De plaatsen zijn per
+// garage opgezocht. Twee ervan (Car Port, Auto-via) waren niet eenduidig te
+// herleiden; die staan op "Nederland" en vallen op de kaart terug op het
+// midden van het land. Weet je de juiste plaats? Vervang dan gewoon "Nederland".
 export const GARAGES: Garage[] = [
   // ---------------- Nederland ----------------
-  { name: "AutoService Jansen", city: "Amersfoort", country: "NL" },
-  { name: "GarageBox Amsterdam", city: "Amsterdam", country: "NL" },
-  { name: "PitStop Rotterdam", city: "Rotterdam", country: "NL" },
-  { name: "De Vries Automotive", city: "Leeuwarden", country: "NL" },
-  { name: "TurboTech Utrecht", city: "Utrecht", country: "NL" },
-  { name: "Garage El Amrani", city: "Den Haag", country: "NL" },
-  { name: "Van Dijk Onderhoud", city: "Zwolle", country: "NL" },
-  { name: "Motoreske Eindhoven", city: "Eindhoven", country: "NL" },
-  { name: "Kaya Auto", city: "Arnhem", country: "NL" },
-  { name: "Noord Garage", city: "Groningen", country: "NL" },
-  { name: "SpeedFix Den Haag", city: "Den Haag", country: "NL" },
-  { name: "Benzine & Co", city: "Breda", country: "NL" },
-  { name: "AutoHerstel Bakker", city: "Alkmaar", country: "NL" },
-  { name: "Garage Het Zuiden", city: "Maastricht", country: "NL" },
-  { name: "Smit & Zonen", city: "Haarlem", country: "NL" },
-  { name: "APK Centrum Tilburg", city: "Tilburg", country: "NL" },
-  { name: "Garage Yildirim", city: "Nijmegen", country: "NL" },
-  { name: "AutoPlus Almere", city: "Almere", country: "NL" },
-  { name: "Werkplaats De Meern", city: "De Meern", country: "NL" },
-  { name: "Garage Van Loon", city: "Venlo", country: "NL" },
-  { name: "Onderhoud Deventer", city: "Deventer", country: "NL" },
-  { name: "AutoTeam Dordrecht", city: "Dordrecht", country: "NL" },
+  { name: "TA cars bv", city: "Roosendaal", country: "NL" },
+  { name: "HGD Autobedrijf", city: "Delft", country: "NL" },
+  { name: "Kaya Automotive Solutions", city: "Delft", country: "NL" },
+  { name: "A.P.K. Keuringsstation Durak", city: "Rotterdam", country: "NL" },
+  { name: "Garage AZA", city: "Alblasserdam", country: "NL" },
+  { name: "Road King Autobedrijf", city: "Beek en Donk", country: "NL" },
+  { name: "Garage Sorgun", city: "Rotterdam", country: "NL" },
+  { name: "Ilgin Garage", city: "Dordrecht", country: "NL" },
+  { name: "Autobedrijf Maassluis", city: "Maassluis", country: "NL" },
+  { name: "Garagebedrijf Dynamic", city: "Delft", country: "NL" },
+  { name: "All Cars", city: "Vlaardingen", country: "NL" },
+  { name: "QSR Quick Services Rotterdam", city: "Rotterdam", country: "NL" },
+  { name: "Autoservice Kasmeka", city: "Helmond", country: "NL" },
+  { name: "Car Port", city: "Nederland", country: "NL" },
+  { name: "Garage Oscar", city: "Rotterdam", country: "NL" },
+  { name: "Autoservice Moes Utrecht", city: "Utrecht", country: "NL" },
+  { name: "Garage Haydar", city: "Delft", country: "NL" },
+  { name: "Autobedrijf Kulek", city: "Oosterhout", country: "NL" },
+  { name: "APK Keurgarage Spijkenisse", city: "Spijkenisse", country: "NL" },
+  { name: "Auto-via", city: "Nederland", country: "NL" },
+  { name: "Garage Shad", city: "Bergen op Zoom", country: "NL" },
+  { name: "Autobedrijf Kaan", city: "Rotterdam", country: "NL" },
+  { name: "Autoservice Maestropoort", city: "Maasland", country: "NL" },
+  { name: "Autobedrijf Sjoko", city: "Rotterdam", country: "NL" },
 
   // ---------------- België ----------------
-  { name: "Garage Peeters", city: "Antwerpen", country: "BE" },
-  { name: "AutoService Mertens", city: "Gent", country: "BE" },
-  { name: "Garage De Smet", city: "Brugge", country: "BE" },
-  { name: "PitLine Brussel", city: "Brussel", country: "BE" },
-  { name: "Garage Janssens", city: "Leuven", country: "BE" },
-  { name: "AutoCenter Hasselt", city: "Hasselt", country: "BE" },
-  { name: "Garage Dubois", city: "Luik", country: "BE" },
-  { name: "Willems Automotive", city: "Mechelen", country: "BE" },
-  { name: "Garage Vandenberghe", city: "Kortrijk", country: "BE" },
-  { name: "AutoFix Oostende", city: "Oostende", country: "BE" },
+  { name: "Maars Garage", city: "Antwerpen", country: "BE" },
 ];
 
 /** All garages, or only those in a given country. */

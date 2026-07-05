@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import UspSection from "@/components/UspSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import BundleDeals from "@/components/BundleDeals";
+import LuxuryShowcase from "@/components/LuxuryShowcase";
 import MechanicChoice from "@/components/MechanicChoice";
 import ShippingInfo from "@/components/ShippingInfo";
 import TrustedGarages from "@/components/TrustedGarages";
@@ -20,8 +21,9 @@ export default function HomePage() {
       <ParallaxBackground />
       <MonteursBar />
       <Hero />
-      <BundleDeals />
       <FeaturedProducts products={list} />
+      <BundleDeals />
+      <LuxuryShowcase />
       <MechanicChoice />
       <UspSection />
       <ShippingInfo />

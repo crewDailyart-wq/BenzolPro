@@ -119,6 +119,18 @@ Onderaan elke productpagina staat een band **"Geschikt voor deze merken"**. De m
 
 Merklogo's zet je in **`public/merken/`** en koppel je met `logo: "volkswagen.png"`. Zonder logo tonen we netjes de merknaam. Zie `public/merken/LEES-MIJ.txt`.
 
+## 🚘 Luxe-auto afbeelding (homepage-showcase)
+
+Op de homepage staat een brede showcase-band waar je een mooie foto van een
+luxe auto kunt tonen (`components/LuxuryShowcase.tsx`):
+
+1. Zet een brede foto (bijv. 1920×1080px, liefst wat donkerder/contrastrijk) in
+   `public/` met exact de naam `luxury-car.jpg`.
+2. Klaar — de foto verschijnt automatisch in de band, met een nette donkere
+   overlay eroverheen zodat de tekst leesbaar blijft. Zonder dit bestand toont
+   de band een stijlvolle geanimeerde placeholder, dus de site blijft altijd
+   heel. Andere bestandsnaam/formaat? Pas `LUXURY_IMAGE` bovenin het component aan.
+
 ## 🏷️ Eigen logo linksboven
 
 Zet een `logo.png` in `public/` en het verschijnt automatisch linksboven op elke pagina (in plaats van de "BenzolPro"-tekst). Zonder bestand blijft de standaard tekst-logo staan. Zie `public/LEES-MIJ.txt`.

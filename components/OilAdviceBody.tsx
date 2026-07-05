@@ -2,8 +2,12 @@ import Link from "next/link";
 import type { Viscosity } from "@/lib/types";
 import { viscosityReason, pickProductForViscosity } from "@/lib/carModels";
 import { euro, sizePrice, defaultSize } from "@/lib/format";
+import { GUIDES } from "@/lib/guides";
 import ProductVisual from "./ProductVisual";
 import { CheckIcon, TruckIcon, ArrowRight, CarIcon } from "./icons";
+
+/** Vaste selectie gidsen die op elke auto-pagina relevant is. */
+const RELATED_GUIDE_SLUGS = ["5w30-of-5w40-verschil", "hoe-vaak-motorolie-verversen", "wat-betekent-motorolie-viscositeit"];
 
 /**
  * Gedeelde weergave voor de "welke olie"-advies-pagina's (zowel per model als
@@ -82,6 +86,22 @@ export default function OilAdviceBody({
           Let op: dit is een algemeen advies op basis van bouwjaar en brandstof. Controleer altijd je instructieboekje of
           de olievuldop voor de exacte fabrieksnorm van jouw specifieke uitvoering.
         </p>
+      </div>
+
+      <div className="mt-8 max-w-3xl">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-300">Meer weten over motorolie?</h2>
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {GUIDES.filter((g) => RELATED_GUIDE_SLUGS.includes(g.slug)).map((g) => (
+            <li key={g.slug}>
+              <Link
+                href={`/gids/${g.slug}`}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-ink-soft px-3 py-1.5 text-sm text-zinc-200 transition hover:bg-neon hover:text-ink"
+              >
+                {g.title} <ArrowRight width={14} height={14} />
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

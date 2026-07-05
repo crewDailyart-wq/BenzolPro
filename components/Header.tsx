@@ -15,9 +15,10 @@ export default function Header() {
 
   const nav = [
     { href: "/products", label: t("nav.products") },
+    { href: "/olie", label: t("nav.oilByCar") },
     { href: "/bundels", label: t("bundle.nav") },
+    { href: "/gids", label: t("nav.guides") },
     { href: "/#garages", label: t("garages.nav") },
-    { href: "/certificaten", label: t("nav.certificates") },
     { href: "/#faq", label: t("faq.nav") },
   ];
 

@@ -30,6 +30,7 @@ export default function Footer() {
     {
       title: t("footer.support"),
       links: [
+        { label: "Kennisbank", href: "/gids" },
         { label: t("footer.shipping"), href: "/#why" },
         { label: t("faq.nav"), href: "/#faq" },
         { label: t("footer.terms"), href: "/#why" },

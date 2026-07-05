@@ -7,6 +7,7 @@ import {
   carSlug,
   viscosityReason,
   resolveSpec,
+  resolveOilCapacity,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
 import { oilChangeHowTo } from "@/lib/schema";
@@ -39,7 +40,8 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
   const otherModels = make.models.filter((m) => carSlug(m.model) !== params.model);
   const generations = model.generations ?? [];
   const engines = model.engines ?? [];
-  const capacity = model.oilCapacityL;
+  const capacity = model.oilCapacityL; // exacte waarde (voor structured data)
+  const cap = resolveOilCapacity(capacity, model.fuel); // weergave (met fallback)
   const spec = resolveSpec(make.name, model);
 
   const pageUrl = absoluteUrl(`/olie/${params.merk}/${params.model}`);
@@ -112,7 +114,7 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
 
       <OilAdviceBody subject={`${make.name} ${model.model}`} era={model.era} fuel={model.fuel} viscosity={model.viscosity} spec={spec} />
 
-      {capacity && <OilCapacityCost subject={`${make.name} ${model.model}`} viscosity={model.viscosity} capacityL={capacity} />}
+      <OilCapacityCost subject={`${make.name} ${model.model}`} viscosity={model.viscosity} capacityL={cap.liters} estimated={cap.estimated} />
 
       {/* motoruitvoeringen (interne links + eigen pagina's) */}
       {engines.length > 0 && (

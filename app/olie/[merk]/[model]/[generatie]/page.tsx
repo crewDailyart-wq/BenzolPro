@@ -6,6 +6,7 @@ import {
   getGenerationBySlug,
   viscosityReason,
   resolveSpec,
+  resolveOilCapacity,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
 import { oilChangeHowTo } from "@/lib/schema";
@@ -48,7 +49,8 @@ export default function GenerationPage({
   if (!entry) notFound();
   const { make, model, generation } = entry;
   const siblings = (model.generations ?? []).filter((g) => g.slug !== params.generatie);
-  const capacity = generation.oilCapacityL ?? model.oilCapacityL;
+  const capacity = generation.oilCapacityL ?? model.oilCapacityL; // exacte waarde (schema)
+  const cap = resolveOilCapacity(capacity, generation.fuel); // weergave (met fallback)
   const spec = resolveSpec(make.name, model, generation);
 
   const pageUrl = absoluteUrl(`/olie/${params.merk}/${params.model}/${params.generatie}`);
@@ -128,7 +130,7 @@ export default function GenerationPage({
         spec={spec}
       />
 
-      {capacity && <OilCapacityCost subject={`${make.name} ${generation.name}`} viscosity={generation.viscosity} capacityL={capacity} />}
+      <OilCapacityCost subject={`${make.name} ${generation.name}`} viscosity={generation.viscosity} capacityL={cap.liters} estimated={cap.estimated} />
 
       {/* andere generaties van dit model */}
       {siblings.length > 0 && (

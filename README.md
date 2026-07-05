@@ -45,6 +45,13 @@ automatisch gegenereerde landingspagina's per automerk en -model (data in
 breadcrumb-structured-data en de kentekencheck-CTA. Voeg gerust merken/modellen
 toe aan `lib/carModels.ts` — pagina's, sitemap en interne links volgen vanzelf.
 
+**Olie-inhoud & kosten op élke auto-pagina:** de "hoeveel liter / wat kost
+verversen"-blokken tonen nu op iedere auto-pagina. Waar geen exacte `oilCapacityL`
+bekend is, valt de site terug op een grove schatting per brandstof
+(`resolveOilCapacity` in `lib/carModels.ts`); dat wordt met "naar schatting"
+gelabeld. Een exacte modelwaarde wint altijd en wordt in de structured data
+(FAQ/HowTo) gebruikt; de schatting alleen in de weergave.
+
 **Fabrieksnorm op elke auto-pagina:** elke model- en generatiepagina toont nu de
 vereiste ACEA/OEM-norm (bijv. `VW 504.00 / 507.00`, `BMW LL-04`), niet alleen de
 viscositeit. De norm komt uit een merk-standaard (`BRAND_SPEC` in `lib/carModels.ts`)

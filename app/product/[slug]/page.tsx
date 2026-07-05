@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductDetail from "@/components/ProductDetail";
-import { PRODUCTS, getProductBySlug } from "@/lib/products";
+import { PRODUCTS, getProductBySlug, productPositioning } from "@/lib/products";
 import { sizePrice, defaultSize } from "@/lib/format";
 import { resolveImages } from "@/lib/media";
 import { SITE_URL, SITE_NAME, absoluteUrl } from "@/lib/site";
@@ -15,15 +15,19 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const product = getProductBySlug(params.slug);
   if (!product) return { title: "BenzolPro" };
   const canonical = `/product/${product.slug}`;
-  const description = `${product.name} · ${product.specs.join(", ")}. Premium Benzol motorolie — altijd gratis verzending, morgen in huis.`;
+  const positioning = productPositioning(product);
+  const title = `${product.name} — ${positioning.join(" · ")} motorolie`;
+  const description =
+    product.description ??
+    `${product.name} · ${product.specs.join(", ")}. Premium Benzol motorolie — altijd gratis verzending, morgen in huis.`;
   return {
-    title: product.name,
+    title,
     description,
     alternates: { canonical },
     openGraph: {
       type: "website",
       url: absoluteUrl(canonical),
-      title: `${product.name} — ${SITE_NAME}`,
+      title: `${title} — ${SITE_NAME}`,
       description,
     },
   };

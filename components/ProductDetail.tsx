@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
 import { euro, sizePrice, sizeCompareAt, sizeNote, defaultSize } from "@/lib/format";
-import { TAGLINES, getProductById } from "@/lib/products";
+import { TAGLINES, getProductById, productPositioning } from "@/lib/products";
 import { getBundlesForProduct, getBundleGalleryImages, bundleOriginalPrice, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { resolveImages, sizeImageCandidates } from "@/lib/media";
 import ProductVisual from "./ProductVisual";
@@ -36,6 +36,12 @@ export default function ProductDetail({ product, related }: { product: Product; 
   const [size, setSize] = useState(defaultSize(product.sizesLiter));
   const [qty, setQty] = useState(1);
   const [previewBundle, setPreviewBundle] = useState<Bundle | null>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+
+  function scrollRail(dir: 1 | -1) {
+    const el = railRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
+  }
 
   const basePrice = sizePrice(product, size);
   const compareAtForSize = sizeCompareAt(product, size);
@@ -83,8 +89,8 @@ export default function ProductDetail({ product, related }: { product: Product; 
         <ArrowRight width={16} height={16} className="rotate-180 rtl:rotate-0" /> {t("product.back")}
       </Link>
 
-      {/* main content (left) + related products beside it (right, sticky) */}
-      <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_300px]">
+      {/* main content: gallery + info (related products staan als carrousel eronder) */}
+      <div className="mt-6">
         <div className="grid gap-10 lg:grid-cols-2">
           {/* visual: gallery with arrows; swaps to the bundle's photos in preview mode */}
           <div className="relative overflow-hidden rounded-3xl border border-ink-line bg-gradient-to-b from-ink-soft to-ink p-6 sm:p-10">
@@ -123,7 +129,19 @@ export default function ProductDetail({ product, related }: { product: Product; 
             </div>
 
             <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">{product.name}</h1>
-            <p className="mt-1 text-zinc-400">{previewBundle ? bundleDesc : tagline}</p>
+            {!previewBundle && (
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {productPositioning(product).map((label) => (
+                  <span
+                    key={label}
+                    className="rounded-full border border-neon/30 bg-neon/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-neon"
+                  >
+                    {label}
+                  </span>
+                ))}
+              </div>
+            )}
+            <p className="mt-2 text-zinc-400">{previewBundle ? bundleDesc : tagline}</p>
             {!previewBundle && product.fitsNote && (
               <p className="mt-2 text-sm font-bold text-gold-metal">★ {product.fitsNote}</p>
             )}
@@ -350,57 +368,75 @@ export default function ProductDetail({ product, related }: { product: Product; 
           </div>
         </div>
 
-        {/* related products: beside the product, not below */}
-        {related.length > 0 && (
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-300">{t("product.related")}</h2>
-            <div className="mt-4 space-y-3">
-              {related.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/product/${p.slug}`}
-                  className="group block rounded-2xl border border-ink-line bg-ink-card p-3.5 transition hover:border-neon/50 hover:shadow-neon"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="h-20 w-20 shrink-0 rounded-xl bg-ink-soft p-1.5">
-                      <ProductVisual product={p} className="h-full w-full" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold leading-tight transition group-hover:text-neon">{p.name}</p>
-                      <div className="mt-1 flex items-center gap-1 text-[11px] text-zinc-400">
-                        <span className="flex text-neon">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <StarIcon key={i} width={11} height={11} className={i < Math.round(p.rating) ? "" : "opacity-25"} />
-                          ))}
-                        </span>
-                        <span className="font-semibold text-zinc-200">{p.rating.toFixed(1)}</span>
-                        <span>({p.reviews})</span>
-                      </div>
-                      <span className="mt-1 inline-block chip !px-2 !py-0.5 !text-[10px]">{p.viscosity}</span>
-                    </div>
-                  </div>
-
-                  {/* a couple of key specs so each card carries more info */}
-                  <div className="mt-2.5 flex flex-wrap gap-1">
-                    {p.specs.slice(0, 3).map((s) => (
-                      <span key={s} className="rounded bg-ink-soft px-1.5 py-0.5 text-[10px] text-zinc-400">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-2.5 flex items-center justify-between">
-                    <PriceTag base={sizePrice(p, defaultSize(p.sizesLiter))} size="xs" />
-                    <span className="flex items-center gap-1 text-[11px] font-medium text-azure transition group-hover:gap-1.5">
-                      {t("plate.viewProduct")} <ArrowRight width={12} height={12} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </aside>
-        )}
       </div>
+
+      {/* related products: carrousel onder het product */}
+      {related.length > 0 && (
+        <section className="mt-14">
+          <div className="flex items-end justify-between gap-3">
+            <h2 className="text-lg font-bold text-zinc-100">{t("product.related")}</h2>
+            <div className="hidden gap-2 sm:flex">
+              <button
+                type="button"
+                onClick={() => scrollRail(-1)}
+                aria-label="Vorige"
+                className="grid h-9 w-9 place-items-center rounded-full border border-ink-line text-zinc-300 transition hover:border-neon hover:text-neon"
+              >
+                <ArrowRight width={16} height={16} className="rotate-180" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollRail(1)}
+                aria-label="Volgende"
+                className="grid h-9 w-9 place-items-center rounded-full border border-ink-line text-zinc-300 transition hover:border-neon hover:text-neon"
+              >
+                <ArrowRight width={16} height={16} />
+              </button>
+            </div>
+          </div>
+
+          <div
+            ref={railRef}
+            className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {related.map((p) => (
+              <Link
+                key={p.id}
+                href={`/product/${p.slug}`}
+                className="group flex w-[240px] shrink-0 snap-start flex-col rounded-2xl border border-ink-line bg-ink-card p-4 transition hover:border-neon/50 hover:shadow-neon"
+              >
+                <div className="mx-auto h-32 w-32 rounded-xl bg-ink-soft p-2">
+                  <ProductVisual product={p} className="h-full w-full" />
+                </div>
+                <p className="mt-3 text-sm font-semibold leading-tight transition group-hover:text-neon">{p.name}</p>
+                <div className="mt-1 flex items-center gap-1 text-[11px] text-zinc-400">
+                  <span className="flex text-neon">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <StarIcon key={i} width={11} height={11} className={i < Math.round(p.rating) ? "" : "opacity-25"} />
+                    ))}
+                  </span>
+                  <span className="font-semibold text-zinc-200">{p.rating.toFixed(1)}</span>
+                  <span>({p.reviews})</span>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  <span className="chip !px-2 !py-0.5 !text-[10px]">{p.viscosity}</span>
+                  {p.specs.slice(0, 2).map((s) => (
+                    <span key={s} className="rounded bg-ink-soft px-1.5 py-0.5 text-[10px] text-zinc-400">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-auto flex items-center justify-between pt-3">
+                  <PriceTag base={sizePrice(p, defaultSize(p.sizesLiter))} size="xs" />
+                  <span className="flex items-center gap-1 text-[11px] font-medium text-azure transition group-hover:gap-1.5">
+                    {t("plate.viewProduct")} <ArrowRight width={12} height={12} />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* tabbladen: omschrijving, specificaties en specificatieblad (PDF) */}
       <ProductTabs product={product} />

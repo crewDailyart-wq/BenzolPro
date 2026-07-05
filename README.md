@@ -39,6 +39,12 @@ De shop heeft een technisch SEO-fundament ingebouwd:
 - **Canonical-URLs** en per-pagina titels/omschrijvingen (voorkomt duplicate content).
 - **Social-share afbeeldingen** worden automatisch gegenereerd (`app/opengraph-image.tsx` en per product) — geen losse afbeeldingsbestanden nodig.
 
+**Programmatic SEO — "Welke olie voor [auto]"-pagina's:** onder `/olie` staan
+automatisch gegenereerde landingspagina's per automerk en -model (data in
+`lib/carModels.ts`), elk met de aanbevolen Benzol-olie, een koopknop, FAQ- en
+breadcrumb-structured-data en de kentekencheck-CTA. Voeg gerust merken/modellen
+toe aan `lib/carModels.ts` — pagina's, sitemap en interne links volgen vanzelf.
+
 > **Belangrijk:** zet in productie je echte domein via de omgevingsvariabele
 > `NEXT_PUBLIC_SITE_URL` (bijv. `https://www.benzolpro.nl`). Alle canonical-URLs,
 > de sitemap en de structured data gebruiken die waarde. Dien daarna je sitemap

@@ -28,6 +28,13 @@ export default function BestsellerSpotlight({
 
   const tagline = TAGLINES[product.tagline]?.[locale] ?? "";
 
+  // Standard headline price is for 5 L, not 1 L
+  const stdSize = defaultSize(product.sizesLiter);
+  const stdPrice = priceForSize(product.price, product.sizesLiter[0], stdSize);
+  const stdCompare = product.compareAtPrice
+    ? priceForSize(product.compareAtPrice, product.sizesLiter[0], stdSize)
+    : undefined;
+
   function quickBuy() {
     const s = defaultSize(product.sizesLiter);
     const unit = price(priceForSize(product.price, product.sizesLiter[0], s));
@@ -98,8 +105,9 @@ export default function BestsellerSpotlight({
               ))}
             </div>
 
-            <div className="mt-4 flex justify-center sm:justify-start">
-              <PriceTag base={product.price} compareAt={product.compareAtPrice} size={large ? "lg" : "md"} />
+            <div className="mt-4 flex flex-wrap items-baseline justify-center gap-2 sm:justify-start">
+              <PriceTag base={stdPrice} compareAt={stdCompare} size={large ? "lg" : "md"} />
+              <span className="text-xs font-medium text-zinc-500">/ {stdSize} {t("product.liter")}</span>
             </div>
             <p className="mt-1.5 flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-400 sm:justify-start">
               <CheckIcon width={13} height={13} /> {t("product.freeShipBadge")}

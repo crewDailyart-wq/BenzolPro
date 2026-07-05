@@ -8,7 +8,7 @@ import { useAudience } from "@/lib/audience";
 import { getProductBySlug } from "@/lib/products";
 import { formatPlate, isPlausiblePlate, normalizePlate } from "@/lib/rdw";
 import type { OilRecommendation } from "@/lib/types";
-import { euro } from "@/lib/format";
+import { euro, priceForSize, defaultSize } from "@/lib/format";
 import ProductVisual from "./ProductVisual";
 import LicensePlate from "./LicensePlate";
 import { ArrowRight, CarIcon, CheckIcon, BoltIcon } from "./icons";
@@ -133,12 +133,18 @@ export default function PlateLookup({ className = "" }: { className?: string }) 
                         <p className="text-xs uppercase tracking-wide text-neon">{t("plate.recommendedOil")}</p>
                         <p className="text-lg font-bold">{product.name}</p>
                         <p className="text-sm text-zinc-400">{product.specs.slice(0, 3).join(" · ")}</p>
-                        <p className="mt-1 text-lg font-bold text-neon">{euro(price(product.price))}</p>
+                        <p className="mt-1 text-lg font-bold text-neon">
+                          {euro(price(priceForSize(product.price, product.sizesLiter[0], defaultSize(product.sizesLiter))))}
+                          <span className="ms-1 text-xs font-medium text-zinc-500">/ {defaultSize(product.sizesLiter)} {t("product.liter")}</span>
+                        </p>
                       </div>
                       <div className="flex w-full flex-col gap-2 sm:w-auto">
                         <button
                           type="button"
-                          onClick={() => add(product, product.sizesLiter[0], 1, price(product.price))}
+                          onClick={() => {
+                            const s = defaultSize(product.sizesLiter);
+                            add(product, s, 1, price(priceForSize(product.price, product.sizesLiter[0], s)));
+                          }}
                           className="btn-neon"
                         >
                           {t("product.quickBuy")}

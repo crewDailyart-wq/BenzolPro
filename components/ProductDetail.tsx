@@ -15,6 +15,7 @@ import ProductGallery from "./ProductGallery";
 import BrandCompatibility from "./BrandCompatibility";
 import Reviews from "./Reviews";
 import PriceTag from "./PriceTag";
+import ProductTabs from "./ProductTabs";
 import {
   StarIcon,
   CheckIcon,
@@ -336,19 +337,13 @@ export default function ProductDetail({ product, related }: { product: Product; 
               <span className="flex items-center gap-2"><CheckIcon width={18} height={18} className="text-azure" /> {t("hero.trust3")}</span>
             </div>
 
-            {/* specs */}
+            {/* korte spec-chips; het volledige overzicht + omschrijving + PDF
+                staat in de tabbladen onder het product */}
             <div className="mt-8 rounded-2xl border border-ink-line bg-ink-card p-5">
               <h2 className="text-sm font-bold uppercase tracking-wide text-zinc-300">{t("product.specs")}</h2>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {product.specs.map((s) => (
                   <li key={s} className="rounded-lg bg-ink-soft px-3 py-1.5 text-sm text-zinc-200">{s}</li>
-                ))}
-              </ul>
-
-              <h2 className="mt-5 text-sm font-bold uppercase tracking-wide text-zinc-300">{t("product.bestFor")}</h2>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {product.bestFor.map((b) => (
-                  <li key={b} className="chip">{t(`bestFor.${b}`)}</li>
                 ))}
               </ul>
             </div>
@@ -406,6 +401,9 @@ export default function ProductDetail({ product, related }: { product: Product; 
           </aside>
         )}
       </div>
+
+      {/* tabbladen: omschrijving, specificaties en specificatieblad (PDF) */}
+      <ProductTabs product={product} />
 
       {/* full-width band below — fills the space under the product and shows
           which car brands the oil is approved for (editable in lib/carBrands.ts) */}

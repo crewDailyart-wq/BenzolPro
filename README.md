@@ -71,6 +71,25 @@ referentie voor de standaardmaat — houd die gelijk aan de eerste maat in
 `prices`. Bundelprijzen staan los in `lib/bundles.ts` (het `price`-veld per
 bundel).
 
+## 📄 Specificatieblad (PDF) per product
+
+Op elke productpagina staan nu tabbladen: **Omschrijving**, **Specificaties** en
+**Specificatieblad**. In dat laatste tabblad kun je een PDF met de specificaties
+tonen. Er zijn twee manieren:
+
+1. **Permanent voor alle bezoekers** (aanbevolen): zet een PDF in `public/products/`
+   met de naam `<slug>-specs.pdf`, bijv. `public/products/benzol-prime-5w30-specs.pdf`.
+   Hij verschijnt dan automatisch ingesloten op de productpagina, met een
+   download-knop. Wil je een andere bestandsnaam/locatie? Vul dan `specSheet` in
+   bij dat product in `lib/products.ts` (bijv. `specSheet: "/products/mijn-blad.pdf"`).
+2. **Even snel bekijken**: staat er nog geen bestand, dan kun je in het tabblad
+   zelf een PDF kiezen. Die wordt direct getoond, maar alleen in je eigen browser
+   (een voorbeeld — niet zichtbaar voor bezoekers).
+
+De **Omschrijving** wordt automatisch samengesteld uit naam, tagline en specs.
+Wil je een eigen tekst? Vul dan `description: "…"` in bij het product in
+`lib/products.ts`.
+
 ## 🖼️ Eigen productfoto's toevoegen
 
 Elk product in `lib/products.ts` heeft al een `images`-veld met **3 bestandsnamen klaarstaan** (voorkant, achterkant, zijkant). Je hoeft dus geen code aan te passen — zet gewoon foto's neer met exact deze bestandsnamen in `public/products/`:

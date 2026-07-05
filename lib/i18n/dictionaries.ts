@@ -24,6 +24,8 @@ const nl = {
     findOil: "Vind jouw olie",
     certificates: "Certificaten",
     quote: "Offerte aanvragen",
+    guides: "Kennisbank",
+    oilByCar: "Olie per auto",
   },
   hero: {
     eyebrow: "Motorolie van de volgende generatie",

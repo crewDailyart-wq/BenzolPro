@@ -45,6 +45,15 @@ automatisch gegenereerde landingspagina's per automerk en -model (data in
 breadcrumb-structured-data en de kentekencheck-CTA. Voeg gerust merken/modellen
 toe aan `lib/carModels.ts` — pagina's, sitemap en interne links volgen vanzelf.
 
+**Kennisbank — informatieve gidsen:** onder `/gids` staat een kennisbank met
+artikelen die de veelgestelde motorolie-vragen beantwoorden ("hoe vaak
+verversen", "5W30 of 5W40", viscositeit, synthetisch vs. mineraal, ACEA/API-
+normen). Elk artikel (data in `lib/guides.ts`) krijgt automatisch een pagina met
+`Article`- en `FAQPage`-structured-data, een inhoudsopgave, een passende
+productaanbeveling en interne links naar de auto- en productpagina's. De
+auto-pagina's linken terug naar relevante gidsen, zodat het interne linkweb sluit.
+Voeg gerust artikelen toe aan `lib/guides.ts` — pagina's, sitemap en links volgen vanzelf.
+
 > **Belangrijk:** zet in productie je echte domein via de omgevingsvariabele
 > `NEXT_PUBLIC_SITE_URL` (bijv. `https://www.benzolpro.nl`). Alle canonical-URLs,
 > de sitemap en de structured data gebruiken die waarde. Dien daarna je sitemap

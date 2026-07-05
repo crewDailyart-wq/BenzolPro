@@ -97,7 +97,7 @@ export default function BundleDetail({ bundle }: { bundle: Bundle }) {
           <div className="mt-6">
             <div className="flex flex-wrap items-baseline gap-2">
               <span className="text-3xl font-extrabold text-neon">{euro(bundle.price)}</span>
-              <span className="text-sm text-zinc-600 line-through">{euro(original)}</span>
+              <span className="text-sm text-red-500 line-through">{euro(original)}</span>
               {savingsPct > 0 && (
                 <span className="rounded-full bg-red-500 px-2 py-0.5 text-[11px] font-bold text-white">
                   −{savingsPct}%

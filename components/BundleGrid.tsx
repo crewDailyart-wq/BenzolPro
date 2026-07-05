@@ -125,7 +125,7 @@ function BundleCard({ bundle }: { bundle: Bundle }) {
         <div className="mt-auto pt-4">
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-extrabold text-neon">{euro(bundle.price)}</span>
-            <span className="text-sm text-zinc-600 line-through">{euro(original)}</span>
+            <span className="text-sm text-red-500 line-through">{euro(original)}</span>
           </div>
           {savings > 0 && (
             <p className="text-[11px] text-neon">{t("bundle.save")} {euro(savings)}</p>

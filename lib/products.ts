@@ -32,6 +32,8 @@ export const PRODUCTS: Product[] = [
     id: "p-ultra-0w20",
     slug: "benzol-ultra-0w20",
     name: "Benzol Modern Drive 0W20",
+    description:
+      "Longlife, volsynthetische 0W20 motorolie voor moderne hybride- en benzinemotoren. Deze dunne, brandstofbesparende olie (ACEA C5, low-SAPS) beschermt vanaf de koude start en is veilig voor je roetfilter. Altijd gratis verzending, voor 22:00 besteld is morgen in huis.",
     viscosity: "0W20",
     category: "fullSynthetic",
     tagline: "hybridReady",
@@ -57,6 +59,8 @@ export const PRODUCTS: Product[] = [
     id: "p-eco-0w30",
     slug: "benzol-eco-0w30",
     name: "Benzol Modern Drive 0W30",
+    description:
+      "Longlife, volsynthetische 0W30 motorolie (ACEA C2) voor moderne benzine- en dieselmotoren. Zuinig, soepel bij een koude start en veilig voor roetfilter en katalysator. Altijd gratis verzending, morgen in huis.",
     viscosity: "0W30",
     category: "fullSynthetic",
     tagline: "maxEfficiency",
@@ -79,6 +83,8 @@ export const PRODUCTS: Product[] = [
     id: "p-prime-5w30",
     slug: "benzol-prime-5w30",
     name: "Benzol Modern Drive 5W30",
+    description:
+      "Onze bestseller: een Longlife, volsynthetische 5W30 motorolie die op ruim de helft van de Nederlandse auto's past. Sterke bescherming voor benzine- en dieselmotoren, met goedkeuringen van onder meer VW, Mercedes-Benz en BMW. Altijd gratis verzending, morgen in huis.",
     viscosity: "5W30",
     category: "fullSynthetic",
     tagline: "everydayHero",
@@ -105,6 +111,8 @@ export const PRODUCTS: Product[] = [
     id: "p-diesel-5w30",
     slug: "benzol-dpf-5w30",
     name: "Benzol Modern Drive 5W30 GF-7A",
+    description:
+      "Longlife, volsynthetische 5W30 motorolie voor moderne benzine- en dieselmotoren (API SQ, ILSAC GF-7A). Houdt je motor schoon en beschermt betrouwbaar bij lange verversingsintervallen. Altijd gratis verzending, morgen in huis.",
     viscosity: "5W30",
     category: "fullSynthetic",
     tagline: "dpfSafe",
@@ -128,6 +136,8 @@ export const PRODUCTS: Product[] = [
     id: "p-synth-5w40",
     slug: "benzol-synth-5w40",
     name: "Benzol Modern Drive 5W40",
+    description:
+      "Longlife, volsynthetische 5W40 motorolie voor benzine-, diesel- en LPG-motoren. Robuuste, betrouwbare bescherming — ook bij hogere temperaturen en zwaardere belasting. Altijd gratis verzending, morgen in huis.",
     viscosity: "5W40",
     category: "fullSynthetic",
     tagline: "allRound",
@@ -153,6 +163,8 @@ export const PRODUCTS: Product[] = [
     id: "p-turbo-5w40",
     slug: "benzol-turbo-5w40",
     name: "Benzol Modern Drive 5W40 Sport",
+    description:
+      "Longlife, volsynthetische 5W40 motorolie ontwikkeld voor turbo- en sportieve motoren. Behoudt zijn filmsterkte bij hoge toeren en temperaturen, zodat je motor optimaal beschermd blijft. Altijd gratis verzending, morgen in huis.",
     viscosity: "5W40",
     category: "fullSynthetic",
     tagline: "turboProtect",
@@ -175,6 +187,8 @@ export const PRODUCTS: Product[] = [
     id: "p-classic-10w40",
     slug: "benzol-classic-10w40",
     name: "Benzol Efficient Drive 10W40",
+    description:
+      "Betrouwbare, deels synthetische 10W40 motorolie voor oudere motoren en hogere kilometerstanden. Solide bescherming tegen een scherpe prijs. Altijd gratis verzending, morgen in huis.",
     viscosity: "10W40",
     category: "syntheticBlend",
     tagline: "highMileage",
@@ -200,6 +214,8 @@ export const PRODUCTS: Product[] = [
     id: "p-guard-10w40",
     slug: "benzol-guard-10w40",
     name: "Benzol Efficient Drive 10W40 Plus",
+    description:
+      "Deels synthetische 10W40 motorolie met extra afdichtende werking voor oudere motoren en hoge kilometerstanden. Gaat olieverbruik en lekkage tegen. Altijd gratis verzending, morgen in huis.",
     viscosity: "10W40",
     category: "syntheticBlend",
     tagline: "sealCare",
@@ -222,6 +238,8 @@ export const PRODUCTS: Product[] = [
     id: "p-race-10w60",
     slug: "benzol-race-10w60",
     name: "Benzol Modern Drive 10W60",
+    description:
+      "Volsynthetische 10W60 racingolie met maximale filmsterkte voor hoogtoerige, sportieve motoren en circuitgebruik. Bescherming onder de zwaarste omstandigheden. Altijd gratis verzending, morgen in huis.",
     viscosity: "10W60",
     category: "racing",
     tagline: "trackReady",
@@ -245,6 +263,8 @@ export const PRODUCTS: Product[] = [
     id: "p-work-15w40",
     slug: "benzol-work-15w40",
     name: "Benzol SHPD Fleet Turbo 15W40",
+    description:
+      "Sterke, minerale 15W40 motorolie voor oudere diesels, bestelwagens en zwaar werk (SHPD). Betrouwbare bescherming bij hoge belasting en lange dagen. Altijd gratis verzending, morgen in huis.",
     viscosity: "15W40",
     category: "mineral",
     tagline: "heavyDuty",
@@ -315,3 +335,24 @@ export function getBrandAggregateRating(): BrandRating {
 }
 
 export const ALL_VISCOSITIES: Viscosity[] = ["0W20", "0W30", "5W30", "5W40", "10W40", "10W60", "15W40"];
+
+const POSITION_CATEGORY: Record<string, string> = {
+  fullSynthetic: "Volsynthetisch",
+  syntheticBlend: "Deels synthetisch",
+  mineral: "Mineraal",
+  racing: "Volsynthetisch racing",
+};
+
+/**
+ * Korte positioneringslabels voor de titel/subtitel van een product, bijv.
+ * ["Longlife", "Volsynthetisch", "ACEA C2"]. Longlife tonen we bij
+ * volsynthetische oliën; de ACEA-klasse komt uit de specs (indien aanwezig).
+ */
+export function productPositioning(p: Product): string[] {
+  const parts: string[] = [];
+  if (p.category === "fullSynthetic") parts.push("Longlife");
+  parts.push(POSITION_CATEGORY[p.category] ?? "");
+  const acea = p.specs.find((s) => s.startsWith("ACEA"));
+  if (acea) parts.push(acea);
+  return parts.filter(Boolean);
+}

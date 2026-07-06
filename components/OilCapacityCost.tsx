@@ -14,10 +14,13 @@ export default function OilCapacityCost({
   subject,
   viscosity,
   capacityL,
+  estimated = false,
 }: {
   subject: string; // bijv. "Volkswagen Golf 1.4 TSI"
   viscosity: Viscosity;
   capacityL: number;
+  /** true als de inhoud een grove schatting is (geen exacte modelwaarde) */
+  estimated?: boolean;
 }) {
   const cost = estimateOilChangeCost(viscosity, capacityL);
   const liters = capacityL.toLocaleString("nl-NL", { maximumFractionDigits: 2 });
@@ -34,8 +37,8 @@ export default function OilCapacityCost({
             ± {liters} L
           </p>
           <p className="mt-1 text-sm text-zinc-400">
-            De <strong>{subject}</strong> heeft bij een verversing (inclusief filter) circa {liters} liter{" "}
-            <strong>{viscosity}</strong> motorolie nodig.
+            De <strong>{subject}</strong> heeft bij een verversing (inclusief filter) {estimated ? "naar schatting" : "circa"} {liters} liter{" "}
+            <strong>{viscosity}</strong> motorolie nodig{estimated ? " — controleer de exacte inhoud in je instructieboekje" : ""}.
           </p>
         </div>
 

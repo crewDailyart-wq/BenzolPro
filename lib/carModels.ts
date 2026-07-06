@@ -869,6 +869,23 @@ export interface OilChangeCost {
  * Schat de kosten van een olieverversing voor een gegeven viscositeit en
  * olie-inhoud. Bewust conservatief en uitlegbaar — een indicatie, geen offerte.
  */
+/** Redelijke standaard olie-inhoud als er geen exacte waarde bekend is (liters). */
+export const DEFAULT_OIL_CAPACITY_L = 4.5;
+
+/**
+ * Effectieve olie-inhoud voor een auto-pagina: de exacte waarde als die er is,
+ * anders een grove schatting op basis van de brandstof. `estimated` geeft aan of
+ * het een schatting is, zodat de pagina de bewoording kan verzachten.
+ */
+export function resolveOilCapacity(
+  explicit: number | undefined,
+  fuel?: FuelLabel,
+): { liters: number; estimated: boolean } {
+  if (explicit != null) return { liters: explicit, estimated: false };
+  const liters = fuel === "hybride" ? 4.2 : fuel === "diesel" ? 5.5 : DEFAULT_OIL_CAPACITY_L;
+  return { liters, estimated: true };
+}
+
 export function estimateOilChangeCost(v: Viscosity, capacityL: number): OilChangeCost {
   const round = (n: number) => Math.round(n * 100) / 100;
   const product = pickProductForViscosity(v);

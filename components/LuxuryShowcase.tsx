@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, CarIcon, ShieldIcon } from "./icons";
 
 /**
@@ -39,11 +40,12 @@ export default function LuxuryShowcase() {
       <div className="relative overflow-hidden rounded-3xl border border-ink-line bg-ink-card shadow-neon">
         <div className="relative aspect-[16/9] w-full sm:aspect-[16/7]">
           {hasImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={LUXURY_IMAGE}
               alt="Luxe auto, beschermd door Benzol-motorolie"
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 1152px"
+              className="object-cover"
             />
           ) : (
             // Stijlvolle placeholder zolang er nog geen eigen foto staat.

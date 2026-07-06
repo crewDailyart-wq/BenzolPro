@@ -37,8 +37,8 @@ export default function ProductVisual({
   }
 
   if (image && !failed) {
-    // eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos, no next/image domain config needed
     return (
+      // eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos, no next/image domain config needed
       <img
         key={image}
         ref={checkAlreadyFailed}

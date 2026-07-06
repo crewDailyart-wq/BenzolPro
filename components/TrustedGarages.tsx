@@ -12,8 +12,8 @@ import { WrenchIcon, StarIcon, ShieldIcon, TruckIcon, ArrowRight, ClipboardIcon 
 function GarageLogo({ garage, size = 28 }: { garage: Garage; size?: number }) {
   const [failed, setFailed] = useState(false);
   if (garage.logo && !failed) {
-    // eslint-disable-next-line @next/next/no-img-element -- local, user-provided garage logos
     return (
+      // eslint-disable-next-line @next/next/no-img-element -- local, user-provided garage logos
       <img
         src={`/garages/${garage.logo}`}
         alt={garage.name}

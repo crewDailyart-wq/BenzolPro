@@ -38,9 +38,9 @@ export default function HomePage() {
       <ParallaxBackground />
       <MonteursBar />
       <Hero />
+      <LuxuryShowcase />
       <FeaturedProducts products={list} />
       <BundleDeals />
-      <LuxuryShowcase />
       <MechanicChoice />
       <UspSection />
       <ShippingInfo />

@@ -60,8 +60,14 @@ De pagina's staan klaar en zijn met je bedrijfsgegevens gevuld:
       FAQ en Breadcrumb horen groen te zijn.
 - [ ] Optioneel: verifieer je site direct in de `<head>` via
       `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` (de "HTML-tag"-methode van Search Console).
-- [ ] Optioneel: **Google Merchant Center** voor Shopping — vereist de juridische
-      pagina's, echte productfoto's en levertijden/retourbeleid (staat allemaal klaar).
+- [ ] **Google Merchant Center** voor Shopping: dien de productfeed in op
+      `https://<domein>/feed.xml` (staat klaar — één item per maat, met gratis
+      verzending NL/BE). Vereist verder de juridische pagina's en bij voorkeur
+      echte productfoto's. Zolang er geen foto staat, gebruikt de feed automatisch
+      de gegenereerde OG-afbeelding (een echte PNG).
+- [ ] Optioneel: zet **Vercel KV** (Storage → KV) aan voor blijvende, gedeelde
+      productreviews. `KV_REST_API_URL` + `KV_REST_API_TOKEN` worden dan
+      automatisch gezet; zonder KV blijven reviews lokaal in de browser.
 
 ## 5b. Analytics & cookies (AVG-conform, kant-en-klaar)
 
@@ -79,7 +85,10 @@ Bezoekers kunnen hun keuze altijd wijzigen via **"Cookievoorkeuren"** onderaan e
 ## 6. Content-finetuning (mag ook na livegang)
 
 - [ ] Zet echte productfoto's in `public/products/` (zie README) — verhoogt conversie
-      én is nodig voor Merchant/Shopping. Zonder foto's toont de site nette SVG-flessen.
+      én is **nodig voor Google Shopping**: de feed (`/feed.xml`) verwijst naar die
+      fotopaden. Zonder geüploade foto's toont de site nette SVG-flessen, maar keurt
+      Merchant Center de items af omdat de afbeeldings-URL niet laadt. Upload dus de
+      foto's op de exacte bestandsnamen uit de README vóórdat je de feed indient.
 - [ ] Controleer de prijzen per maat in `lib/products.ts` en de bundelprijzen in `lib/bundles.ts`.
 - [ ] Vul echte afhaalpunten in (`components/Checkout.tsx` → `PICKUP_POINTS`) of verberg afhalen.
 

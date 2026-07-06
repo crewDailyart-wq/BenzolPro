@@ -58,8 +58,23 @@ De pagina's staan klaar en zijn met je bedrijfsgegevens gevuld:
 - [ ] Test enkele pagina's in de
       [Rich Results Test](https://search.google.com/test/rich-results) — Product,
       FAQ en Breadcrumb horen groen te zijn.
+- [ ] Optioneel: verifieer je site direct in de `<head>` via
+      `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` (de "HTML-tag"-methode van Search Console).
 - [ ] Optioneel: **Google Merchant Center** voor Shopping — vereist de juridische
       pagina's, echte productfoto's en levertijden/retourbeleid (staat allemaal klaar).
+
+## 5b. Analytics & cookies (AVG-conform, kant-en-klaar)
+
+De cookiemelding en analytics zitten er al in; ze verschijnen pas als je ze aanzet:
+
+- [ ] Wil je bezoek meten met **Google Analytics 4**? Zet `NEXT_PUBLIC_GA_ID` (bijv. `G-XXXX`).
+      De cookiemelding verschijnt dan automatisch en GA laadt **pas na toestemming**
+      (Google Consent Mode v2 staat standaard op "denied").
+- [ ] Liever cookieloos en zonder banner? Zet `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` — Plausible
+      is privacyvriendelijk en vereist geen toestemming.
+- [ ] Niets invullen mag ook: dan is er geen tracking en geen cookiemelding — nog steeds AVG-conform.
+
+Bezoekers kunnen hun keuze altijd wijzigen via **"Cookievoorkeuren"** onderaan elke pagina.
 
 ## 6. Content-finetuning (mag ook na livegang)
 
@@ -67,12 +82,6 @@ De pagina's staan klaar en zijn met je bedrijfsgegevens gevuld:
       én is nodig voor Merchant/Shopping. Zonder foto's toont de site nette SVG-flessen.
 - [ ] Controleer de prijzen per maat in `lib/products.ts` en de bundelprijzen in `lib/bundles.ts`.
 - [ ] Vul echte afhaalpunten in (`components/Checkout.tsx` → `PICKUP_POINTS`) of verberg afhalen.
-
-## 7. Nog niet gebouwd (bewust, buiten scope vandaag)
-
-- Cookie-consentbanner + analytics (GA4/Plausible). De site plaatst nu geen
-  tracking-cookies, dus je bent AVG-conform zonder banner. Wil je bezoek meten,
-  voeg dan een banner + analytics toe (het cookiebeleid verwijst hier al naar).
 
 ---
 

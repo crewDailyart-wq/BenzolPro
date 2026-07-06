@@ -29,18 +29,27 @@ export default function Page() {
         </p>
       </LegalSection>
 
-      <LegalSection heading="3. Analytische en marketingcookies">
+      <LegalSection heading="3. Analytische cookies (alleen met toestemming)">
         <p>
-          Deze webshop plaatst standaard geen analytische of marketingcookies. Zodra wij analytics (bijvoorbeeld voor het
-          meten van bezoek) of marketing zouden inzetten, gebeurt dat uitsluitend na jouw toestemming via een
-          cookiemelding, en werken we dit beleid bij.
+          Voor het meten van bezoek kunnen we Google Analytics gebruiken. Deze analytische cookies worden{" "}
+          <strong>pas geplaatst nadat je daar via de cookiemelding toestemming voor geeft</strong>. Kies je voor
+          &laquo;alleen noodzakelijk&raquo;, dan wordt er niets geladen en niets getrackt. Waar we een cookieloze,
+          privacyvriendelijke meetmethode (zoals Plausible) gebruiken, worden er geen persoonsgegevens of cookies
+          verwerkt en is geen toestemming nodig.
         </p>
       </LegalSection>
 
-      <LegalSection heading="4. Cookies beheren">
+      <LegalSection heading="4. Marketingcookies">
         <p>
-          Je kunt cookies en lokale opslag altijd zelf verwijderen of blokkeren via de instellingen van je browser. Houd
-          er rekening mee dat de winkelwagen dan mogelijk niet bewaard blijft.
+          Deze webshop plaatst geen marketing- of advertentiecookies en deelt geen gegevens met advertentienetwerken.
+        </p>
+      </LegalSection>
+
+      <LegalSection heading="5. Je keuze wijzigen">
+        <p>
+          Je kunt je keuze op elk moment aanpassen via de link <strong>&laquo;Cookievoorkeuren&raquo;</strong> onderaan
+          elke pagina. Daarnaast kun je cookies en lokale opslag altijd zelf verwijderen of blokkeren via de instellingen
+          van je browser. Houd er rekening mee dat de winkelwagen dan mogelijk niet bewaard blijft.
         </p>
       </LegalSection>
     </LegalPage>

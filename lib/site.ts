@@ -42,6 +42,22 @@ export function shown(value: string): string {
 /** Datum waarop de juridische documenten voor het laatst zijn bijgewerkt. */
 export const LEGAL_UPDATED = process.env.NEXT_PUBLIC_LEGAL_UPDATED ?? "2026-07-06";
 
+/**
+ * Analytics-configuratie. Alles optioneel: laat leeg om zonder analytics live te
+ * gaan (dan verschijnt er ook geen cookiemelding). Zet één of beide:
+ *  - GA4 (Google Analytics): plaatst cookies → laadt pas na toestemming.
+ *  - Plausible: cookieloos en privacyvriendelijk → laadt direct, geen toestemming nodig.
+ */
+export const ANALYTICS = {
+  gaId: process.env.NEXT_PUBLIC_GA_ID ?? "",
+  plausibleDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ?? "",
+} as const;
+
+/** true wanneer er een toestemming-vereisende tracker (GA4) is geconfigureerd. */
+export function needsConsent(): boolean {
+  return Boolean(ANALYTICS.gaId);
+}
+
 /** Maak van een pad ("/product/x") een volledige absolute URL. */
 export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

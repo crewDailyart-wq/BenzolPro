@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useState } from "react";
 import Logo from "./Logo";
 import { useI18n } from "@/lib/i18n/provider";
+import { needsConsent } from "@/lib/site";
+import { useConsent } from "@/lib/consent";
 import { ArrowRight, CheckIcon } from "./icons";
 
 export default function Footer() {
   const { t } = useI18n();
+  const { reset: resetConsent } = useConsent();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -124,7 +127,14 @@ export default function Footer() {
       <div className="border-t border-ink-line">
         <div className="section-pad flex flex-col items-start justify-between gap-2 py-6 text-xs text-zinc-500 sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} BenzolPro. {t("footer.rights")}</p>
-          <p className="max-w-md">{t("footer.disclaimer")}</p>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            {needsConsent() && (
+              <button type="button" onClick={resetConsent} className="underline transition hover:text-neon">
+                Cookievoorkeuren
+              </button>
+            )}
+            <p className="max-w-md">{t("footer.disclaimer")}</p>
+          </div>
         </div>
       </div>
     </footer>

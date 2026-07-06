@@ -17,6 +17,9 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ChatWidget from "@/components/ChatWidget";
 import JsonLd from "@/components/JsonLd";
+import { ConsentProvider } from "@/lib/consent";
+import Analytics from "@/components/Analytics";
+import CookieBanner from "@/components/CookieBanner";
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, COMPANY, isPlaceholder } from "@/lib/site";
 import { getBrandAggregateRating } from "@/lib/products";
 
@@ -46,6 +49,11 @@ export const metadata: Metadata = {
     description: "Vind in seconden de juiste olie voor jouw auto.",
   },
   robots: { index: true, follow: true },
+  // Zet NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION om je site in Google Search Console
+  // te verifiëren (de meta-tag verschijnt dan automatisch in de <head>).
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 // Globale structured data: wie is het bedrijf + welke website is dit.
@@ -110,17 +118,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="nl" dir="ltr" className={spaceGrotesk.variable} suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <JsonLd data={[ORG_JSONLD, WEBSITE_JSONLD]} />
-        <I18nProvider>
-          <AudienceProvider>
-            <CartProvider>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-              <CartDrawer />
-              <ChatWidget />
-            </CartProvider>
-          </AudienceProvider>
-        </I18nProvider>
+        <ConsentProvider>
+          <I18nProvider>
+            <AudienceProvider>
+              <CartProvider>
+                <Header />
+                <main>{children}</main>
+                <Footer />
+                <CartDrawer />
+                <ChatWidget />
+                <CookieBanner />
+              </CartProvider>
+            </AudienceProvider>
+          </I18nProvider>
+          <Analytics />
+        </ConsentProvider>
       </body>
     </html>
   );

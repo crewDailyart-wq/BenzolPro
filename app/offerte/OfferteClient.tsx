@@ -24,6 +24,7 @@ export default function OfferteClient() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
 
   function update<K extends keyof FormState>(key: K, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -39,14 +40,29 @@ export default function OfferteClient() {
     return Object.keys(e).length === 0;
   }
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
+    setSendError(null);
     setSending(true);
-    window.setTimeout(() => {
+    try {
+      const res = await fetch("/api/offerte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setSending(false);
+        setSendError(data?.error || t("checkout.payError"));
+        return;
+      }
       setSending(false);
       setDone(true);
-    }, 1400);
+    } catch {
+      setSending(false);
+      setSendError(t("checkout.payError"));
+    }
   }
 
   if (done) {
@@ -122,6 +138,12 @@ export default function OfferteClient() {
               className="input-field min-h-[100px] resize-y"
             />
           </Field>
+
+          {sendError && (
+            <p className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300" role="alert">
+              {sendError}
+            </p>
+          )}
 
           <button type="submit" disabled={sending} className="btn-neon w-full">
             {sending ? (

@@ -23,6 +23,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/bundels", priority: 0.8, freq: "weekly" },
     { path: "/certificaten", priority: 0.5, freq: "yearly" },
     { path: "/offerte", priority: 0.6, freq: "monthly" },
+    { path: "/contact", priority: 0.5, freq: "yearly" },
+    { path: "/algemene-voorwaarden", priority: 0.3, freq: "yearly" },
+    { path: "/privacybeleid", priority: 0.3, freq: "yearly" },
+    { path: "/retourbeleid", priority: 0.3, freq: "yearly" },
+    { path: "/cookiebeleid", priority: 0.3, freq: "yearly" },
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((s) => ({

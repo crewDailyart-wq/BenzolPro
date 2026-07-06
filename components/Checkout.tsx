@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart, PICKUP_DISCOUNT } from "@/lib/cart";
@@ -23,8 +22,7 @@ const PICKUP_POINTS = [
 ];
 
 export default function Checkout() {
-  const router = useRouter();
-  const { lines, subtotal, shipping, discount, total, count, clear, deliveryMethod, setDeliveryMethod } = useCart();
+  const { lines, subtotal, shipping, discount, total, count, deliveryMethod, setDeliveryMethod } = useCart();
   const { t } = useI18n();
 
   const [method, setMethod] = useState<PayMethod>("ideal");
@@ -34,6 +32,7 @@ export default function Checkout() {
   const [form, setForm] = useState({ firstName: "", lastName: "", address: "", postal: "", city: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [processing, setProcessing] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const isPickup = deliveryMethod === "pickup";
 
@@ -59,23 +58,54 @@ export default function Checkout() {
     return Object.keys(e).length === 0;
   }
 
-  function completeOrder(express: boolean) {
+  async function completeOrder(express: boolean) {
     if (!validate(express)) return;
+    setApiError(null);
     setProcessing(true);
-    // Simulate a payment round-trip. No real charge is made (demo checkout).
-    const orderId = "BP-" + Math.floor(100000 + (subtotal * 97 + count * 31 + email.length * 7) % 900000);
-    window.setTimeout(() => {
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          method,
+          deliveryMethod,
+          pickupPoint: isPickup ? pickupPoint : undefined,
+          customer: { ...form },
+          // Alleen id/maat/aantal — de server herberekent alle prijzen zelf.
+          lines: lines.map((l) => ({
+            productId: l.productId,
+            sizeLiter: l.sizeLiter,
+            qty: l.qty,
+            isBundle: Boolean(l.isBundle),
+          })),
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data?.checkoutUrl) {
+        setProcessing(false);
+        setApiError(data?.error || t("checkout.payError"));
+        return;
+      }
+
+      // Bewaar een korte samenvatting zodat de bedankpagina meteen iets kan tonen
+      // terwijl de definitieve status bij Mollie wordt opgehaald.
       try {
-        sessionStorage.setItem(
-          "benzolpro.lastOrder",
-          JSON.stringify({ orderId, email: email || "customer@benzolpro.nl", total }),
+        localStorage.setItem(
+          "benzolpro.pendingOrder",
+          JSON.stringify({ orderId: data.orderId, email, total }),
         );
       } catch {
         /* ignore */
       }
-      clear();
-      router.push("/checkout/success");
-    }, 1600);
+      // Door naar de beveiligde betaalpagina van Mollie (iDEAL, kaart, Apple Pay …).
+      window.location.href = data.checkoutUrl;
+    } catch {
+      setProcessing(false);
+      setApiError(t("checkout.payError"));
+    }
   }
 
   if (count === 0 && !processing) {
@@ -262,6 +292,12 @@ export default function Checkout() {
               </div>
             )}
           </Section>
+
+          {apiError && (
+            <p className="mt-6 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300" role="alert">
+              {apiError}
+            </p>
+          )}
 
           <button
             type="button"

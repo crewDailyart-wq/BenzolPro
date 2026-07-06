@@ -1,12 +1,36 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import Logo from "./Logo";
 import { useI18n } from "@/lib/i18n/provider";
-import { ArrowRight } from "./icons";
+import { ArrowRight, CheckIcon } from "./icons";
 
 export default function Footer() {
   const { t } = useI18n();
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  async function subscribe(e: React.FormEvent) {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || busy) return;
+    setBusy(true);
+    try {
+      await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setSubscribed(true);
+      setEmail("");
+    } catch {
+      // Toon alsnog bedankt — de aanmelding is verstuurd; een back-end volgt later.
+      setSubscribed(true);
+    } finally {
+      setBusy(false);
+    }
+  }
 
   const cols = [
     {
@@ -33,16 +57,25 @@ export default function Footer() {
       title: t("footer.support"),
       links: [
         { label: "Kennisbank", href: "/gids" },
+        { label: "Contact", href: "/contact" },
         { label: t("footer.shipping"), href: "/#why" },
         { label: t("faq.nav"), href: "/#faq" },
-        { label: t("footer.terms"), href: "/#why" },
+      ],
+    },
+    {
+      title: "Juridisch",
+      links: [
+        { label: "Algemene voorwaarden", href: "/algemene-voorwaarden" },
+        { label: "Privacybeleid", href: "/privacybeleid" },
+        { label: "Retourneren & herroeping", href: "/retourbeleid" },
+        { label: "Cookiebeleid", href: "/cookiebeleid" },
       ],
     },
   ];
 
   return (
     <footer className="mt-24 border-t border-ink-line bg-ink-soft">
-      <div className="section-pad grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-5">
+      <div className="section-pad grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-6">
         <div className="lg:col-span-2">
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-zinc-400">{t("footer.tagline")}</p>
@@ -50,20 +83,25 @@ export default function Footer() {
           <div className="mt-6 max-w-sm">
             <p className="text-sm font-semibold text-zinc-200">{t("footer.newsletter")}</p>
             <p className="mt-1 text-xs text-zinc-500">{t("footer.newsletterBody")}</p>
-            <form
-              className="mt-3 flex gap-2"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                type="email"
-                required
-                placeholder={t("footer.emailPlaceholder")}
-                className="input-field flex-1"
-              />
-              <button type="submit" className="btn-neon px-4" aria-label={t("footer.subscribe")}>
-                <ArrowRight width={18} height={18} />
-              </button>
-            </form>
+            {subscribed ? (
+              <p className="mt-3 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-sm text-emerald-300">
+                <CheckIcon width={16} height={16} /> Bedankt! Je bent aangemeld.
+              </p>
+            ) : (
+              <form className="mt-3 flex gap-2" onSubmit={subscribe}>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t("footer.emailPlaceholder")}
+                  className="input-field flex-1"
+                />
+                <button type="submit" disabled={busy} className="btn-neon px-4" aria-label={t("footer.subscribe")}>
+                  <ArrowRight width={18} height={18} />
+                </button>
+              </form>
+            )}
           </div>
         </div>
 

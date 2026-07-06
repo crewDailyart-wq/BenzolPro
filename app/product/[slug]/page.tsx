@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ProductDetail from "@/components/ProductDetail";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { PRODUCTS, getProductBySlug, productPositioning } from "@/lib/products";
 import { sizePrice, defaultSize } from "@/lib/format";
 import { resolveImages } from "@/lib/media";
@@ -97,6 +98,13 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   return (
     <>
       <JsonLd data={[productJsonLd, breadcrumbJsonLd]} />
+      <Breadcrumbs
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Producten", href: "/products" },
+          { name: product.name },
+        ]}
+      />
       <ProductDetail product={product} related={related} />
     </>
   );

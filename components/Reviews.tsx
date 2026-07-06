@@ -25,18 +25,41 @@ export default function Reviews({ scope, seedRating, seedCount }: { scope: strin
   const [rating, setRating] = useState(5);
   const [hover, setHover] = useState(0);
   const [done, setDone] = useState(false);
+  // true zodra de reviews echt op de server (KV) worden bewaard; false = lokale opslag.
+  const [persisted, setPersisted] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(key);
-      if (stored) setReviews(JSON.parse(stored) as Review[]);
-    } catch {
-      /* ignore */
+    let cancelled = false;
+    async function load() {
+      // Probeer de server (gedeelde, blijvende reviews).
+      try {
+        const res = await fetch(`/api/reviews?scope=${encodeURIComponent(scope)}`, { cache: "no-store" });
+        const data = await res.json().catch(() => ({}));
+        if (cancelled) return;
+        if (data?.persisted) {
+          setPersisted(true);
+          setReviews(Array.isArray(data.reviews) ? data.reviews : []);
+          return;
+        }
+      } catch {
+        /* val terug op lokale opslag */
+      }
+      // Geen server-opslag: lees uit localStorage (zoals voorheen).
+      if (cancelled) return;
+      try {
+        const stored = window.localStorage.getItem(key);
+        if (stored) setReviews(JSON.parse(stored) as Review[]);
+      } catch {
+        /* ignore */
+      }
     }
-  }, [key]);
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [key, scope]);
 
-  function persist(list: Review[]) {
-    setReviews(list);
+  function persistLocal(list: Review[]) {
     try {
       window.localStorage.setItem(key, JSON.stringify(list));
     } catch {
@@ -44,21 +67,39 @@ export default function Reviews({ scope, seedRating, seedCount }: { scope: strin
     }
   }
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!text.trim()) return;
-    const review: Review = {
+    const optimistic: Review = {
       name: name.trim() || t("reviews.anonymous"),
       rating,
       text: text.trim(),
       date: new Date().toISOString().slice(0, 10),
     };
-    persist([review, ...reviews]);
+    const nextList = [optimistic, ...reviews];
+    setReviews(nextList);
     setName("");
     setText("");
     setRating(5);
     setDone(true);
     setTimeout(() => setDone(false), 2500);
+
+    // Stuur naar de server; bewaart daar als KV is geconfigureerd, anders lokaal.
+    try {
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scope, name: optimistic.name, rating: optimistic.rating, text: optimistic.text }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (data?.persisted) {
+        setPersisted(true);
+        return; // server bewaart het; niets lokaal nodig
+      }
+    } catch {
+      /* offline of niet geconfigureerd → lokaal bewaren */
+    }
+    persistLocal(nextList);
   }
 
   const count = reviews.length + (seedCount ?? 0);
@@ -138,7 +179,7 @@ export default function Reviews({ scope, seedRating, seedCount }: { scope: strin
                 t("reviews.submit")
               )}
             </button>
-            <p className="mt-2 text-[11px] text-zinc-600">{t("reviews.demoNote")}</p>
+            {!persisted && <p className="mt-2 text-[11px] text-zinc-600">{t("reviews.demoNote")}</p>}
           </form>
 
           {/* list */}

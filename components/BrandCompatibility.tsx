@@ -14,8 +14,8 @@ import { CarIcon } from "./icons";
 function BrandLogo({ name, logo }: { name: string; logo?: string }) {
   const [failed, setFailed] = useState(false);
   if (logo && !failed) {
-    // eslint-disable-next-line @next/next/no-img-element -- local, user-provided brand logos
     return (
+      // eslint-disable-next-line @next/next/no-img-element -- local, user-provided brand logos
       <img
         src={`/merken/${logo}`}
         alt={name}

@@ -1,5 +1,14 @@
 import type { Metadata, Viewport } from "next";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+// Zelf-gehost lettertype (geen render-blokkerende externe request, geen layout-shift).
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-sans",
+});
 import { I18nProvider } from "@/lib/i18n/provider";
 import { AudienceProvider } from "@/lib/audience";
 import { CartProvider } from "@/lib/cart";
@@ -82,15 +91,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl" dir="ltr" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="nl" dir="ltr" className={spaceGrotesk.variable} suppressHydrationWarning>
       <body className="min-h-screen antialiased">
         <JsonLd data={[ORG_JSONLD, WEBSITE_JSONLD]} />
         <I18nProvider>

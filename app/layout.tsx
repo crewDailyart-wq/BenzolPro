@@ -17,7 +17,7 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import ChatWidget from "@/components/ChatWidget";
 import JsonLd from "@/components/JsonLd";
-import { SITE_URL, SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL } from "@/lib/site";
+import { SITE_URL, SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, COMPANY, isPlaceholder } from "@/lib/site";
 import { getBrandAggregateRating } from "@/lib/products";
 
 export const metadata: Metadata = {
@@ -59,10 +59,26 @@ const ORG_JSONLD = {
   slogan: SITE_TAGLINE,
   logo: `${SITE_URL}/opengraph-image`,
   email: CONTACT_EMAIL,
+  legalName: COMPANY.legalName,
   areaServed: ["NL", "BE"],
+  // Adres en telefoon alleen opnemen als ze echt zijn ingevuld (geen placeholders
+  // in de structured data — dat schaadt juist het vertrouwen bij Google).
+  ...(isPlaceholder(COMPANY.street)
+    ? {}
+    : {
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: COMPANY.street,
+          postalCode: COMPANY.postal,
+          addressLocality: COMPANY.city,
+          addressCountry: COMPANY.country,
+        },
+      }),
+  ...(isPlaceholder(COMPANY.vat) ? {} : { vatID: COMPANY.vat }),
   contactPoint: {
     "@type": "ContactPoint",
     email: CONTACT_EMAIL,
+    telephone: COMPANY.phone,
     contactType: "customer support",
     availableLanguage: ["Dutch", "English"],
   },

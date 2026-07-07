@@ -54,6 +54,7 @@ export default function Footer() {
         { label: t("quote.title"), href: "/offerte" },
         { label: t("audience.garage"), href: "/#garages" },
         { label: t("nav.certificates"), href: "/certificaten" },
+        { label: "Gratis kentekencheck-widget", href: "/widget" },
       ],
     },
     {

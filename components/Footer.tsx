@@ -131,9 +131,9 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-ink-line">
-        <div className="section-pad flex flex-col items-center gap-3 py-5 sm:flex-row sm:justify-between">
-          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">Veilig betalen met</p>
-          <PaymentBadges />
+        <div className="section-pad py-5">
+          <p className="text-center text-xs font-semibold uppercase tracking-wide text-zinc-500">Veilig betalen met</p>
+          <PaymentBadges marquee className="mt-3" />
         </div>
       </div>
 

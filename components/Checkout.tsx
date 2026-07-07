@@ -321,7 +321,7 @@ export default function Checkout() {
           <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-zinc-500">
             <LockIcon width={14} height={14} /> {t("checkout.secured")}
           </p>
-          <PaymentBadges className="mt-4 justify-center" />
+          <PaymentBadges marquee className="mt-4" />
         </div>
 
         {/* summary column */}

@@ -4,6 +4,7 @@ import { BUNDLES } from "@/lib/bundles";
 import { getMakeEntries, getAllModelEntries, getAllGenerationEntries, getAllEngineEntries } from "@/lib/carModels";
 import { GUIDES } from "@/lib/guides";
 import { getCities } from "@/lib/garages";
+import { COMPARE_PAIRS } from "@/lib/compare";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -20,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/widget", priority: 0.6, freq: "monthly" },
     { path: "/open-data", priority: 0.6, freq: "monthly" },
     { path: "/motorolie-rapport", priority: 0.7, freq: "yearly" },
+    { path: "/kosten", priority: 0.7, freq: "monthly" },
+    { path: "/vergelijk", priority: 0.7, freq: "monthly" },
     { path: "/olie", priority: 0.8, freq: "weekly" },
     { path: "/olie-verversen", priority: 0.7, freq: "weekly" },
     { path: "/gids", priority: 0.7, freq: "weekly" },
@@ -96,6 +99,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  // Kostenpagina's per model ("wat kost olie verversen [auto]").
+  const costEntries: MetadataRoute.Sitemap = getAllModelEntries().map((e) => ({
+    url: `${SITE_URL}/kosten/${e.makeSlug}/${e.modelSlug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  // Viscositeit-vergelijkpagina's ("5W30 of 5W40").
+  const compareEntries: MetadataRoute.Sitemap = COMPARE_PAIRS.map((p) => ({
+    url: `${SITE_URL}/vergelijk/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
     ...productEntries,
@@ -106,5 +125,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...engineEntries,
     ...guideEntries,
     ...cityEntries,
+    ...costEntries,
+    ...compareEntries,
   ];
 }

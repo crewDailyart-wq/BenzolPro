@@ -61,6 +61,8 @@ export default function Footer() {
       title: t("footer.support"),
       links: [
         { label: "Kennisbank", href: "/gids" },
+        { label: `Motorolie-rapport`, href: "/motorolie-rapport" },
+        { label: "Open data", href: "/open-data" },
         { label: "Contact", href: "/contact" },
         { label: t("footer.shipping"), href: "/#why" },
         { label: t("faq.nav"), href: "/#faq" },

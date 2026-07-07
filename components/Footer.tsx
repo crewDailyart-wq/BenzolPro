@@ -46,6 +46,7 @@ export default function Footer() {
         { label: "Motorolie per auto", href: "/olie" },
         { label: "Kosten olie verversen", href: "/kosten" },
         { label: "Olie vergelijken", href: "/vergelijk" },
+        { label: "Gratis kentekentools", href: "/tools" },
         { label: "Kentekencheck", href: "/kenteken-check" },
         { label: t("footer.findOil"), href: "/#plate" },
       ],

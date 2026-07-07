@@ -5,6 +5,7 @@ import { getMakeEntries, getAllModelEntries, getAllGenerationEntries, getAllEngi
 import { GUIDES } from "@/lib/guides";
 import { getCities } from "@/lib/garages";
 import { COMPARE_PAIRS } from "@/lib/compare";
+import { TOOLS } from "@/lib/tools";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -23,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/motorolie-rapport", priority: 0.7, freq: "yearly" },
     { path: "/kosten", priority: 0.7, freq: "monthly" },
     { path: "/vergelijk", priority: 0.7, freq: "monthly" },
+    { path: "/tools", priority: 0.8, freq: "weekly" },
     { path: "/olie", priority: 0.8, freq: "weekly" },
     { path: "/olie-verversen", priority: 0.7, freq: "weekly" },
     { path: "/gids", priority: 0.7, freq: "weekly" },
@@ -115,6 +117,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  // Gratis RDW-kentekentools (APK, voertuiggegevens, CO2, waarde, wegenbelasting).
+  const toolEntries: MetadataRoute.Sitemap = TOOLS.map((t) => ({
+    url: `${SITE_URL}/tools/${t.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.75,
+  }));
+
   return [
     ...staticEntries,
     ...productEntries,
@@ -127,5 +137,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cityEntries,
     ...costEntries,
     ...compareEntries,
+    ...toolEntries,
   ];
 }

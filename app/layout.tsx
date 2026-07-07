@@ -12,14 +12,10 @@ const spaceGrotesk = Space_Grotesk({
 import { I18nProvider } from "@/lib/i18n/provider";
 import { AudienceProvider } from "@/lib/audience";
 import { CartProvider } from "@/lib/cart";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
-import ChatWidget from "@/components/ChatWidget";
+import AppShell from "@/components/AppShell";
 import JsonLd from "@/components/JsonLd";
 import { ConsentProvider } from "@/lib/consent";
 import Analytics from "@/components/Analytics";
-import CookieBanner from "@/components/CookieBanner";
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, COMPANY, isPlaceholder } from "@/lib/site";
 import { getBrandAggregateRating } from "@/lib/products";
 
@@ -122,12 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <I18nProvider>
             <AudienceProvider>
               <CartProvider>
-                <Header />
-                <main>{children}</main>
-                <Footer />
-                <CartDrawer />
-                <ChatWidget />
-                <CookieBanner />
+                <AppShell>{children}</AppShell>
               </CartProvider>
             </AudienceProvider>
           </I18nProvider>

@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/products", priority: 0.9, freq: "daily" },
     { path: "/kenteken-check", priority: 0.8, freq: "monthly" },
     { path: "/widget", priority: 0.6, freq: "monthly" },
+    { path: "/open-data", priority: 0.6, freq: "monthly" },
+    { path: "/motorolie-rapport", priority: 0.7, freq: "yearly" },
     { path: "/olie", priority: 0.8, freq: "weekly" },
     { path: "/olie-verversen", priority: 0.7, freq: "weekly" },
     { path: "/gids", priority: 0.7, freq: "weekly" },

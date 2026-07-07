@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import Logo from "./Logo";
+import PaymentBadges from "./PaymentBadges";
 import { useI18n } from "@/lib/i18n/provider";
 import { needsConsent } from "@/lib/site";
 import { useConsent } from "@/lib/consent";
@@ -127,6 +128,13 @@ export default function Footer() {
             </ul>
           </div>
         ))}
+      </div>
+
+      <div className="border-t border-ink-line">
+        <div className="section-pad flex flex-col items-center gap-3 py-5 sm:flex-row sm:justify-between">
+          <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">Veilig betalen met</p>
+          <PaymentBadges />
+        </div>
       </div>
 
       <div className="border-t border-ink-line">

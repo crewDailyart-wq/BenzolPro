@@ -6,6 +6,7 @@ import { useCart, PICKUP_DISCOUNT } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
 import { euro } from "@/lib/format";
 import OilBottle from "./OilBottle";
+import PaymentBadges from "./PaymentBadges";
 import { LockIcon, CheckIcon, BoltIcon, ArrowRight, TruckIcon, PackageIcon } from "./icons";
 
 type PayMethod = "ideal" | "applepay" | "card" | "paypal";
@@ -320,6 +321,7 @@ export default function Checkout() {
           <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-zinc-500">
             <LockIcon width={14} height={14} /> {t("checkout.secured")}
           </p>
+          <PaymentBadges className="mt-4 justify-center" />
         </div>
 
         {/* summary column */}

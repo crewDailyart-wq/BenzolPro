@@ -65,6 +65,7 @@ export default function Footer() {
       title: t("footer.support"),
       links: [
         { label: "Kennisbank", href: "/gids" },
+        { label: "Olie-normen encyclopedie", href: "/normen" },
         { label: `Motorolie-rapport`, href: "/motorolie-rapport" },
         { label: "Open data", href: "/open-data" },
         { label: "Contact", href: "/contact" },

@@ -10,6 +10,7 @@ import {
   resolveOilCapacity,
 } from "@/lib/carModels";
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
+import { normForSpec } from "@/lib/norms";
 import { oilChangeHowTo } from "@/lib/schema";
 import OilAdviceBody from "@/components/OilAdviceBody";
 import OilCapacityCost from "@/components/OilCapacityCost";
@@ -108,7 +109,17 @@ export default function ModelPage({ params }: { params: { merk: string; model: s
       </h1>
       {spec && (
         <p className="mt-2 text-sm text-zinc-400">
-          Gangbare fabrieksnorm: <span className="font-semibold text-zinc-200">{spec}</span>
+          Gangbare fabrieksnorm:{" "}
+          {(() => {
+            const norm = normForSpec(spec);
+            return norm ? (
+              <Link href={`/normen/${norm.slug}`} className="font-semibold text-neon hover:underline">
+                {spec}
+              </Link>
+            ) : (
+              <span className="font-semibold text-zinc-200">{spec}</span>
+            );
+          })()}
         </p>
       )}
 

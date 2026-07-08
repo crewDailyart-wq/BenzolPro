@@ -6,6 +6,7 @@ import { GUIDES } from "@/lib/guides";
 import { getCities } from "@/lib/garages";
 import { COMPARE_PAIRS } from "@/lib/compare";
 import { TOOLS } from "@/lib/tools";
+import { NORMS } from "@/lib/norms";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -25,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/kosten", priority: 0.7, freq: "monthly" },
     { path: "/vergelijk", priority: 0.7, freq: "monthly" },
     { path: "/tools", priority: 0.8, freq: "weekly" },
+    { path: "/normen", priority: 0.7, freq: "monthly" },
     { path: "/olie", priority: 0.8, freq: "weekly" },
     { path: "/olie-verversen", priority: 0.7, freq: "weekly" },
     { path: "/gids", priority: 0.7, freq: "weekly" },
@@ -125,6 +127,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
+  // Olie-norm-encyclopedie (ACEA/API/OEM).
+  const normEntries: MetadataRoute.Sitemap = NORMS.map((n) => ({
+    url: `${SITE_URL}/normen/${n.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
     ...productEntries,
@@ -138,5 +148,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...costEntries,
     ...compareEntries,
     ...toolEntries,
+    ...normEntries,
   ];
 }

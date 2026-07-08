@@ -47,6 +47,7 @@ export default function Footer() {
         { label: "Kosten olie verversen", href: "/kosten" },
         { label: "Olie vergelijken", href: "/vergelijk" },
         { label: "Gratis kentekentools", href: "/tools" },
+        { label: "Mijn Garage", href: "/mijn-garage" },
         { label: "Kentekencheck", href: "/kenteken-check" },
         { label: t("footer.findOil"), href: "/#plate" },
       ],

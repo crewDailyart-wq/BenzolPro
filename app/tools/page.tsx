@@ -75,6 +75,18 @@ export default function ToolsHub() {
             </Link>
           ))}
 
+          {/* Mijn Garage */}
+          <Link href="/mijn-garage" className="card-surface group flex flex-col p-6 transition hover:border-neon/50">
+            <span className="grid h-12 w-12 place-items-center rounded-xl bg-ink-soft text-neon">
+              <CarIcon width={22} height={22} />
+            </span>
+            <h2 className="mt-4 text-lg font-bold">Mijn Garage</h2>
+            <p className="mt-1 flex-1 text-sm text-zinc-400">Bewaar je auto(&apos;s) en krijg gratis APK- en olieverversing-herinneringen.</p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-neon">
+              Naar Mijn Garage <ArrowRight width={16} height={16} className="transition group-hover:translate-x-1" />
+            </span>
+          </Link>
+
           {/* Olie-tool als afsluiter */}
           <Link href="/kenteken-check" className="group flex flex-col justify-between rounded-2xl border border-neon/40 bg-neon/5 p-6 transition hover:bg-neon/10">
             <span className="grid h-12 w-12 place-items-center rounded-xl bg-neon text-ink">

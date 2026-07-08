@@ -15,6 +15,7 @@ import {
   buildIcs,
 } from "@/lib/garage";
 import LicensePlate from "./LicensePlate";
+import InstallPrompt from "./InstallPrompt";
 import { ArrowRight, CarIcon, CheckIcon, ShieldIcon, DropIcon, TrashIcon, BoltIcon } from "./icons";
 
 type AddStatus = "idle" | "loading" | "invalid" | "notfound" | "error" | "exists";
@@ -254,6 +255,7 @@ export default function MyGarage() {
             <button onClick={downloadIcs} className="btn-ghost">
               <CheckIcon width={16} height={16} /> Zet herinneringen in je agenda (.ics)
             </button>
+            <InstallPrompt label="Installeer als app — herinneringen op je beginscherm" />
           </div>
 
           {/* e-mailherinneringen */}

@@ -4,6 +4,34 @@
 // (gratis bezorging, gratis kentekenadvies, DTC-prijs, bulk voor garages) — geen
 // onterechte kwaliteitsclaims. Voeg gerust merken toe; pagina/sitemap volgen.
 
+// Echte goedkeuringen + labwaarden van de Benzol Modern Drive 5W30 (officieel
+// specificatieblad). Gebruikt op de merkvergelijkpagina's om concreet en
+// eerlijk aan te tonen dat Benzol premium-goedkeuringen draagt.
+export const BENZOL_5W30 = {
+  productSlug: "benzol-prime-5w30",
+  approvals: [
+    "VW 504.00 / 507.00",
+    "MB 229.51 / 229.52",
+    "BMW LL-04",
+    "GM dexos2",
+    "Porsche C30",
+    "RN 0700 / 0710",
+    "Fiat 9.55535-S3",
+    "Ford WSS-M2C917-A",
+    "PSA B71 2290 / 2297",
+    "API SN/CF",
+    "ACEA C2/C3",
+  ],
+  highlights: [
+    { label: "Viscositeitsindex", value: "170" },
+    { label: "HTHS @ 150 °C", value: "3,68 mPa·s" },
+    { label: "Vlampunt (COC)", value: "222 °C" },
+    { label: "Stolpunt", value: "−39 °C" },
+    { label: "TBN", value: "6,7 mg KOH/g" },
+    { label: "Sulfaatas", value: "0,79 %" },
+  ],
+};
+
 export interface BrandCompare {
   slug: string; // pad onder /vs, bijv. "kroon-oil"
   competitor: string; // "Kroon-Oil"

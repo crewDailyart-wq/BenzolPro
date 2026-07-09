@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { BRAND_COMPARES, getBrandCompare, compareRows } from "@/lib/brandCompare";
+import { BRAND_COMPARES, getBrandCompare, compareRows, BENZOL_5W30 } from "@/lib/brandCompare";
+import { getProductBySlug } from "@/lib/products";
 import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/site";
 import JsonLd from "@/components/JsonLd";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -93,6 +94,34 @@ export default function BrandVsPage({ params }: { params: { merk: string } }) {
             </tbody>
           </table>
         </div>
+
+        {/* echte goedkeuringen + labwaarden van de Benzol 5W30 */}
+        <section className="mt-10 max-w-3xl rounded-2xl border border-ink-line bg-ink-soft p-6">
+          <h2 className="text-lg font-bold">Benzol Modern Drive 5W30 draagt echte topgoedkeuringen</h2>
+          <p className="mt-1 text-sm text-zinc-400">
+            Van het officiële specificatieblad — dezelfde fabrieksgoedkeuringen als de grote premiummerken:
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {BENZOL_5W30.approvals.map((a) => (
+              <span key={a} className="rounded-lg bg-ink px-3 py-1.5 text-sm font-semibold text-zinc-100 ring-1 ring-ink-line">
+                {a}
+              </span>
+            ))}
+          </div>
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {BENZOL_5W30.highlights.map((h) => (
+              <div key={h.label} className="rounded-xl border border-ink-line bg-ink p-3">
+                <p className="text-lg font-extrabold text-neon">{h.value}</p>
+                <p className="text-xs text-zinc-500">{h.label}</p>
+              </div>
+            ))}
+          </div>
+          {getProductBySlug(BENZOL_5W30.productSlug) && (
+            <Link href={`/product/${BENZOL_5W30.productSlug}`} className="btn-neon mt-5 w-fit px-4 py-2 text-sm">
+              Bekijk de Benzol 5W30 <ArrowRight width={14} height={14} />
+            </Link>
+          )}
+        </section>
 
         {/* edges */}
         <div className="mt-10 grid max-w-3xl gap-4 sm:grid-cols-2">

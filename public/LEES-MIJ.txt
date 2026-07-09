@@ -38,3 +38,22 @@ Wil je jouw eigen Benzol-logo linksboven tonen in plaats van de standaard
 Productfoto's toevoegen
 =========================
 Zie public/products/LEES-MIJ.txt voor het toevoegen van foto's per product.
+
+Merk-/hero-banner bovenaan de productenpagina
+==============================================
+Bovenaan de pagina "Alle motorolie" (/products) staat een brede hero-banner.
+Wil je 'm vervangen? Zet een afbeelding in DEZE map (public/) met de naam:
+
+     brand-banner.jpg
+
+- Gebruik een brede afbeelding met DONKERE achtergrond (bijv. ~1800×900 px,
+  verhouding rond 2:1) zodat hij in de zwart-goud stijl past. De hele
+  afbeelding wordt getoond (niets bijgesneden) en schaalt responsive mee.
+- Een JPG is voor zo'n fotobanner het lichtst (snelle laadtijd). Gebruik je
+  liever PNG/WEBP? Pas dan de bestandsnaam aan in components/BrandBanner.tsx.
+- Geen bestand geplaatst? Dan wordt er niets getoond — nooit een kapot plaatje.
+- De plek/opmaak pas je aan in components/BrandBanner.tsx (en waar hij wordt
+  geplaatst in app/products/page.tsx).
+
+Let op: gebruik alleen merklogo's waarvoor je toestemming hebt. Merknamen en
+logo's zijn eigendom van de betreffende fabrikanten.

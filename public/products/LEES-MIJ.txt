@@ -129,9 +129,13 @@ Anti-Rust Spray (400 ml)
 Belangrijk
 ==========
 - Namen moeten EXACT overeenkomen (kleine letters, streepjes precies zo).
-- De extensie (.jpg) moet echt bij het opgeslagen bestandstype horen. Sla je
-  een foto op als PNG of WEBP? Pas dan in lib/products.ts de extensie in de
-  betreffende regel aan naar .png of .webp.
+- JPG, PNG én WEBP werken allemaal automatisch. De namen hierboven eindigen op
+  .jpg, maar je mag ook .png of .webp neerzetten met dezelfde naam — de site
+  probeert automatisch .jpg → .png → .webp en toont wat hij vindt. Je hoeft
+  hiervoor NIETS in de code aan te passen.
+  Tip: voor productfoto's zijn JPG of WEBP het lichtst (sneller laden). PNG mag
+  ook, maar is voor foto's meestal groter (langzamer) — gebruik PNG vooral als
+  je transparantie nodig hebt.
 - Windows verbergt vaak bestandsextensies, waardoor een bestand er uitziet als
   "foto.jpg" maar in werkelijkheid "foto.jpg.jpg" heet. Zet in Verkenner →
   Beeld → "Bestandsnaamextensies" aan om dit te controleren.

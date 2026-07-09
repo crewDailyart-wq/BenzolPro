@@ -68,6 +68,12 @@ De pagina's staan klaar en zijn met je bedrijfsgegevens gevuld:
 - [ ] Optioneel: zet **Vercel KV** (Storage → KV) aan voor blijvende, gedeelde
       productreviews. `KV_REST_API_URL` + `KV_REST_API_TOKEN` worden dan
       automatisch gezet; zonder KV blijven reviews lokaal in de browser.
+- [ ] Optioneel: **"Mijn Garage" e-mailherinneringen** (APK + olie). Vereist
+      **Vercel KV** (opslag aanmeldingen) + **Resend** (verzenden) + een
+      `CRON_SECRET`. De dagelijkse cron staat al klaar in `vercel.json`
+      (`/api/cron/reminders`, 08:00). Zonder deze setup werkt Mijn Garage nog
+      steeds: auto's worden lokaal bewaard en de agenda-herinnering (.ics)
+      blijft werken — alleen de e-mails gaan dan niet uit.
 
 ## 5b. Analytics & cookies (AVG-conform, kant-en-klaar)
 

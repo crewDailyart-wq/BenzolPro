@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/kosten", priority: 0.7, freq: "monthly" },
     { path: "/vergelijk", priority: 0.7, freq: "monthly" },
     { path: "/tools", priority: 0.8, freq: "weekly" },
+    { path: "/mijn-garage", priority: 0.7, freq: "monthly" },
     { path: "/normen", priority: 0.7, freq: "monthly" },
     { path: "/olie", priority: 0.8, freq: "weekly" },
     { path: "/olie-verversen", priority: 0.7, freq: "weekly" },

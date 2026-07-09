@@ -16,6 +16,7 @@ import AppShell from "@/components/AppShell";
 import JsonLd from "@/components/JsonLd";
 import { ConsentProvider } from "@/lib/consent";
 import Analytics from "@/components/Analytics";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import { SITE_URL, SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, COMPANY, isPlaceholder } from "@/lib/site";
 import { getBrandAggregateRating } from "@/lib/products";
 
@@ -124,6 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </I18nProvider>
           <Analytics />
         </ConsentProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

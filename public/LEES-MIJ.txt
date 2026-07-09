@@ -38,3 +38,25 @@ Wil je jouw eigen Benzol-logo linksboven tonen in plaats van de standaard
 Productfoto's toevoegen
 =========================
 Zie public/products/LEES-MIJ.txt voor het toevoegen van foto's per product.
+
+Merkenstrip bovenaan de productenpagina (lange, smalle logobanner)
+===================================================================
+Bovenaan de pagina "Alle motorolie" (/products) kun je één lange, smalle
+afbeelding tonen met veel automerk-logo's naast elkaar (bijv. "Geschikt voor
+alle bekende merken"). Zet daarvoor een afbeelding in DEZE map (public/) met
+de naam:
+
+     merken-banner.png
+
+- Gebruik een brede, lage afbeelding, bijvoorbeeld 1600×200 px (een
+  verhouding rond 8:1 werkt het mooist). De strip is responsive en schaalt
+  automatisch mee.
+- Een PNG met transparante achtergrond staat het mooist op de donkere
+  achtergrond; een JPG mag ook — hernoem het bestand dan naar
+  "merken-banner.png" of pas de naam aan in components/BrandStrip.tsx.
+- Geen bestand geplaatst? Dan wordt er simpelweg niets getoond — er
+  verschijnt nooit een kapot plaatje.
+
+Let op: gebruik alleen logo's waarvoor je toestemming hebt. Merknamen en
+logo's zijn eigendom van de betreffende fabrikanten en dienen hier enkel ter
+informatie (jouw olie voldoet aan hun specificaties).

@@ -1,5 +1,4 @@
 import Shop from "@/components/Shop";
-import BrandStrip from "@/components/BrandStrip";
 import { PRODUCTS } from "@/lib/products";
 
 export const metadata = {
@@ -14,7 +13,6 @@ export default function ProductsPage({
 }) {
   return (
     <div className="section-pad py-10">
-      <BrandStrip />
       <Shop products={PRODUCTS} initialViscosity={searchParams.v} initialSort={searchParams.sort} />
     </div>
   );

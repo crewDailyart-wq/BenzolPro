@@ -7,6 +7,7 @@ import { getCities } from "@/lib/garages";
 import { COMPARE_PAIRS } from "@/lib/compare";
 import { TOOLS } from "@/lib/tools";
 import { NORMS } from "@/lib/norms";
+import { BRAND_COMPARES } from "@/lib/brandCompare";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -25,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/motorolie-rapport", priority: 0.7, freq: "yearly" },
     { path: "/kosten", priority: 0.7, freq: "monthly" },
     { path: "/vergelijk", priority: 0.7, freq: "monthly" },
+    { path: "/vs", priority: 0.7, freq: "monthly" },
     { path: "/tools", priority: 0.8, freq: "weekly" },
     { path: "/mijn-garage", priority: 0.7, freq: "monthly" },
     { path: "/normen", priority: 0.7, freq: "monthly" },
@@ -136,6 +138,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  // Merk-vs-merk vergelijkingen (Benzol vs concurrent).
+  const brandVsEntries: MetadataRoute.Sitemap = BRAND_COMPARES.map((b) => ({
+    url: `${SITE_URL}/vs/${b.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticEntries,
     ...productEntries,
@@ -150,5 +160,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...compareEntries,
     ...toolEntries,
     ...normEntries,
+    ...brandVsEntries,
   ];
 }

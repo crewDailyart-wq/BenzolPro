@@ -68,12 +68,12 @@ export default function BestsellerSpotlight({
         <span className="animate-twinkle pointer-events-none absolute bottom-16 left-8 h-1.5 w-1.5 rounded-full bg-azure-soft shadow-[0_0_10px_2px_rgba(143,199,255,0.7)] [animation-delay:1.4s]" />
         <span className="animate-twinkle pointer-events-none absolute left-1/3 top-8 h-1.5 w-1.5 rounded-full bg-neon shadow-[0_0_10px_2px_rgba(246,217,137,0.6)] [animation-delay:0.7s]" />
 
-        <div className="relative grid grow grid-cols-1 items-center gap-6 sm:grid-cols-2 sm:gap-8">
+        <div className={`relative grid grow grid-cols-1 items-center gap-6 sm:gap-8 ${large ? "sm:grid-cols-[1.25fr_1fr]" : "sm:grid-cols-2"}`}>
           {/* floating product visual, big and central — square frame so an
               uploaded photo fills it completely (rounded corners, no borders) */}
-          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[440px]" : "max-w-[300px]"}`}>
+          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[560px] lg:max-w-[640px]" : "max-w-[340px]"}`}>
             {/* soft blue ring behind bottle, gently pulsing */}
-            <div className="animate-pulse-glow absolute inset-6 rounded-full bg-radial-azure opacity-90" />
+            <div className="animate-pulse-glow absolute inset-4 rounded-full bg-radial-azure opacity-90" />
             <div className="animate-float relative h-full w-full overflow-hidden rounded-3xl">
               <ProductVisual
                 product={product}

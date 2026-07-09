@@ -1,104 +1,150 @@
-Eigen productfoto's toevoegen
-==============================
+Eigen productfoto's toevoegen — ALLE bestandsnamen per product
+================================================================
 
-Elk product in lib/products.ts heeft al 3 bestandsnamen klaarstaan
-(voorkant, achterkant, zijkant). Je hoeft dus GEEN code aan te passen —
-zet gewoon foto's neer met exact de juiste bestandsnamen en ze verschijnen
-automatisch, mét pijlknoppen om te wisselen zodra er 2 of meer aanwezig zijn.
+Zet je foto's (vierkant, min. 800x800px werkt het mooist) in DEZE map
+(public/products/) met exact de namen hieronder. Je hoeft GEEN code aan te
+passen: elke naam staat al klaar. Wat je neerzet verschijnt automatisch in de
+galerij (met pijlknoppen + miniaturen); wat je nog niet hebt, wordt gewoon
+overgeslagen — er verschijnt NOOIT een kapot plaatje.
 
-Zet je foto's (vierkant, min. 800x800px werkt het mooist) neer als:
+Per product zijn dit de mogelijke bestanden:
+  - 7 foto's (verschillende hoeken) -> verschijnen in de galerij
+  - 3 maatfoto's (alleen motoroliën: doos/vat bij 20/60/208 L)
+  - 1 specificatieblad (PDF)  -> tabblad "Specificatieblad"
+Je hoeft ze niet allemaal te hebben; 1 goede voorkant is al genoeg.
 
-MOTOROLIËN
-  Product                          Voorkant                         Achterkant                                  Zijkant
-  ------------------------------------------------------------------------------------------------------------------------------------------------------
-  Modern Drive 0W20         ->  benzol-ultra-0w20.jpg           benzol-ultra-0w20-achterkant.jpg           benzol-ultra-0w20-zijkant.jpg
-  Modern Drive 0W30         ->  benzol-eco-0w30.jpg             benzol-eco-0w30-achterkant.jpg             benzol-eco-0w30-zijkant.jpg
-  Modern Drive 5W30         ->  benzol-prime-5w30.jpg           benzol-prime-5w30-achterkant.jpg           benzol-prime-5w30-zijkant.jpg
-  Modern Drive 5W40         ->  benzol-synth-5w40.jpg           benzol-synth-5w40-achterkant.jpg           benzol-synth-5w40-zijkant.jpg
-  Efficient Drive 10W40     ->  benzol-classic-10w40.jpg        benzol-classic-10w40-achterkant.jpg        benzol-classic-10w40-zijkant.jpg
+De 7 hoeken gebruiken steeds dezelfde achtervoegsels achter de productnaam:
+  <naam>.jpg                (voorkant — de hoofdfoto)
+  <naam>-achterkant.jpg     (achterkant)
+  <naam>-zijkant.jpg        (zijkant)
+  <naam>-etiket.jpg         (etiket / label close-up)
+  <naam>-dop.jpg            (dop / bovenkant)
+  <naam>-detail.jpg         (detailfoto)
+  <naam>-sfeer.jpg          (sfeer- / in-gebruik-foto)
 
-ONDERHOUD & ACCESSOIRES
-  Product                          Voorkant                         Achterkant                                  Zijkant
-  ------------------------------------------------------------------------------------------------------------------------------------------------------
-  Fuel Injector Cleaner     ->  benzol-injector-cleaner.jpg     benzol-injector-cleaner-achterkant.jpg     benzol-injector-cleaner-zijkant.jpg
-  Brake Fluid DOT-4         ->  benzol-remvloeistof-dot4.jpg    benzol-remvloeistof-dot4-achterkant.jpg    benzol-remvloeistof-dot4-zijkant.jpg
-  Anti-Rust Spray           ->  benzol-anti-roest-spray.jpg     benzol-anti-roest-spray-achterkant.jpg     benzol-anti-roest-spray-zijkant.jpg
 
-Hoe werkt het precies?
-- Heb je alle 3 de foto's van een product? Dan zie je op de productpagina
-  een volledige galerij: grote pijlknoppen (links/rechts), een
-  miniaturenstrip om direct een hoek te kiezen, plus pijltjestoetsen en
-  swipen op mobiel.
-- Heb je er maar 1 of 2? Geen probleem — de ontbrekende foto('s) worden
-  gewoon overgeslagen, en de galerij toont alleen de foto's die je wél hebt
-  neergezet (met pijlen zodra dat er 2 of meer zijn).
-- Heb je er nul? Dan verschijnt de gegenereerde flesillustratie.
-Er verschijnt dus NOOIT een kapot plaatje-icoontje.
+MOTOROLIËN  (11 bestanden elk: 7 foto's + 3 maatfoto's + 1 PDF)
+================================================================
 
-Belangrijk:
+Modern Drive 0W20
+  benzol-ultra-0w20.jpg
+  benzol-ultra-0w20-achterkant.jpg
+  benzol-ultra-0w20-zijkant.jpg
+  benzol-ultra-0w20-etiket.jpg
+  benzol-ultra-0w20-dop.jpg
+  benzol-ultra-0w20-detail.jpg
+  benzol-ultra-0w20-sfeer.jpg
+  benzol-ultra-0w20-20l.jpg        (doos van 4×5 L)
+  benzol-ultra-0w20-60l.jpg        (vat)
+  benzol-ultra-0w20-208l.jpg       (vat)
+  benzol-ultra-0w20-specs.pdf      (specificatieblad)
+
+Modern Drive 0W30
+  benzol-eco-0w30.jpg
+  benzol-eco-0w30-achterkant.jpg
+  benzol-eco-0w30-zijkant.jpg
+  benzol-eco-0w30-etiket.jpg
+  benzol-eco-0w30-dop.jpg
+  benzol-eco-0w30-detail.jpg
+  benzol-eco-0w30-sfeer.jpg
+  benzol-eco-0w30-20l.jpg
+  benzol-eco-0w30-60l.jpg
+  benzol-eco-0w30-208l.jpg
+  benzol-eco-0w30-specs.pdf
+
+Modern Drive 5W30  (de foto's + PDF voor 5W30 staan er deels al)
+  benzol-prime-5w30.jpg
+  benzol-prime-5w30-achterkant.jpg
+  benzol-prime-5w30-zijkant.jpg
+  benzol-prime-5w30-etiket.jpg
+  benzol-prime-5w30-dop.jpg
+  benzol-prime-5w30-detail.jpg
+  benzol-prime-5w30-sfeer.jpg
+  benzol-prime-5w30-20l.jpg
+  benzol-prime-5w30-60l.jpg
+  benzol-prime-5w30-208l.jpg
+  benzol-prime-5w30-specs.pdf
+
+Modern Drive 5W40
+  benzol-synth-5w40.jpg
+  benzol-synth-5w40-achterkant.jpg
+  benzol-synth-5w40-zijkant.jpg
+  benzol-synth-5w40-etiket.jpg
+  benzol-synth-5w40-dop.jpg
+  benzol-synth-5w40-detail.jpg
+  benzol-synth-5w40-sfeer.jpg
+  benzol-synth-5w40-20l.jpg
+  benzol-synth-5w40-60l.jpg
+  benzol-synth-5w40-208l.jpg
+  benzol-synth-5w40-specs.pdf
+
+Efficient Drive 10W40
+  benzol-classic-10w40.jpg
+  benzol-classic-10w40-achterkant.jpg
+  benzol-classic-10w40-zijkant.jpg
+  benzol-classic-10w40-etiket.jpg
+  benzol-classic-10w40-dop.jpg
+  benzol-classic-10w40-detail.jpg
+  benzol-classic-10w40-sfeer.jpg
+  benzol-classic-10w40-20l.jpg
+  benzol-classic-10w40-60l.jpg
+  benzol-classic-10w40-208l.jpg
+  benzol-classic-10w40-specs.pdf
+
+
+ONDERHOUD & ACCESSOIRES  (8 bestanden elk: 7 foto's + 1 PDF, geen maatfoto's)
+=============================================================================
+
+Fuel Injector Cleaner (300 ml)
+  benzol-injector-cleaner.jpg
+  benzol-injector-cleaner-achterkant.jpg
+  benzol-injector-cleaner-zijkant.jpg
+  benzol-injector-cleaner-etiket.jpg
+  benzol-injector-cleaner-dop.jpg
+  benzol-injector-cleaner-detail.jpg
+  benzol-injector-cleaner-sfeer.jpg
+  benzol-injector-cleaner-specs.pdf
+
+Brake Fluid DOT-4 (0,5 / 1 L)
+  benzol-remvloeistof-dot4.jpg
+  benzol-remvloeistof-dot4-achterkant.jpg
+  benzol-remvloeistof-dot4-zijkant.jpg
+  benzol-remvloeistof-dot4-etiket.jpg
+  benzol-remvloeistof-dot4-dop.jpg
+  benzol-remvloeistof-dot4-detail.jpg
+  benzol-remvloeistof-dot4-sfeer.jpg
+  benzol-remvloeistof-dot4-specs.pdf
+
+Anti-Rust Spray (400 ml)
+  benzol-anti-roest-spray.jpg
+  benzol-anti-roest-spray-achterkant.jpg
+  benzol-anti-roest-spray-zijkant.jpg
+  benzol-anti-roest-spray-etiket.jpg
+  benzol-anti-roest-spray-dop.jpg
+  benzol-anti-roest-spray-detail.jpg
+  benzol-anti-roest-spray-sfeer.jpg
+  benzol-anti-roest-spray-specs.pdf
+
+
+Belangrijk
+==========
 - Namen moeten EXACT overeenkomen (kleine letters, streepjes precies zo).
-- De extensie (.jpg) moet echt bij het opgeslagen bestandstype horen. Sla
-  je een foto op als PNG of WEBP? Pas dan in lib/products.ts de extensie
-  in de betreffende regel aan naar .png of .webp.
-- Windows verbergt vaak bestandsextensies, waardoor een bestand er uitziet
-  als "foto.jpg" maar in werkelijkheid "foto.jpg.jpg" heet. Zet in
-  Verkenner → Beeld → "Bestandsnaamextensies" aan om dit te controleren.
+- De extensie (.jpg) moet echt bij het opgeslagen bestandstype horen. Sla je
+  een foto op als PNG of WEBP? Pas dan in lib/products.ts de extensie in de
+  betreffende regel aan naar .png of .webp.
+- Windows verbergt vaak bestandsextensies, waardoor een bestand er uitziet als
+  "foto.jpg" maar in werkelijkheid "foto.jpg.jpg" heet. Zet in Verkenner →
+  Beeld → "Bestandsnaamextensies" aan om dit te controleren.
 
-Meer of andere hoeken dan voor/achter/zijkant?
+Nog meer of andere hoeken nodig?
 Voeg gewoon extra regels toe aan de `images`-lijst van dat product in
-lib/products.ts, bijvoorbeeld:
-
-  images: [
-    "/products/benzol-prime-5w30.jpg",
-    "/products/benzol-prime-5w30-achterkant.jpg",
-    "/products/benzol-prime-5w30-zijkant.jpg",
-    "/products/benzol-prime-5w30-etiket.jpg",
-  ],
-
-Specificatieblad (PDF) per product — de "certificaten"
-=======================================================
-Elk product toont op de productpagina een tabblad "Specificatieblad". Zet
-daarvoor de officiële datasheet-PDF neer met deze naam (slug van het product):
-
-  Product                    Bestandsnaam
-  ------------------------------------------------------------------
-  Modern Drive 0W20      ->  benzol-ultra-0w20-specs.pdf
-  Modern Drive 0W30      ->  benzol-eco-0w30-specs.pdf
-  Modern Drive 5W30      ->  benzol-prime-5w30-specs.pdf   (staat er al)
-  Modern Drive 5W40      ->  benzol-synth-5w40-specs.pdf
-  Efficient Drive 10W40  ->  benzol-classic-10w40-specs.pdf
-  Fuel Injector Cleaner  ->  benzol-injector-cleaner-specs.pdf
-  Brake Fluid DOT-4      ->  benzol-remvloeistof-dot4-specs.pdf
-  Anti-Rust Spray        ->  benzol-anti-roest-spray-specs.pdf
-
-Zodra het PDF-bestand aanwezig is, verschijnt het automatisch (met een
-download-/openknop). Ontbreekt het? Dan blijft de nette technische
-spec-tabel staan die al uit de datasheet in lib/products.ts is ingevuld.
-
-Foto per hoeveelheid (bijv. een doos van 4 flessen bij 20 liter)
-=================================================================
-Alleen voor de motoroliën (5 / 20 / 60 / 208 L). Klikt een klant op een
-grotere maat, dan kun je daar een aparte foto bij tonen. Zet daarvoor een
-bestand neer met deze naam:
-
-  Maat        Bestandsnaam            Toont
-  -----------------------------------------------------------------
-  20 liter -> <slug>-20l.jpg          doos van 4×5 L flessen
-  60 liter -> <slug>-60l.jpg          vat
-  208 liter-> <slug>-208l.jpg         vat
-
-Bijvoorbeeld voor Modern Drive 5W30:
-  benzol-prime-5w30-20l.jpg     (foto van de doos met 4 flessen)
-  benzol-prime-5w30-60l.jpg     (foto van het vat)
-  benzol-prime-5w30-208l.jpg    (foto van het grote vat)
-
-De onderhoudsproducten (injector cleaner 300 ml, remvloeistof 0,5/1 L,
-anti-roest spray 400 ml) gebruiken gewoon de normale productfoto's.
+lib/products.ts, bijvoorbeeld "/products/benzol-prime-5w30-onderkant.jpg". Elke
+naam die je daar toevoegt, wordt daarna automatisch opgepakt.
 
 Bundeldeal-foto's
-===================
+=================
 Zie public/products/bundles/LEES-MIJ.txt voor de bundelfoto's.
 
-Achtergrondafbeelding op de homepage (parallax-effect)
-========================================================
+Achtergrondafbeelding op de homepage (parallax)
+================================================
 Zie public/LEES-MIJ.txt (één map hoger) voor hero-bg.jpg.

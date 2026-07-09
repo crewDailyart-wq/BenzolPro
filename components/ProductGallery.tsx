@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import OilBottle from "./OilBottle";
+import FallbackImage from "./FallbackImage";
 import { ArrowRight } from "./icons";
 
 /**
@@ -67,18 +68,6 @@ export default function ProductGallery({
     setFailed((prev) => (prev.has(originalIndex) ? prev : new Set(prev).add(originalIndex)));
   }
 
-  /**
-   * Server-rendered <img> tags start loading as soon as the browser parses
-   * the HTML — before React hydrates and attaches the onError listener. If
-   * the load already failed by the time hydration commits, that native
-   * error event is missed. This ref catches that case on mount.
-   */
-  function checkAlreadyFailed(el: HTMLImageElement | null, src: string) {
-    if (el && el.complete && el.naturalWidth === 0) {
-      markFailed(allImages.indexOf(src));
-    }
-  }
-
   function onKeyDown(e: React.KeyboardEvent) {
     if (e.key === "ArrowLeft") prev();
     if (e.key === "ArrowRight") next();
@@ -116,10 +105,8 @@ export default function ProductGallery({
         onMouseMove={onZoomMove}
         onMouseLeave={() => setZoom((z) => ({ ...z, active: false }))}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos */}
-        <img
+        <FallbackImage
           key={current}
-          ref={(el) => checkAlreadyFailed(el, current)}
           src={current}
           alt={`${name} — foto ${safeIndex + 1} van ${total}`}
           className={`h-full w-full rounded-3xl object-contain transition-transform duration-200 ease-out ${imageClassName}`}
@@ -127,7 +114,7 @@ export default function ProductGallery({
             transform: zoom.active ? "scale(2.2)" : "scale(1)",
             transformOrigin: `${zoom.x}% ${zoom.y}%`,
           }}
-          onError={() => markFailed(allImages.indexOf(current))}
+          onExhausted={() => markFailed(allImages.indexOf(current))}
         />
 
         {total > 1 && (
@@ -169,13 +156,11 @@ export default function ProductGallery({
                 i === safeIndex ? "border-neon shadow-neon" : "border-ink-line opacity-60 hover:opacity-100"
               }`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary user-provided local photos */}
-              <img
-                ref={(el) => checkAlreadyFailed(el, img)}
+              <FallbackImage
                 src={img}
                 alt=""
                 className="h-full w-full object-cover"
-                onError={() => markFailed(allImages.indexOf(img))}
+                onExhausted={() => markFailed(allImages.indexOf(img))}
               />
             </button>
           ))}

@@ -11,6 +11,9 @@ export interface Product {
   /** Marketing tagline key -> resolved per language via description map on product */
   tagline: string;
   specs: string[]; // e.g. ["ACEA C3", "API SN", "VW 504.00/507.00"]
+  /** Optionele technische labwaarden (van het officiële specificatieblad),
+   *  getoond als tabel op het tabblad "Specificaties". */
+  techSpecs?: { label: string; method?: string; value: string }[];
   sizesLiter: number[]; // available bottle sizes
   price: number; // reference price for the default (first) size in EUR (= prices[firstSize])
   compareAtPrice?: number; // reference "was" price for the default size

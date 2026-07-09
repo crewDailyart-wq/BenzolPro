@@ -78,6 +78,28 @@ export default function ProductTabs({ product }: { product: Product }) {
                   </li>
                 ))}
               </ul>
+              {product.techSpecs && product.techSpecs.length > 0 && (
+                <>
+                  <h3 className="mt-6 text-sm font-bold uppercase tracking-wide text-zinc-300">
+                    Technische gegevens
+                  </h3>
+                  <div className="mt-3 overflow-x-auto">
+                    <table className="w-full border-collapse text-sm">
+                      <tbody>
+                        {product.techSpecs.map((ts) => (
+                          <tr key={ts.label} className="border-b border-ink-line/60">
+                            <td className="py-2 pr-4 text-zinc-400">{ts.label}</td>
+                            <td className="py-2 pr-4 text-right font-semibold text-zinc-100">{ts.value}</td>
+                            <td className="hidden py-2 text-right text-xs text-zinc-600 sm:table-cell">{ts.method}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="mt-2 text-xs text-zinc-600">Typische waarden volgens het officiële specificatieblad. Geen productspecificatie.</p>
+                </>
+              )}
+
               <h3 className="mt-6 text-sm font-bold uppercase tracking-wide text-zinc-300">
                 {t("product.bestFor")}
               </h3>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useI18n } from "@/lib/i18n/provider";
+import { formatBottleSize } from "@/lib/format";
 
 /**
- * Blue glittering size chip (e.g. "5 L") that marks which size the standard
- * headline price is for. Since prices are shown for the 5 L size everywhere,
- * this makes the size unmistakable with an animated azure sheen + glitter.
+ * Blue glittering size chip (e.g. "5 L" or "300 ml") that marks which size the
+ * standard headline price is for. Kleine onderhoudsmaten (< 1 L) worden als
+ * milliliters getoond via `formatBottleSize`.
  */
 export default function SizeChip({
   liters,
@@ -14,13 +14,10 @@ export default function SizeChip({
   liters: number;
   className?: string;
 }) {
-  const { t } = useI18n();
-  const unit = t("product.liter");
+  const label = formatBottleSize(liters);
   return (
-    <span className={`size-chip ${className}`} aria-label={`${liters} ${unit}`}>
-      <span>
-        {liters}&nbsp;{unit}
-      </span>
+    <span className={`size-chip ${className}`} aria-label={label}>
+      <span>{label.replace(" ", " ")}</span>
     </span>
   );
 }

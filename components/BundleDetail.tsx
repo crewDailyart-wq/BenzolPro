@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
-import { euro } from "@/lib/format";
+import { euro, formatBottleSize } from "@/lib/format";
 import { getProductById } from "@/lib/products";
 import {
   bundleOriginalPrice,
@@ -130,7 +130,7 @@ export default function BundleDetail({ bundle }: { bundle: Bundle }) {
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold transition group-hover:text-azure">
                         {it.qty > 1 ? `${it.qty}× ` : ""}
-                        {it.sizeLiter} {t("product.liter")} {product!.name}
+                        {formatBottleSize(it.sizeLiter)} {product!.name}
                       </p>
                       <span className="text-[11px] text-zinc-500">{t("bundle.perProductLink")}</span>
                     </div>

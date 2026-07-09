@@ -6,7 +6,7 @@ import type { Product } from "@/lib/types";
 import { useI18n } from "@/lib/i18n/provider";
 import { useCart } from "@/lib/cart";
 import { useAudience } from "@/lib/audience";
-import { euro, sizePrice, sizeCompareAt, sizeNote, defaultSize } from "@/lib/format";
+import { euro, sizePrice, sizeCompareAt, sizeNote, defaultSize, formatBottleSize } from "@/lib/format";
 import { TAGLINES, getProductById, productPositioning } from "@/lib/products";
 import { getBundlesForProduct, getBundleGalleryImages, bundleOriginalPrice, GIFT_LABEL, type Bundle } from "@/lib/bundles";
 import { resolveImages, sizeImageCandidates } from "@/lib/media";
@@ -119,8 +119,14 @@ export default function ProductDetail({ product, related }: { product: Product; 
                   <WrenchIcon width={13} height={13} /> {t("monteur.badge")}
                 </span>
               )}
-              <span className="chip">{product.viscosity}</span>
-              <span className="chip">{t(`category.${product.category}`)}</span>
+              {product.kind === "care" ? (
+                product.productType && <span className="chip">{product.productType}</span>
+              ) : (
+                <>
+                  <span className="chip">{product.viscosity}</span>
+                  {product.category && <span className="chip">{t(`category.${product.category}`)}</span>}
+                </>
+              )}
               {previewBundle && (
                 <span className="chip border-azure/50 bg-azure/10 text-azure">
                   <PackageIcon width={13} height={13} /> {t("bundle.badge")}: {bundleName}
@@ -197,7 +203,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
                       <li key={i} className="flex items-center gap-1.5">
                         <CheckIcon width={14} height={14} className="text-azure" />
                         {it.qty > 1 ? `${it.qty}× ` : ""}
-                        {it.sizeLiter} {t("product.liter")} {p?.name ?? it.productId}
+                        {formatBottleSize(it.sizeLiter)} {p?.name ?? it.productId}
                       </li>
                     );
                   })}
@@ -230,9 +236,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
                               : "border-ink-line bg-ink-card text-zinc-200 hover:border-neon/60"
                         }`}
                       >
-                        <span>
-                          {s} {t("product.liter")}
-                        </span>
+                        <span>{formatBottleSize(s)}</span>
                         {note && (
                           <span
                             className={`mt-0.5 text-[10px] font-medium ${

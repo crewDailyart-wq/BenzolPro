@@ -536,7 +536,7 @@ export function suggestedProductsForNorm(norm: Norm): { products: Product[]; exa
   const exact = productsForNorm(norm);
   if (exact.length) return { products: exact, exact: true };
   const vis = new Set(norm.viscosities ?? []);
-  const byVis = PRODUCTS.filter((p) => vis.has(p.viscosity) && p.category !== "racing");
+  const byVis = PRODUCTS.filter((p) => p.viscosity != null && vis.has(p.viscosity) && p.category !== "racing");
   return { products: byVis.slice(0, 4), exact: false };
 }
 

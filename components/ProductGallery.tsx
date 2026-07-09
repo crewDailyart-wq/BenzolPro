@@ -23,7 +23,7 @@ export default function ProductGallery({
   images: string[];
   name: string;
   accent: string;
-  viscosity: string;
+  viscosity?: string;
   imageClassName?: string;
 }) {
   // keyed by content, not array reference — callers like resolveImages()

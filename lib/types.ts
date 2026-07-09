@@ -6,8 +6,17 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  viscosity: Viscosity;
-  category: OilCategory;
+  /** Soort product. Standaard (afwezig) = motorolie. "care" = onderhouds-/
+   *  accessoireproduct (remvloeistof, injector cleaner, anti-roest spray) dat
+   *  buiten het kentekenadvies en de viscositeitfilters valt. */
+  kind?: "oil" | "care";
+  /** Alleen voor niet-olie producten: het getoonde producttype-label
+   *  (bijv. "Remvloeistof"), gebruikt op de plek van de viscositeit-chip. */
+  productType?: string;
+  /** Viscositeit — alleen voor motoroliën. Onderhoudsproducten hebben er geen. */
+  viscosity?: Viscosity;
+  /** Oliecategorie — alleen voor motoroliën. */
+  category?: OilCategory;
   /** Marketing tagline key -> resolved per language via description map on product */
   tagline: string;
   specs: string[]; // e.g. ["ACEA C3", "API SN", "VW 504.00/507.00"]

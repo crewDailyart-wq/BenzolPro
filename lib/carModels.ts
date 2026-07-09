@@ -366,7 +366,7 @@ export const CAR_MAKES: CarMake[] = [
       { model: "5-serie", era: "2010–heden", viscosity: "5W30", fuel: "benzine & diesel" },
       { model: "X1", era: "2015–heden", viscosity: "5W30", fuel: "benzine & diesel" },
       { model: "X3", era: "2010–heden", viscosity: "5W30", fuel: "benzine & diesel" },
-      { model: "M3 / M4", era: "2014–heden", viscosity: "10W60", fuel: "petrol" },
+      { model: "M3 / M4", era: "2014–heden", viscosity: "5W40", fuel: "petrol" },
     ],
   },
   {

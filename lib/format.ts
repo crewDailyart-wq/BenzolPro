@@ -59,6 +59,18 @@ export function sizeNote(size: number): string | null {
 }
 
 /**
+ * Toont een maat leesbaar: kleine onderhoudsmaten (< 1 L) als milliliters
+ * ("300 ml"), grotere oliematen als liters ("5 L"). Zo klopt de weergave voor
+ * zowel de motoroliën (5/20/60/208 L) als de onderhoudsproducten
+ * (injector cleaner 300 ml, remvloeistof 0,5 L, spray 400 ml).
+ */
+export function formatBottleSize(size: number): string {
+  if (size < 1) return `${Math.round(size * 1000)} ml`;
+  const label = Number.isInteger(size) ? String(size) : String(size).replace(".", ",");
+  return `${label} L`;
+}
+
+/**
  * FALLBACK-berekening. Sinds elke maat een eigen vaste prijs heeft (zie
  * `product.prices` en `sizePrice`) wordt dit alleen nog gebruikt als een maat
  * per ongeluk geen eigen prijs heeft. Leidt een maatprijs af uit de basisprijs

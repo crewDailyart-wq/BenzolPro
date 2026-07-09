@@ -79,7 +79,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         productId: product.id,
         slug: product.slug,
         name: product.name,
-        viscosity: product.viscosity,
+        viscosity: product.viscosity ?? product.productType ?? "",
         sizeLiter,
         price,
         qty,

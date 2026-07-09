@@ -8,18 +8,21 @@ automatisch, mét pijlknoppen om te wisselen zodra er 2 of meer aanwezig zijn.
 
 Zet je foto's (vierkant, min. 800x800px werkt het mooist) neer als:
 
-  Product                   Voorkant                          Achterkant                                  Zijkant
-  --------------------------------------------------------------------------------------------------------------------------------------------
-  Benzol Ultra 0W20      -> benzol-ultra-0w20.jpg           benzol-ultra-0w20-achterkant.jpg           benzol-ultra-0w20-zijkant.jpg
-  Benzol Eco 0W30        -> benzol-eco-0w30.jpg             benzol-eco-0w30-achterkant.jpg             benzol-eco-0w30-zijkant.jpg
-  Benzol Prime 5W30      -> benzol-prime-5w30.jpg           benzol-prime-5w30-achterkant.jpg           benzol-prime-5w30-zijkant.jpg
-  Benzol DPF 5W30        -> benzol-dpf-5w30.jpg             benzol-dpf-5w30-achterkant.jpg             benzol-dpf-5w30-zijkant.jpg
-  Benzol Synth 5W40      -> benzol-synth-5w40.jpg           benzol-synth-5w40-achterkant.jpg           benzol-synth-5w40-zijkant.jpg
-  Benzol Turbo 5W40      -> benzol-turbo-5w40.jpg           benzol-turbo-5w40-achterkant.jpg           benzol-turbo-5w40-zijkant.jpg
-  Benzol Classic 10W40   -> benzol-classic-10w40.jpg        benzol-classic-10w40-achterkant.jpg        benzol-classic-10w40-zijkant.jpg
-  Benzol Guard 10W40     -> benzol-guard-10w40.jpg          benzol-guard-10w40-achterkant.jpg          benzol-guard-10w40-zijkant.jpg
-  Benzol Race 10W60      -> benzol-race-10w60.jpg           benzol-race-10w60-achterkant.jpg           benzol-race-10w60-zijkant.jpg
-  Benzol Work 15W40      -> benzol-work-15w40.jpg           benzol-work-15w40-achterkant.jpg           benzol-work-15w40-zijkant.jpg
+MOTOROLIËN
+  Product                          Voorkant                         Achterkant                                  Zijkant
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+  Modern Drive 0W20         ->  benzol-ultra-0w20.jpg           benzol-ultra-0w20-achterkant.jpg           benzol-ultra-0w20-zijkant.jpg
+  Modern Drive 0W30         ->  benzol-eco-0w30.jpg             benzol-eco-0w30-achterkant.jpg             benzol-eco-0w30-zijkant.jpg
+  Modern Drive 5W30         ->  benzol-prime-5w30.jpg           benzol-prime-5w30-achterkant.jpg           benzol-prime-5w30-zijkant.jpg
+  Modern Drive 5W40         ->  benzol-synth-5w40.jpg           benzol-synth-5w40-achterkant.jpg           benzol-synth-5w40-zijkant.jpg
+  Efficient Drive 10W40     ->  benzol-classic-10w40.jpg        benzol-classic-10w40-achterkant.jpg        benzol-classic-10w40-zijkant.jpg
+
+ONDERHOUD & ACCESSOIRES
+  Product                          Voorkant                         Achterkant                                  Zijkant
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+  Fuel Injector Cleaner     ->  benzol-injector-cleaner.jpg     benzol-injector-cleaner-achterkant.jpg     benzol-injector-cleaner-zijkant.jpg
+  Brake Fluid DOT-4         ->  benzol-remvloeistof-dot4.jpg    benzol-remvloeistof-dot4-achterkant.jpg    benzol-remvloeistof-dot4-zijkant.jpg
+  Anti-Rust Spray           ->  benzol-anti-roest-spray.jpg     benzol-anti-roest-spray-achterkant.jpg     benzol-anti-roest-spray-zijkant.jpg
 
 Hoe werkt het precies?
 - Heb je alle 3 de foto's van een product? Dan zie je op de productpagina
@@ -52,11 +55,31 @@ lib/products.ts, bijvoorbeeld:
     "/products/benzol-prime-5w30-etiket.jpg",
   ],
 
+Specificatieblad (PDF) per product — de "certificaten"
+=======================================================
+Elk product toont op de productpagina een tabblad "Specificatieblad". Zet
+daarvoor de officiële datasheet-PDF neer met deze naam (slug van het product):
+
+  Product                    Bestandsnaam
+  ------------------------------------------------------------------
+  Modern Drive 0W20      ->  benzol-ultra-0w20-specs.pdf
+  Modern Drive 0W30      ->  benzol-eco-0w30-specs.pdf
+  Modern Drive 5W30      ->  benzol-prime-5w30-specs.pdf   (staat er al)
+  Modern Drive 5W40      ->  benzol-synth-5w40-specs.pdf
+  Efficient Drive 10W40  ->  benzol-classic-10w40-specs.pdf
+  Fuel Injector Cleaner  ->  benzol-injector-cleaner-specs.pdf
+  Brake Fluid DOT-4      ->  benzol-remvloeistof-dot4-specs.pdf
+  Anti-Rust Spray        ->  benzol-anti-roest-spray-specs.pdf
+
+Zodra het PDF-bestand aanwezig is, verschijnt het automatisch (met een
+download-/openknop). Ontbreekt het? Dan blijft de nette technische
+spec-tabel staan die al uit de datasheet in lib/products.ts is ingevuld.
+
 Foto per hoeveelheid (bijv. een doos van 4 flessen bij 20 liter)
 =================================================================
-Klikt een klant op de productpagina op een grotere maat, dan kun je daar een
-aparte foto bij tonen (bijvoorbeeld een doos met 4 flessen bij 20 liter, of
-een vat bij 60/208 liter). Zet daarvoor een bestand neer met deze naam:
+Alleen voor de motoroliën (5 / 20 / 60 / 208 L). Klikt een klant op een
+grotere maat, dan kun je daar een aparte foto bij tonen. Zet daarvoor een
+bestand neer met deze naam:
 
   Maat        Bestandsnaam            Toont
   -----------------------------------------------------------------
@@ -64,16 +87,13 @@ een vat bij 60/208 liter). Zet daarvoor een bestand neer met deze naam:
   60 liter -> <slug>-60l.jpg          vat
   208 liter-> <slug>-208l.jpg         vat
 
-Bijvoorbeeld voor Benzol Prime 5W30:
+Bijvoorbeeld voor Modern Drive 5W30:
   benzol-prime-5w30-20l.jpg     (foto van de doos met 4 flessen)
   benzol-prime-5w30-60l.jpg     (foto van het vat)
   benzol-prime-5w30-208l.jpg    (foto van het grote vat)
 
-Zodra de klant op die maat klikt, verschijnt automatisch deze foto vooraan in
-de galerij (met de pijlen ziet hij nog steeds de gewone foto's). Heb je de
-foto nog niet geüpload? Geen probleem — dan blijft gewoon de normale
-productfoto staan; er verschijnt nooit een kapot plaatje. De losse maten
-1 L en 5 L gebruiken altijd de gewone productfoto's.
+De onderhoudsproducten (injector cleaner 300 ml, remvloeistof 0,5/1 L,
+anti-roest spray 400 ml) gebruiken gewoon de normale productfoto's.
 
 Bundeldeal-foto's
 ===================

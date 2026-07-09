@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart, PICKUP_DISCOUNT } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
-import { euro } from "@/lib/format";
+import { euro, formatBottleSize } from "@/lib/format";
 import OilBottle from "./OilBottle";
 import PaymentBadges from "./PaymentBadges";
 import { LockIcon, CheckIcon, BoltIcon, ArrowRight, TruckIcon, PackageIcon } from "./icons";
@@ -340,7 +340,7 @@ export default function Checkout() {
                   <div className="flex-1">
                     <p className="text-sm font-semibold leading-tight">{line.name}</p>
                     <p className="text-xs text-zinc-500">
-                      {line.isBundle ? t("bundle.badge") : `${line.sizeLiter} ${t("product.liter")}`}
+                      {line.isBundle ? t("bundle.badge") : formatBottleSize(line.sizeLiter)}
                     </p>
                   </div>
                   <span className="text-sm font-bold">{euro(line.price * line.qty)}</span>

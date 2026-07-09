@@ -1,6 +1,6 @@
 interface OilBottleProps {
   accent: string;
-  viscosity: string;
+  viscosity?: string;
   className?: string;
 }
 
@@ -8,8 +8,8 @@ interface OilBottleProps {
  * A crisp, futuristic oil-bottle rendered entirely in SVG so the shop needs
  * no binary image assets. The accent colour drives the "liquid" glow.
  */
-export default function OilBottle({ accent, viscosity, className }: OilBottleProps) {
-  const gid = viscosity.replace(/[^a-zA-Z0-9]/g, "");
+export default function OilBottle({ accent, viscosity = "", className }: OilBottleProps) {
+  const gid = viscosity.replace(/[^a-zA-Z0-9]/g, "") || "benzol";
   return (
     <svg viewBox="0 0 200 260" className={className} role="img" aria-label={`Benzol ${viscosity}`}>
       <defs>

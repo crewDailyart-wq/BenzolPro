@@ -32,7 +32,8 @@ export default function Shop({ products, initialViscosity, initialSort }: ShopPr
       list = list.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
-          p.viscosity.toLowerCase().includes(q) ||
+          (p.viscosity?.toLowerCase().includes(q) ?? false) ||
+          (p.productType?.toLowerCase().includes(q) ?? false) ||
           p.specs.some((s) => s.toLowerCase().includes(q)),
       );
     }

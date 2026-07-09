@@ -86,7 +86,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <StarIcon width={13} height={13} className="text-neon" />
           <span className="font-semibold text-zinc-200">{product.rating.toFixed(1)}</span>
           <span>({product.reviews})</span>
-          <span className="ms-auto chip !px-2 !py-0.5">{product.viscosity}</span>
+          <span className="ms-auto chip !px-2 !py-0.5">{product.viscosity ?? product.productType}</span>
         </div>
 
         <h3 className="mt-2 font-bold leading-tight transition group-hover:text-neon">{product.name}</h3>

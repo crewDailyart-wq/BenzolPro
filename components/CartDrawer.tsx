@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
-import { euro } from "@/lib/format";
+import { euro, formatBottleSize } from "@/lib/format";
 import OilBottle from "./OilBottle";
 import { CloseIcon, TrashIcon, PlusIcon, MinusIcon, BoltIcon, ArrowRight, TruckIcon } from "./icons";
 
@@ -76,9 +76,7 @@ export default function CartDrawer() {
                           {line.isBundle ? (
                             <span className="text-neon">{t("bundle.badge")} · {t("cart.free")} ✈</span>
                           ) : (
-                            <>
-                              {line.sizeLiter} {t("product.liter")}
-                            </>
+                            <>{formatBottleSize(line.sizeLiter)}</>
                           )}
                         </p>
                       </div>

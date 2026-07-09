@@ -20,7 +20,7 @@ export default function ProductTabs({ product }: { product: Product }) {
 
   // ---- Omschrijving (auto-samengesteld als er geen eigen tekst is) ----
   const bestForList = product.bestFor.map((b) => t(`bestFor.${b}`)).join(", ");
-  const cat = CATEGORY_NL[product.category] ?? "";
+  const cat = product.category ? CATEGORY_NL[product.category] ?? "" : "";
   const description =
     product.description ??
     `De ${product.name} is een ${cat} motorolie die voldoet aan ${product.specs.join(

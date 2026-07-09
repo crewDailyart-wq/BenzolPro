@@ -4,7 +4,7 @@
 // client geen eigen prijs kan afdwingen.
 import { getProductById } from "./products";
 import { BUNDLES } from "./bundles";
-import { sizePrice } from "./format";
+import { sizePrice, formatBottleSize } from "./format";
 import { PICKUP_DISCOUNT } from "./cart";
 
 export interface IncomingLine {
@@ -115,6 +115,6 @@ export function orderNumberFrom(paymentId: string): string {
 /** Korte, mensvriendelijke samenvatting van de regels (voor e-mail/metadata). */
 export function summarizeLines(lines: ValidatedLine[]): string {
   return lines
-    .map((l) => `${l.qty}× ${l.name}${l.isBundle ? " (bundel)" : ` ${l.sizeLiter}L`}`)
+    .map((l) => `${l.qty}× ${l.name}${l.isBundle ? " (bundel)" : ` ${formatBottleSize(l.sizeLiter)}`}`)
     .join(", ");
 }

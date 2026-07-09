@@ -25,14 +25,14 @@ export default function BrandStrip({
   if (failed) return null;
 
   return (
-    <div className="mb-8 overflow-hidden rounded-2xl border border-ink-line bg-ink-card/60">
+    <div className="mb-8 overflow-hidden rounded-2xl border border-ink-line bg-white">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={alt}
         loading="eager"
         onError={() => setFailed(true)}
-        className="h-16 w-full object-cover object-center sm:h-20 md:h-24"
+        className="h-28 w-full object-cover object-center sm:h-32 md:h-40"
       />
     </div>
   );

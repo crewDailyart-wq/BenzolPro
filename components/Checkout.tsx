@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart, PICKUP_DISCOUNT } from "@/lib/cart";
 import { useI18n } from "@/lib/i18n/provider";
 import { euro, formatBottleSize } from "@/lib/format";
+import { PICKUP_POINTS, PICKUP_ENABLED } from "@/lib/site";
 import OilBottle from "./OilBottle";
 import PaymentBadges from "./PaymentBadges";
 import { LockIcon, CheckIcon, BoltIcon, ArrowRight, TruckIcon, PackageIcon } from "./icons";
@@ -13,15 +14,6 @@ type PayMethod = "ideal" | "applepay" | "card" | "paypal";
 
 const BANKS = ["ABN AMRO", "ING", "Rabobank", "bunq", "ASN Bank", "SNS", "Knab", "Revolut", "Triodos"];
 
-// A few example collection points customers can pick up from.
-const PICKUP_POINTS = [
-  "Benzol Afhaalpunt — Amsterdam Noord",
-  "Benzol Afhaalpunt — Rotterdam Alexander",
-  "Benzol Afhaalpunt — Utrecht Lage Weide",
-  "Benzol Afhaalpunt — Eindhoven De Hurk",
-  "Benzol Afhaalpunt — Antwerpen Merksem",
-];
-
 export default function Checkout() {
   const { lines, subtotal, shipping, discount, total, count, deliveryMethod, setDeliveryMethod } = useCart();
   const { t } = useI18n();
@@ -29,7 +21,13 @@ export default function Checkout() {
   const [method, setMethod] = useState<PayMethod>("ideal");
   const [bank, setBank] = useState(BANKS[0]);
   const [email, setEmail] = useState("");
-  const [pickupPoint, setPickupPoint] = useState(PICKUP_POINTS[0]);
+  const [pickupPoint, setPickupPoint] = useState(PICKUP_POINTS[0] ?? "");
+
+  // Geen afhaalpunten geconfigureerd? Forceer thuisbezorging zodat er nooit een
+  // afhaalbestelling zonder geldig afhaalpunt ontstaat.
+  useEffect(() => {
+    if (!PICKUP_ENABLED && deliveryMethod !== "home") setDeliveryMethod("home");
+  }, [deliveryMethod, setDeliveryMethod]);
   const [form, setForm] = useState({ firstName: "", lastName: "", address: "", postal: "", city: "", phone: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [processing, setProcessing] = useState(false);
@@ -184,7 +182,9 @@ export default function Checkout() {
             </Field>
           </Section>
 
-          {/* delivery method: home delivery vs pickup point (with discount) */}
+          {/* delivery method: home delivery vs pickup point (with discount).
+              Only shown when real pickup points are configured. */}
+          {PICKUP_ENABLED && (
           <Section title={t("checkout.deliveryMethod")}>
             <div className="grid gap-3 sm:grid-cols-2">
               <button
@@ -224,6 +224,7 @@ export default function Checkout() {
               </button>
             </div>
           </Section>
+          )}
 
           {/* address (home) or pickup point (pickup) */}
           <Section title={isPickup ? t("checkout.pickupPoint") : t("checkout.delivery")}>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage, { LegalSection } from "@/components/LegalPage";
 import JsonLd from "@/components/JsonLd";
+import ContactForm from "@/components/ContactForm";
 import { COMPANY, SITE_NAME, SITE_URL, shown } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -28,6 +29,11 @@ export default function Page() {
     <>
       <JsonLd data={CONTACT_JSONLD} />
       <LegalPage title="Contact" intro="Vragen over een bestelling, een product of bulklevering? We helpen je graag.">
+        <LegalSection heading="Stuur ons een bericht">
+          <p className="mb-4">Vul het formulier in — we reageren doorgaans binnen één werkdag.</p>
+          <ContactForm />
+        </LegalSection>
+
         <LegalSection heading="Bereik ons">
           <ul className="list-none space-y-2">
             <li>

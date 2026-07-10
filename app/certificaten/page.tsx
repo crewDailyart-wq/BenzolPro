@@ -2,7 +2,7 @@ import CertificatesClient from "./CertificatesClient";
 
 export const metadata = {
   title: "Certificaten — BenzolPro",
-  description: "Officiële certificaten en kwaliteitsnormen van Benzol motorolie, en eigen certificaten uploaden.",
+  description: "Officiële certificaten en kwaliteitsnormen van Benzol motorolie, met downloadbare specificatiebladen (PDF).",
 };
 
 export default function CertificatenPage() {

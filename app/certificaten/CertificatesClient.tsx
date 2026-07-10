@@ -1,14 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n/provider";
+import { PRODUCTS } from "@/lib/products";
 import {
   CertificateIcon,
   ChevronDown,
-  UploadIcon,
   FileIcon,
-  ImageIcon,
-  TrashIcon,
   CheckIcon,
 } from "@/components/icons";
 
@@ -31,50 +29,41 @@ const OFFICIAL_CERTS: OfficialCert[] = [
   { code: "RDW", title: "RDW Open Data", desc: "Kentekencheck via de officiële RDW Open Data API.", issuer: "RDW", number: "BP-RDW-OD-2026" },
 ];
 
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  isImage: boolean;
-  url: string;
-}
-
-function formatSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+/** Pad naar het specificatieblad van een product (conventie: <slug>-specs.pdf). */
+function datasheetPath(slug: string, specSheet?: string): string {
+  return specSheet ?? `/products/${slug}-specs.pdf`;
 }
 
 export default function CertificatesClient() {
   const { t } = useI18n();
   const [openCert, setOpenCert] = useState<string | null>(null);
-  const [files, setFiles] = useState<UploadedFile[]>([]);
-  const [dragOver, setDragOver] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const counter = useRef(0);
+  // slug -> bestaat er een echte PDF? (null = nog aan het controleren)
+  const [available, setAvailable] = useState<Record<string, boolean | null>>({});
 
-  function addFiles(list: FileList | null) {
-    if (!list) return;
-    const next: UploadedFile[] = Array.from(list).map((f) => {
-      counter.current += 1;
-      return {
-        id: `f-${counter.current}-${f.name}`,
-        name: f.name,
-        size: f.size,
-        isImage: f.type.startsWith("image/"),
-        url: URL.createObjectURL(f),
-      };
+  // Controleer per product of er daadwerkelijk een PDF-specificatieblad staat,
+  // zodat we alleen werkende downloads tonen (net als de SpecSheetTab op de
+  // productpagina). Zodra je een <slug>-specs.pdf in public/products/ zet, licht
+  // de download hier automatisch op.
+  useEffect(() => {
+    let cancelled = false;
+    setAvailable(Object.fromEntries(PRODUCTS.map((p) => [p.slug, null])));
+    PRODUCTS.forEach((p) => {
+      const path = datasheetPath(p.slug, p.specSheet);
+      fetch(path, { method: "HEAD" })
+        .then((res) => {
+          if (cancelled) return;
+          const type = res.headers.get("content-type") ?? "";
+          const ok = res.ok && type.includes("pdf");
+          setAvailable((prev) => ({ ...prev, [p.slug]: ok }));
+        })
+        .catch(() => {
+          if (!cancelled) setAvailable((prev) => ({ ...prev, [p.slug]: false }));
+        });
     });
-    setFiles((prev) => [...prev, ...next]);
-  }
-
-  function removeFile(id: string) {
-    setFiles((prev) => {
-      const target = prev.find((f) => f.id === id);
-      if (target) URL.revokeObjectURL(target.url);
-      return prev.filter((f) => f.id !== id);
-    });
-  }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="section-pad py-10">
@@ -122,79 +111,38 @@ export default function CertificatesClient() {
         })}
       </div>
 
-      {/* upload own certificates */}
-      <h2 className="mt-12 text-sm font-bold uppercase tracking-wide text-zinc-300">{t("certificates.uploadTitle")}</h2>
-      <p className="mt-1 max-w-xl text-sm text-zinc-400">{t("certificates.uploadBody")}</p>
+      {/* downloadable product datasheets */}
+      <h2 className="mt-12 text-sm font-bold uppercase tracking-wide text-zinc-300">{t("certificates.datasheetsTitle")}</h2>
+      <p className="mt-1 max-w-xl text-sm text-zinc-400">{t("certificates.datasheetsBody")}</p>
 
-      <div
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
-        }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragOver(false);
-          addFiles(e.dataTransfer.files);
-        }}
-        className={`mt-4 flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-10 text-center transition ${
-          dragOver ? "border-azure bg-azure/5" : "border-ink-line"
-        }`}
-      >
-        <span className="grid h-12 w-12 place-items-center rounded-full bg-azure/10 text-azure">
-          <UploadIcon width={22} height={22} />
-        </span>
-        <p className="text-sm text-zinc-400">{t("certificates.dropText")}</p>
-        <button type="button" onClick={() => inputRef.current?.click()} className="btn-ghost">
-          {t("certificates.uploadButton")}
-        </button>
-        <input
-          ref={inputRef}
-          type="file"
-          multiple
-          accept=".pdf,image/*"
-          className="hidden"
-          onChange={(e) => addFiles(e.target.files)}
-        />
-      </div>
-
-      {files.length > 0 ? (
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {files.map((f) => (
-            <div key={f.id} className="card-surface flex items-center gap-3 p-3">
-              <div className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-lg bg-ink-soft">
-                {f.isImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={f.url} alt={f.name} className="h-full w-full object-cover" />
-                ) : (
-                  <FileIcon width={20} height={20} className="text-zinc-400" />
-                )}
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {PRODUCTS.map((p) => {
+          const path = datasheetPath(p.slug, p.specSheet);
+          const state = available[p.slug];
+          const ready = state === true;
+          return (
+            <div key={p.slug} className="card-surface flex items-center gap-3 p-3">
+              <div className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-ink-soft text-zinc-400">
+                <FileIcon width={20} height={20} className={ready ? "text-neon" : undefined} />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">{f.name}</p>
-                <p className="text-xs text-zinc-500">{formatSize(f.size)}</p>
+                <p className="truncate text-sm font-medium">{p.name}</p>
+                {ready ? (
+                  <a
+                    href={path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-0.5 inline-flex items-center gap-1 text-xs font-semibold text-neon hover:underline"
+                  >
+                    {t("certificates.datasheetDownload")}
+                  </a>
+                ) : (
+                  <p className="mt-0.5 text-xs text-zinc-500">{t("certificates.datasheetPending")}</p>
+                )}
               </div>
-              <button
-                type="button"
-                onClick={() => removeFile(f.id)}
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-zinc-500 transition hover:bg-red-500/10 hover:text-red-400"
-                aria-label={t("certificates.remove")}
-              >
-                <TrashIcon width={16} height={16} />
-              </button>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className="mt-4 text-sm text-zinc-500">{t("certificates.empty")}</p>
-      )}
-
-      <div className="mt-6 flex gap-3 rounded-2xl border border-azure/30 bg-azure/5 p-4">
-        <ImageIcon width={20} height={20} className="mt-0.5 shrink-0 text-azure" />
-        <div>
-          <p className="text-sm font-semibold text-azure">{t("certificates.noteTitle")}</p>
-          <p className="mt-1 text-xs text-zinc-400">{t("certificates.noteBody")}</p>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

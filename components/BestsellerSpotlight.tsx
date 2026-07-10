@@ -68,10 +68,10 @@ export default function BestsellerSpotlight({
         <span className="animate-twinkle pointer-events-none absolute bottom-16 left-8 h-1.5 w-1.5 rounded-full bg-azure-soft shadow-[0_0_10px_2px_rgba(143,199,255,0.7)] [animation-delay:1.4s]" />
         <span className="animate-twinkle pointer-events-none absolute left-1/3 top-8 h-1.5 w-1.5 rounded-full bg-neon shadow-[0_0_10px_2px_rgba(246,217,137,0.6)] [animation-delay:0.7s]" />
 
-        <div className={`relative grid grow grid-cols-1 items-center gap-6 sm:gap-8 ${large ? "sm:grid-cols-[1.25fr_1fr]" : "sm:grid-cols-2"}`}>
+        <div className={`relative flex grow flex-col items-center gap-4 ${large ? "" : "sm:grid sm:grid-cols-2 sm:items-center sm:gap-8"}`}>
           {/* floating product visual, big and central — square frame so an
               uploaded photo fills it completely (rounded corners, no borders) */}
-          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[560px] lg:max-w-[640px]" : "max-w-[340px]"}`}>
+          <div className={`relative mx-auto aspect-square w-full ${large ? "max-w-[360px] lg:max-w-[400px]" : "max-w-[340px]"}`}>
             {/* soft blue ring behind bottle, gently pulsing */}
             <div className="animate-pulse-glow absolute inset-4 rounded-full bg-radial-azure opacity-90" />
             <div className="animate-float relative h-full w-full overflow-hidden rounded-3xl">
@@ -84,8 +84,8 @@ export default function BestsellerSpotlight({
           </div>
 
           {/* info */}
-          <div className="text-center sm:text-start">
-            <div className="flex items-center justify-center gap-1 text-xs text-zinc-400 sm:justify-start">
+          <div className={large ? "w-full max-w-lg text-center" : "text-center sm:text-start"}>
+            <div className="flex items-center justify-center gap-1 text-xs text-zinc-400">
               <StarIcon width={13} height={13} className="text-neon" />
               <span className="font-semibold text-zinc-100">{product.rating.toFixed(1)}</span>
               <span>({product.reviews})</span>
@@ -96,7 +96,7 @@ export default function BestsellerSpotlight({
               <p className="mt-1.5 text-sm font-bold text-gold-metal">★ {product.fitsNote}</p>
             )}
 
-            <div className="mt-3 flex flex-wrap justify-center gap-1 sm:justify-start">
+            <div className="mt-3 flex flex-wrap justify-center gap-1">
               {product.specs.slice(0, 3).map((s) => (
                 <span key={s} className="rounded bg-ink-soft px-2 py-0.5 text-[11px] text-zinc-300">
                   {s}
@@ -104,11 +104,11 @@ export default function BestsellerSpotlight({
               ))}
             </div>
 
-            <div className="mt-4 flex flex-wrap items-baseline justify-center gap-2 sm:justify-start">
+            <div className="mt-4 flex flex-wrap items-baseline justify-center gap-2">
               <PriceTag base={stdPrice} compareAt={stdCompare} size={large ? "lg" : "md"} />
               <SizeChip liters={stdSize} />
             </div>
-            <p className="mt-1.5 flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-400 sm:justify-start">
+            <p className="mt-1.5 flex items-center justify-center gap-1.5 text-xs font-medium text-emerald-400">
               <CheckIcon width={13} height={13} /> {t("product.freeShipBadge")}
             </p>
 
@@ -129,7 +129,7 @@ export default function BestsellerSpotlight({
               </Link>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-zinc-500 sm:justify-start">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-zinc-500">
               <span className="flex items-center gap-1.5">
                 <CheckIcon width={13} height={13} className="text-neon" /> {t("hero.trust2")}
               </span>

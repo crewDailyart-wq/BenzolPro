@@ -58,6 +58,22 @@ export function needsConsent(): boolean {
   return Boolean(ANALYTICS.gaId);
 }
 
+/**
+ * Afhaalpunten waar klanten hun bestelling kunnen ophalen (met afhaalkorting).
+ * Vul ze in productie via `NEXT_PUBLIC_PICKUP_POINTS`, gescheiden door een
+ * pipe-teken, bijv.:
+ *   NEXT_PUBLIC_PICKUP_POINTS="Benzol Amsterdam Noord|Benzol Rotterdam Alexander"
+ * Zonder deze variabele is er geen afhaaloptie — dan tonen we alleen (gratis)
+ * thuisbezorging, zodat er geen niet-bestaande afhaalpunten live staan.
+ */
+export const PICKUP_POINTS: string[] = (process.env.NEXT_PUBLIC_PICKUP_POINTS ?? "")
+  .split("|")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+/** true wanneer er echte afhaalpunten zijn geconfigureerd. */
+export const PICKUP_ENABLED = PICKUP_POINTS.length > 0;
+
 /** Maak van een pad ("/product/x") een volledige absolute URL. */
 export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

@@ -96,7 +96,10 @@ Bezoekers kunnen hun keuze altijd wijzigen via **"Cookievoorkeuren"** onderaan e
       Merchant Center de items af omdat de afbeeldings-URL niet laadt. Upload dus de
       foto's op de exacte bestandsnamen uit de README vóórdat je de feed indient.
 - [ ] Controleer de prijzen per maat in `lib/products.ts` en de bundelprijzen in `lib/bundles.ts`.
-- [ ] Vul echte afhaalpunten in (`components/Checkout.tsx` → `PICKUP_POINTS`) of verberg afhalen.
+- [ ] Afhaalpunten: standaard staat de afhaaloptie **uit** (alleen gratis
+      thuisbezorging). Wil je afhalen aanbieden? Zet echte locaties in
+      `NEXT_PUBLIC_PICKUP_POINTS` (gescheiden door `|`); de afhaaloptie + korting
+      verschijnen dan automatisch in de checkout.
 
 ---
 

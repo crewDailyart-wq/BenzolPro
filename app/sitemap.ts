@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/kosten", priority: 0.7, freq: "monthly" },
     { path: "/vergelijk", priority: 0.7, freq: "monthly" },
     { path: "/vs", priority: 0.7, freq: "monthly" },
+    { path: "/wiki", priority: 0.8, freq: "weekly" },
     { path: "/tools", priority: 0.8, freq: "weekly" },
     { path: "/mijn-garage", priority: 0.7, freq: "monthly" },
     { path: "/normen", priority: 0.7, freq: "monthly" },

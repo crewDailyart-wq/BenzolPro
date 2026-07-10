@@ -10,7 +10,7 @@ export const FREE_SHIPPING_THRESHOLD = 0;
 export const SHIPPING_COST = 0;
 
 /** Flat discount when the customer picks up at a collection point instead of home delivery. */
-export const PICKUP_DISCOUNT = 2.5;
+export const PICKUP_DISCOUNT = 1;
 
 export type DeliveryMethod = "home" | "pickup";
 

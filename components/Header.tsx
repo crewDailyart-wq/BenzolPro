@@ -17,7 +17,7 @@ export default function Header() {
     { href: "/products", label: t("nav.products") },
     { href: "/olie", label: t("nav.oilByCar") },
     { href: "/bundels", label: t("bundle.nav") },
-    { href: "/gids", label: t("nav.guides") },
+    { href: "/wiki", label: t("nav.wiki") },
     { href: "/#garages", label: t("garages.nav") },
     { href: "/#faq", label: t("faq.nav") },
   ];

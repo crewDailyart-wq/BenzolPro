@@ -26,6 +26,7 @@ const nl = {
     quote: "Offerte aanvragen",
     guides: "Kennisbank",
     oilByCar: "Olie per auto",
+    wiki: "Auto-wiki",
   },
   hero: {
     eyebrow: "Motorolie van de volgende generatie",

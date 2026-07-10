@@ -157,7 +157,7 @@ export const PRODUCTS: Product[] = [
     stock: 120,
     fitsNote: "Geschikt voor ruim 50% van de Nederlandse auto's",
     images: [
-      "/products/benzol-prime-5w30.webp",
+      "/products/benzol-prime-5w30.jpg",
       "/products/benzol-prime-5w30-achterkant.jpg",
       "/products/benzol-prime-5w30-zijkant.jpg",
       "/products/benzol-prime-5w30-etiket.jpg",

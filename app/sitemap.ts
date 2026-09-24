@@ -8,11 +8,16 @@ import { COMPARE_PAIRS } from "@/lib/compare";
 import { TOOLS } from "@/lib/tools";
 import { NORMS } from "@/lib/norms";
 import { BRAND_COMPARES } from "@/lib/brandCompare";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, SITEMAP_FULL } from "@/lib/site";
 
 /**
  * Automatische sitemap.xml (bereikbaar op /sitemap.xml). Dien deze in bij Google
  * Search Console zodat alle producten, bundels en pagina's snel geïndexeerd worden.
+ *
+ * De diepste, dunste laag (generatie- en motoruitvoering-pagina's, plus de
+ * kostenpagina's die inhoudelijk sterk overlappen met de merk/model-pagina's)
+ * staat pas in de sitemap als SITEMAP_FULL=true — zie de toelichting bij
+ * SITEMAP_FULL in lib/site.ts.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -152,14 +157,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...bundleEntries,
     ...makeEntries,
     ...modelEntries,
-    ...generationEntries,
-    ...engineEntries,
     ...guideEntries,
     ...cityEntries,
-    ...costEntries,
     ...compareEntries,
     ...toolEntries,
     ...normEntries,
     ...brandVsEntries,
+    // Diepste/dunste laag: pas indienen zodra de kernpagina's geïndexeerd zijn.
+    ...(SITEMAP_FULL ? [...generationEntries, ...engineEntries, ...costEntries] : []),
   ];
 }

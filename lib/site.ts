@@ -74,6 +74,19 @@ export const PICKUP_POINTS: string[] = (process.env.NEXT_PUBLIC_PICKUP_POINTS ??
 /** true wanneer er echte afhaalpunten zijn geconfigureerd. */
 export const PICKUP_ENABLED = PICKUP_POINTS.length > 0;
 
+/**
+ * Op een gloednieuw domein zonder autoriteit indexeert Google de diepste,
+ * meest specifieke pagina's (generaties, motoruitvoeringen, kostenpagina's)
+ * vaak lang niet — dat verdunt het crawlbudget en vertraagt indexering van de
+ * belangrijkere merk/model-pagina's. Daarom staat de sitemap standaard op de
+ * kernlaag (~320 sterke pagina's). Zet SITEMAP_FULL=true zodra de kernpagina's
+ * geïndexeerd zijn en het domein wat autoriteit heeft opgebouwd (meestal na
+ * 4-8 weken) om de volledige ~550 pagina's weer aan te bieden. De pagina's
+ * zelf blijven altijd bereikbaar — dit schakelt alleen wat er in sitemap.xml
+ * aan Google wordt voorgesteld.
+ */
+export const SITEMAP_FULL = process.env.SITEMAP_FULL === "true";
+
 /** Maak van een pad ("/product/x") een volledige absolute URL. */
 export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
